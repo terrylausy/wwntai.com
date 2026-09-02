@@ -66,6 +66,7 @@
                     <a href="../courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm 机械臂课程</a>
                     <a href="../courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人课程</a>
                     <a href="../courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手课程</a>
+<a href="../courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini 课程</a>
                 </div>
             </div>
             <div class="group relative">
@@ -101,6 +102,7 @@
         <a href="../courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm 机械臂课程</a>
         <a href="../courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人课程</a>
         <a href="../courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手课程</a>
+<a href="../courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini 课程</a>
         <a href="../solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>高校合作</a>
         <a href="../solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>教育方案</a>
         <a href="../solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>产教研合作</a>
@@ -148,11 +150,34 @@
                     </a>
                 </div>
             </div>
-            <!-- 右侧产品图 -->
+            <!-- 右侧产品图轮播 -->
             <div class="relative flex justify-center">
                 <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/20 to-transparent rounded-full blur-3xl"></div>
-                <div class="relative w-72 md:w-96 neon-ring rounded-3xl overflow-hidden border border-cyan-400/20">
-                    <img src="../Assets/images/openduck/openduck-mini-hero.jpg" alt="OpenDuck Mini 开源双足机器人" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                <div class="relative w-72 md:w-96 neon-ring rounded-3xl overflow-hidden border border-cyan-400/20 bg-[#0B1120]" id="product-carousel">
+                    <div class="flex transition-transform duration-500 ease-out" id="carousel-track">
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-hero.jpg" alt="OpenDuck Mini 开源双足机器人" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-gallery-1.jpg" alt="OpenDuck Mini 正面展示" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-gallery-2.jpg" alt="OpenDuck Mini 细节展示" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <!-- 箭头 -->
+                    <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur transition-colors" aria-label="上一张">
+                        <i class="fas fa-chevron-left text-sm"></i>
+                    </button>
+                    <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur transition-colors" aria-label="下一张">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                    <!-- 指示器 -->
+                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+                        <button onclick="goToSlide(0)" class="carousel-dot w-2 h-2 rounded-full bg-white/80 transition-all" aria-label="第1张"></button>
+                        <button onclick="goToSlide(1)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="第2张"></button>
+                        <button onclick="goToSlide(2)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="第3张"></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -426,6 +451,174 @@ duck.<span class="text-cyan-300">blink_eyes</span>(<span class="text-emerald-300
     </div>
 </section>
 
+<!-- ============ 课程体系 ============ -->
+<section class="relative py-20 bg-white overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">CURRICULUM</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">配套课程体系</h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">从具身智能概念到 MuJoCo 仿真，16 节系统课程覆盖双足机器人全链路教学</p>
+            <p class="mt-3 text-sm"><a href="../courses.html#openduck-courses" class="text-cyan-600 font-semibold hover:underline"><i class="fas fa-external-link-alt mr-1"></i>本课程为课程体系栏目之一 · 查看完整课程体系</a></p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- 模块一：课程导论 -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center"><i class="fas fa-book-open"></i></div>
+                    <h3 class="text-lg font-bold">模块一：课程导论</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-cyan-600 bg-cyan-50 px-2 py-1 rounded h-fit">01</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">课程简单介绍和安排</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">课程目标、知识图谱、学习路径与考核方式总览。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-cyan-600 bg-cyan-50 px-2 py-1 rounded h-fit">02</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">上课使用的同步软件</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">配置开发环境、SSH 远程连接与文件同步工具链。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 模块二：具身智能基础 -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center"><i class="fas fa-brain"></i></div>
+                    <h3 class="text-lg font-bold">模块二：具身智能基础</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">03</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">具身智能的概念定义</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">从传统 AI 到具身智能：感知、决策与执行的闭环。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">04</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">具身智能的控制系统</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">分层控制架构：高层任务规划、中层运动控制、底层伺服驱动。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">05</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">机器人运动控制的两个路线</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">基于模型控制与基于学习控制的对比、适用场景与演进趋势。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 模块三：双足运动控制 -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center"><i class="fas fa-running"></i></div>
+                    <h3 class="text-lg font-bold">模块三：双足运动控制</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">06</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">质心投影的概念</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">质心、支撑多边形与静态稳定性的几何关系。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">07</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">捕捉点（Capture Point）概念入门</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">线性倒立摆模型与捕捉点的物理意义及计算。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">08</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">支撑脚和身体的重心转移</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">单双脚支撑切换、重心轨迹规划与稳定判据。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">09</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">机器人关节的正逆运动学</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">DH 参数建模、正运动学求解与逆运动学数值解法。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">10</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">摆动脚的末端运动控制分析</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">足端轨迹规划：离地、摆动、触地阶段的约束与插值。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">11</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">计算摆动脚的 Capture Point</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">结合质心速度与位置，求解摆动脚触地点的预测方法。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">12</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">双足机器人走路的流程分析</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">从状态机到步态周期：双足行走完整控制流程拆解。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">13</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">双足机器人步态的全流程介绍</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">参数整定、在线调试与真机步态验证的工程实践。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- 模块四：MuJoCo 仿真 -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center"><i class="fas fa-cube"></i></div>
+                    <h3 class="text-lg font-bold">模块四：MuJoCo 仿真</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">14</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">MuJoCo 仿真环境的介绍</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">MuJoCo 物理引擎特性、URDF/MJCF 模型与接触模型。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">15</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">MuJoCo 环境的命令行安装</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">在 Linux/树莓派上安装 MuJoCo、绑定 Python 与依赖。</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">16</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">MuJoCo 的 Hello World 案例</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">加载 OpenDuck Mini 模型、运行第一个仿真步并可视化。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 text-center">
+            <a href="../contact.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-500/20">
+                <i class="fas fa-play-circle mr-2"></i>获取完整课程大纲与样课
+            </a>
+        </div>
+    </div>
+</section>
+
 <!-- ============ CTA ============ -->
 <section class="relative z-10 py-20">
     <div class="max-w-4xl mx-auto px-6 text-center">
@@ -464,6 +657,37 @@ duck.<span class="text-cyan-300">blink_eyes</span>(<span class="text-emerald-300
         <div class="text-xs text-gray-400">© 2026 wwntAI.com · 万物拟态</div>
     </div>
 </footer>
+
+<script>
+let currentSlide = 0;
+const track = document.getElementById('carousel-track');
+const slides = track ? track.querySelectorAll(':scope > div') : [];
+const dots = document.querySelectorAll('.carousel-dot');
+function updateCarousel() {
+    if (!track) return;
+    track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    dots.forEach(function(dot, i) {
+        dot.classList.toggle('bg-white/80', i === currentSlide);
+        dot.classList.toggle('bg-white/40', i !== currentSlide);
+    });
+}
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateCarousel();
+}
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateCarousel();
+}
+function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+if (slides.length > 0) {
+    updateCarousel();
+    setInterval(nextSlide, 5000);
+}
+</script>
 
 </body>
 </html>
