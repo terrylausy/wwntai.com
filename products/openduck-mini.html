@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenDuck Mini 开源仿生双足机器人 - wwntAI.com</title>
+    <meta name="description" content="OpenDuck Mini 开源仿生双足机器人：约42cm、14+2自由度、树莓派强化学习驱动，35+件3D打印件外观随心定制。万物拟态提供整机装配、外观定制与深度开发服务。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',secondary:'#f8fafc',accent:'#2563eb',card:'#ffffff',border:'#e2e8f0',
+                        light: '#3b82f6',
+                        warm: '#d97706',
+                        accent2: '#7c3aed',
+                        cyanx: '#06b6d4',
+                        dark: '#0F172A',
+                        muted: '#64748B'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}</script>
+    <style>
+        .bg-grid{background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:40px 40px}
+        .bg-grid-dark{background-image:linear-gradient(rgba(148,163,184,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.07) 1px,transparent 1px);background-size:42px 42px}
+        .glass{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,.08)}
+        .card-hover{transition:all .35s cubic-bezier(.4,0,.2,1)}
+        .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(6,182,212,.10)}
+        .text-gradient{background:linear-gradient(135deg,#2563eb,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .text-gradient-cyan{background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .spec-table td{border-bottom:1px solid #334155;padding:10px 0}
+        .spec-table td:first-child{color:#94a3b8;width:170px}
+        .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+        .tag-duck{background:rgba(6,182,212,.12);color:#06b6d4;border:1px solid rgba(6,182,212,.30)}
+        .tag-custom{background:rgba(129,140,248,.12);color:#818cf8;border:1px solid rgba(129,140,248,.30)}
+        .hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(34,211,238,.18) 0%,transparent 65%)}
+        .neon-ring{box-shadow:0 0 0 1px rgba(34,211,238,.25),0 0 40px rgba(34,211,238,.15),0 25px 60px rgba(0,0,0,.45)}
+        .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-size:.8rem;font-weight:500;border:1px solid rgba(34,211,238,.25);background:rgba(15,23,42,.6);color:#a5f3fc}
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<!-- Navigation -->
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="../index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">万物拟态 | 全栈式赋能高校职校拥抱 <strong>AI+机器人</strong>专业</span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="../index.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">首页</a>
+            <div class="group relative">
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">产品 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="../products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人</a>
+                    <a href="../products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+                    <a href="../products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+                    <a href="../products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手</a>
+                    <a href="../products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>多功能实训平台</a>
+                    <a href="../products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI纪念品</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="../courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">课程 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="../products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>炎书AI</a>
+                    <a href="../courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI实训箱课程</a>
+                    <a href="../courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm 机械臂课程</a>
+                    <a href="../courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人课程</a>
+                    <a href="../courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手课程</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="../solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">高校合作 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="../solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>教育方案</a>
+                    <a href="../solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>产教研合作</a>
+                </div>
+            </div>
+            <a href="../opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">开源社区</a><a href="https://wwnt.ai" target="_blank" class="px-3 py-1.5 ml-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors">国际站</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center px-4 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span>炎书AI</span>
+                <span class="text-[10px] font-normal opacity-90">建课系统</span>
+            </a>
+            <a href="../contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">预约演示</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="../index.html" class="block py-3 text-accent font-medium">首页</a>
+        <a href="../products/robots.html" class="block py-3 text-gray-700">具身智能机器人</a>
+        <a href="../products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+        <a href="../products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+        <a href="../products/dexterous-hand.html" class="block py-3 text-gray-700">灵巧手</a>
+        <a href="../products/embedded-platform.html" class="block py-3 text-gray-700">多功能实训平台</a>
+        <a href="../products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI纪念品</a>
+        <a href="../courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>课程</a>
+        <a href="../products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>炎书AI</a>
+        <a href="../courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI实训箱课程</a>
+        <a href="../courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm 机械臂课程</a>
+        <a href="../courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人课程</a>
+        <a href="../courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手课程</a>
+        <a href="../solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>高校合作</a>
+        <a href="../solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>教育方案</a>
+        <a href="../solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>产教研合作</a>
+        <a href="../opensource.html" class="block py-3 text-gray-700">开源社区</a><a href="https://wwnt.ai" target="_blank" class="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors">国际站</a>
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>炎书AI · 建课系统</a>
+        <a href="../contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">预约演示</a>
+    </div>
+</nav>
+
+<!-- ============ Hero（深色科技感） ============ -->
+<header class="relative overflow-hidden bg-[#0B1120] text-white">
+    <div class="absolute inset-0 bg-grid-dark opacity-60"></div>
+    <div class="absolute inset-0 hero-glow"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-32 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-16">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- 左侧文字 -->
+            <div>
+                <div class="flex flex-wrap items-center gap-2 mb-5">
+                    <span class="tag tag-duck">开源仿生双足机器人</span>
+                    <span class="tag tag-custom">支持深度定制</span>
+                    <span class="px-3 py-1 bg-white/5 text-cyan-200 text-xs rounded-full border border-white/10">Apache-2.0 开源</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                    OpenDuck <span class="text-gradient-cyan">Mini</span>
+                </h1>
+                <p class="mt-3 text-sm md:text-base text-cyan-300/80 font-medium tracking-wide">v2 · 复刻迪士尼 BDX 的开源双足仿生机器人</p>
+                <p class="mt-6 text-lg text-slate-300 leading-relaxed">
+                    约 42cm 的可爱双足机器人，14+2 自由度全身关节，树莓派强化学习驱动行走。35+ 件 3D 打印结构全部开源——<span class="text-cyan-300 font-semibold">外观、配色、功能，全部由你定义</span>。
+                </p>
+                <div class="mt-6 flex flex-wrap gap-2">
+                    <span class="chip"><i class="fas fa-cube"></i>外观 3D 打印定制</span>
+                    <span class="chip"><i class="fas fa-code-branch"></i>全链路开源可二次开发</span>
+                    <span class="chip"><i class="fas fa-gamepad"></i>手柄遥控行走</span>
+                    <span class="chip"><i class="fas fa-eye"></i>表情交互系统</span>
+                </div>
+                <div class="mt-9 flex flex-wrap gap-4">
+                    <a href="../contact.html" class="inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all shadow-xl shadow-cyan-500/20 hover:shadow-cyan-400/30 text-base">
+                        <i class="fas fa-palette mr-2"></i>定制咨询
+                    </a>
+                    <a href="https://github.com/apirrone/Open_Duck_Mini" target="_blank" class="inline-flex items-center px-7 py-3.5 border-2 border-cyan-400/40 text-cyan-200 hover:bg-cyan-400/10 font-semibold rounded-xl transition-all text-base">
+                        <i class="fab fa-github mr-2"></i>开源仓库
+                    </a>
+                </div>
+            </div>
+            <!-- 右侧产品图 -->
+            <div class="relative flex justify-center">
+                <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/20 to-transparent rounded-full blur-3xl"></div>
+                <div class="relative w-72 md:w-96 neon-ring rounded-3xl overflow-hidden border border-cyan-400/20">
+                    <img src="../Assets/images/openduck/openduck-mini-hero.jpg" alt="OpenDuck Mini 开源双足机器人" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <!-- 数据条 -->
+        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">42cm</div>
+                <div class="mt-1 text-xs text-slate-400">整机高度</div>
+            </div>
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">14+2</div>
+                <div class="mt-1 text-xs text-slate-400">全身自由度</div>
+            </div>
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">35+</div>
+                <div class="mt-1 text-xs text-slate-400">3D打印结构件</div>
+            </div>
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">100%</div>
+                <div class="mt-1 text-xs text-slate-400">开源可定制</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ============ 为什么选择（可定制卖点） ============ -->
+<section class="relative z-10 py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">WHY OPENDUCK MINI</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">不止是一台机器人，<span class="text-gradient">更是一个可定制的开源平台</span></h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">从外壳颜色到控制算法，从教学课件到科研实验，OpenDuck Mini 的每一层都向开发者开放</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-palette"></i></div>
+                <h3 class="font-bold text-lg mb-2">外观随心定制</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">35+ 件 3D 打印结构件（PLA/TPU），配色、涂装、外壳造型均可定制，打造独一无二的校园 IP 机器人形象。</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-code"></i></div>
+                <h3 class="font-bold text-lg mb-2">全链路开源</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">机械 CAD、BOM 物料、板载软件、仿真环境、强化学习策略全部开源（Apache-2.0），商用无忧。</p>
+            </div>
+            <div class="rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white p-7 shadow-lg card-hover">
+                <div class="w-12 h-12 rounded-xl bg-cyan-400/20 text-cyan-300 flex items-center justify-center text-xl mb-4"><i class="fas fa-microchip"></i></div>
+                <h3 class="font-bold text-lg mb-2">功能自由扩展</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">预留摄像头、麦克风、LED 表情与投影接口，可加装传感器与语音交互，满足科研与教学场景扩展。</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-brain"></i></div>
+                <h3 class="font-bold text-lg mb-2">真机部署 RL</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">MuJoCo 仿真 + 强化学习行走策略开箱即用，支持模仿学习训练自己的步态，Sim2Real 全流程打通。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 产品规格 ============ -->
+<section class="relative py-20 bg-[#0B1120] text-white overflow-hidden">
+    <div class="absolute inset-0 bg-grid-dark opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="text-sm text-cyan-400 font-semibold tracking-wider">TECHNICAL SPECS</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">产品规格</h2>
+            <p class="mt-3 text-slate-400">OpenDuck Mini v2 核心参数一览</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-8 backdrop-blur">
+            <table class="w-full spec-table text-sm">
+                <tr><td>外形高度</td><td class="text-slate-200">约 42 cm（腿部伸直）</td></tr>
+                <tr><td>机器人构型</td><td class="text-slate-200">双足仿生机器人（灵感源于迪士尼 BDX）</td></tr>
+                <tr><td>驱动系统</td><td class="text-slate-200">14× Feetech STS3215 总线舵机 + 2× SG90 微型舵机（触角）</td></tr>
+                <tr><td>关节布局</td><td class="text-slate-200">每腿 5 自由度（髋偏航/滚转/俯仰、膝、踝）；头部俯仰/偏航/滚转 + 颈部俯仰；触角 ×2</td></tr>
+                <tr><td>主控制器</td><td class="text-slate-200">Raspberry Pi Zero 2W（4×Cortex-A53 @1GHz，512MB RAM）</td></tr>
+                <tr><td>传感器</td><td class="text-slate-200">BNO055 九轴 IMU、足部接触开关、摄像头、麦克风</td></tr>
+                <tr><td>电源</td><td class="text-slate-200">2S 18650 锂电池组（约 7.4V）带 BMS 保护</td></tr>
+                <tr><td>音频 / 显示</td><td class="text-slate-200">MAX98357A I2S 功放 + 扬声器；双眼 LED + 投影表情</td></tr>
+                <tr><td>机械结构</td><td class="text-slate-200">35+ 件 3D 打印件（PLA 结构件 / TPU 柔性件），M3 热熔螺母与轴承</td></tr>
+                <tr><td>控制方式</td><td class="text-slate-200">Xbox 手柄（蓝牙）遥控，支持启停 / 加速 / 触角 / 随机音效</td></tr>
+                <tr><td>开源许可</td><td class="text-cyan-300 font-medium">Apache-2.0（含商用）</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 技术架构 ============ -->
+<section class="relative z-10 py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">ARCHITECTURE</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">五位一体的技术架构</h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">机械 · 驱动 · 感知 · 算力 · 软件，每一层都开放可改</p>
+        </div>
+        <div class="grid md:grid-cols-5 gap-5">
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-cubes"></i></div>
+                <h3 class="font-semibold mb-2">机械结构</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">PLA 结构件 + TPU 柔性脚底，Onshape 完整 CAD 模型开放，打印参数一键复用</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-cogs"></i></div>
+                <h3 class="font-semibold mb-2">驱动系统</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">14 路串行总线舵机 + 2 路 PWM 触角，关节软偏移标定工具，电机参数可辨识</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-satellite-dish"></i></div>
+                <h3 class="font-semibold mb-2">感知系统</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">BNO055 九轴 IMU 姿态感知，足部接触开关，摄像头与麦克风表情交互扩展</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-microchip"></i></div>
+                <h3 class="font-semibold mb-2">板载算力</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">树莓派 Zero 2W 运行 ONNX 强化学习策略，GPIO 直控 LED / 投影 / 触角 / 足部开关</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-terminal"></i></div>
+                <h3 class="font-semibold mb-2">软件生态</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">板载 Python Runtime + MuJoCo 仿真 + RL 训练管线，duck_config.json 灵活配置</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 软件与强化学习 ============ -->
+<section class="relative py-20 bg-gray-50 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-sm text-cyan-600 font-semibold">SOFTWARE &amp; RL</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">仿真训练到真机行走，<span class="text-gradient">一条链路打通</span></h2>
+                <div class="space-y-5">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-flask"></i></div>
+                        <div>
+                            <h4 class="font-semibold">MuJoCo 仿真验证</h4>
+                            <p class="text-sm text-gray-500 mt-1">内置 URDF 模型与 Playground 环境，从 Onshape 设计到仿真的转换文档齐全，仿真零门槛。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-robot"></i></div>
+                        <div>
+                            <h4 class="font-semibold">预训练行走策略开箱即用</h4>
+                            <p class="text-sm text-gray-500 mt-1">仓库内置 ONNX 格式强化学习策略（BEST_WALK_ONNX），到手即可驱动行走，无需自行训练。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <h4 class="font-semibold">模仿学习 + Sim2Real</h4>
+                            <p class="text-sm text-gray-500 mt-1">提供参考动作生成流程与训练文档，配合 BAM 电机辨识提升仿真到真机的迁移效果。</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-gamepad"></i></div>
+                        <div>
+                            <h4 class="font-semibold">手柄即插即玩</h4>
+                            <p class="text-sm text-gray-500 mt-1">Xbox 蓝牙手柄遥控：启停、随机音效、触角控制、加速行走，演示与交互场景随手就来。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="rounded-3xl bg-gradient-to-br from-[#0B1120] to-[#1e1b4b] p-10 text-white shadow-2xl border border-indigo-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-grid-dark opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-6">
+                            <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            <span class="ml-3 text-xs text-slate-400 font-mono">python v2_rl_walk_mujoco.py</span>
+                        </div>
+                        <pre class="text-xs leading-relaxed text-cyan-200/90 font-mono overflow-x-auto"><code><span class="text-slate-500"># OpenDuck Mini Runtime</span>
+<span class="text-purple-300">from</span> runtime <span class="text-purple-300">import</span> Duck
+
+duck = Duck(<span class="text-emerald-300">config</span>=<span class="text-amber-300">'duck_config.json'</span>)
+duck.<span class="text-cyan-300">calibrate</span>()        <span class="text-slate-500"># 关节软偏移标定</span>
+duck.<span class="text-cyan-300">load_policy</span>(<span class="text-amber-300">'BEST_WALK_ONNX.onnx'</span>)
+duck.<span class="text-cyan-300">walk</span>()              <span class="text-slate-500"># 强化学习步态</span>
+duck.<span class="text-cyan-300">blink_eyes</span>(<span class="text-emerald-300">2</span>)  <span class="text-slate-500"># 表情交互 ✨</span></code></pre>
+                        <div class="mt-6 flex flex-wrap gap-3 text-[11px]">
+                            <span class="px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/20">Runtime Python</span>
+                            <span class="px-3 py-1 rounded-full bg-indigo-400/10 text-indigo-300 border border-indigo-400/20">ONNX 推理</span>
+                            <span class="px-3 py-1 rounded-full bg-emerald-400/10 text-emerald-300 border border-emerald-400/20">MuJoCo 仿真</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 定制服务 ============ -->
+<section class="relative z-10 py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">CUSTOMIZATION</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">三种定制方式，<span class="text-gradient">总有一种适合你</span></h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">万物拟态提供从整机交付到联合研发的完整定制服务体系</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="rounded-2xl border border-gray-100 p-8 shadow-sm card-hover bg-white">
+                <span class="tag tag-duck mb-4">标准版</span>
+                <h3 class="text-xl font-bold mb-3">整机即开即用</h3>
+                <p class="text-sm text-gray-500 mb-6">全装配整机交付，含预训练行走策略，开箱即可遥控行走，适合课程演示与兴趣体验。</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>全装配整机 + 电池电源套装</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>预装 Runtime 与行走策略</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Xbox 手柄 + 使用指南</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>免费开源资料与社群支持</li>
+                </ul>
+            </div>
+            <div class="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 text-white p-8 shadow-xl card-hover relative overflow-hidden">
+                <div class="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold rounded-bl-2xl">最受欢迎</div>
+                <span class="tag tag-custom mb-4">外观定制版</span>
+                <h3 class="text-xl font-bold mb-3">校园 IP 定制</h3>
+                <p class="text-sm text-slate-300 mb-6">融入学校 Logo、吉祥物、校庆元素的外壳定制，打造校园专属的 AI 形象大使。</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>外壳配色 / 涂装 / 校徽定制</li>
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>定制吉祥物造型头部</li>
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>校庆 / 活动主题皮肤</li>
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>批量定制（班级 / 社团套件）</li>
+                </ul>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-8 shadow-sm card-hover bg-white">
+                <span class="tag tag-duck mb-4">深度开发版</span>
+                <h3 class="text-xl font-bold mb-3">联合研发定制</h3>
+                <p class="text-sm text-gray-500 mb-6">面向高校实验室与科研团队的联合研发，从硬件到算法按需深度定制。</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>传感器 / 末端执行器加装</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>自定义步态与动作训练</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>配套教学课件与实验手册</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>联合论文发表与课题申报</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ 应用场景 ============ -->
+<section class="relative py-20 bg-gray-50 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">SCENARIOS</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">从课堂到实验室，<span class="text-gradient">无处不在</span></h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3 class="font-bold mb-2">高校课程教学</h3>
+                <p class="text-sm text-gray-500">覆盖机器人学、运动控制、嵌入式、强化学习的全链条实训载体，理论到真机一以贯之。</p>
+            </div>
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-flask"></i></div>
+                <h3 class="font-bold mb-2">科研验证</h3>
+                <p class="text-sm text-gray-500">低成本双足平台，适合步态控制、Sim2Real、模仿学习等方向的快速迭代验证。</p>
+            </div>
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-tools"></i></div>
+                <h3 class="font-bold mb-2">创客教育</h3>
+                <p class="text-sm text-gray-500">从零组装到二次开发，开源 BOM 与装配指南，培养动手能力与工程思维。</p>
+            </div>
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-flag-checkered"></i></div>
+                <h3 class="font-bold mb-2">竞赛与活动</h3>
+                <p class="text-sm text-gray-500">校园科技节、开放日、迎新典礼的互动明星，定制外观让机器人成为校园 IP。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="relative z-10 py-20">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="rounded-3xl bg-gradient-to-r from-[#0B1120] to-[#1e1b4b] text-white p-12 relative overflow-hidden">
+            <div class="absolute inset-0 bg-grid-dark opacity-50"></div>
+            <div class="absolute -top-20 -right-20 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold">让这台机器人，<span class="text-gradient-cyan">成为你的样子</span></h2>
+                <p class="mt-4 text-slate-300 max-w-xl mx-auto">无论是校园 IP 形象、教学实训平台，还是科研验证载体，OpenDuck Mini 都可以按你的想法定制。</p>
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <a href="../contact.html" class="inline-flex items-center px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all shadow-xl shadow-cyan-500/25 text-base">
+                        <i class="fas fa-paper-plane mr-2"></i>预约定制咨询
+                    </a>
+                    <a href="../opensource.html" class="inline-flex items-center px-8 py-3.5 border-2 border-white/20 text-white hover:bg-white/10 font-semibold rounded-xl transition-all text-base">
+                        <i class="fab fa-github mr-2"></i>探索开源社区
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="relative z-10 bg-gray-50 border-t border-gray-200 py-10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            <span class="text-xs text-gray-500">万物拟态 · 全栈式赋能高校职校拥抱 AI+机器人专业</span>
+        </div>
+        <div class="flex items-center gap-6 text-sm text-gray-500">
+            <a href="../about.html" class="hover:text-accent transition-colors">关于我们</a>
+            <a href="../contact.html" class="hover:text-accent transition-colors">联系我们</a>
+            <a href="../disclaimer.html" class="hover:text-accent transition-colors">免责声明</a>
+            <a href="../privacy.html" class="hover:text-accent transition-colors">隐私政策</a>
+        </div>
+        <div class="text-xs text-gray-400">© 2026 wwntAI.com · 万物拟态</div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -68,6 +68,7 @@
                 <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">产品 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
                 <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                     <a href="products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人</a>
+                    <a href="products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
                     <a href="products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
                     <a href="products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手</a>
                     <a href="products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald text-xs"></i>多功能实训平台</a>
@@ -106,6 +107,7 @@
     <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
         <a href="index.html" class="block py-3 text-accent font-medium">首页</a>
         <a href="products/robots.html" class="block py-3 text-gray-700">具身智能机器人</a>
+        <a href="products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
         <a href="products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
         <a href="products/dexterous-hand.html" class="block py-3 text-gray-700">灵巧手</a>
         <a href="products/embedded-platform.html" class="block py-3 text-gray-700">多功能实训平台</a>
@@ -262,10 +264,10 @@
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
             <span class="tag tag-claw mb-4">PRODUCT ARRAYS</span>
-            <h2 class="text-3xl md:text-4xl font-bold mt-4">五大产品阵列</h2>
+            <h2 class="text-3xl md:text-4xl font-bold mt-4">六大产品阵列</h2>
             <p class="mt-3 text-gray-400">从硬件到软件，从课堂到实验室，覆盖高校AI教育全场景</p>
         </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
             <!-- 阵列一：具身智能机器人 -->
             <div class="card-hover bg-card border border-border rounded-2xl p-6 group">
                 <div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-colors">
@@ -385,6 +387,26 @@
                     了解产品 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                 </div>
             </a>
+            <!-- 阵列六：OpenDuck Mini -->
+            <a href="products/openduck-mini.html" class="card-hover block bg-card border border-cyan-200 rounded-2xl p-6 group cursor-pointer">
+                <div class="w-14 h-14 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 transition-colors">
+                    <i class="fas fa-robot text-2xl text-cyan-600"></i>
+                </div>
+                <span class="text-xs px-2.5 py-1 bg-cyan-100/50 rounded-full font-semibold text-cyan-600 border border-cyan-200 mb-3 inline-block">阵列六</span>
+                <h3 class="text-xl font-bold mt-3 mb-3">OpenDuck Mini</h3>
+                <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                    全开源智能双足机器人，14+2 自由度灵动结构，支持外观与功能深度定制，覆盖机器人启蒙到强化学习全链路教学。
+                </p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="text-xs px-2 py-1 bg-gray-100/50 rounded text-gray-500">开源硬件</span>
+                    <span class="text-xs px-2 py-1 bg-gray-100/50 rounded text-gray-500">双足机器人</span>
+                    <span class="text-xs px-2 py-1 bg-gray-100/50 rounded text-gray-500">强化学习</span>
+                    <span class="text-xs px-2 py-1 bg-gray-100/50 rounded text-gray-500">支持定制</span>
+                </div>
+                <div class="flex items-center text-cyan-600 text-sm font-semibold">
+                    了解产品 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </div>
+            </a>
         </div>
     </div>
 </section>
@@ -393,7 +415,7 @@
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-14">
             <h2 class="text-3xl font-bold">高校应用场景</h2>
-            <p class="mt-3 text-gray-400">五大产品阵列协同，覆盖高校AI教育全链路</p>
+            <p class="mt-3 text-gray-400">六大产品阵列协同，覆盖高校AI教育全链路</p>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
@@ -446,13 +468,14 @@
                 <p class="text-sm leading-relaxed">总部：广州增城区</p>
             </div>
             <div>
-                <h4 class="text-white font-semibold mb-4">五大产品阵列</h4>
+                <h4 class="text-white font-semibold mb-4">六大产品阵列</h4>
                 <div class="space-y-2 text-sm">
                     <a href="products/robots.html" class="block hover:text-white transition-colors">具身智能机器人</a>
                     <a href="products/openarm.html" class="block hover:text-white transition-colors">OpenArm 开源机械臂</a>
                     <a href="products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">灵巧手</a>
                     <a href="products/embedded-platform.html" class="block hover:text-white transition-colors">多功能实训平台</a>
                     <a href="products/yanshi-ai.html" class="block hover:text-white transition-colors">炎书AI</a>
+                    <a href="products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
                 </div>
             </div>
             <div>
