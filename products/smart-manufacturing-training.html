@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>具身智能机器人 - wwntAI.com | x 高擎动力战略合作</title>
+    <meta name="description" content="wwntAI与高擎动力战略合作，提供Mini Pi高性能双足机器人、Panthera-HT开源机械臂及全套核心零部件，面向高校机器人教育。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',secondary:'#f8fafc',accent:'#2563eb',card:'#ffffff',border:'#e2e8f0',
+                        light: '#3b82f6',
+                        warm: '#d97706',
+                        accent2: '#7c3aed',
+                        dark: '#0F172A',
+                        muted: '#64748B'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}</script>
+    <style>
+        .bg-grid{background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:40px 40px}
+        .glass{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,.08)}
+        .card-hover{transition:all .35s cubic-bezier(.4,0,.2,1)}
+        .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(37,99,235,.08)}
+        .text-gradient{background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .spec-table td{border-bottom:1px solid #e2e8f0;padding:10px 0}
+        .spec-table td:first-child{color:#64748b;width:160px}
+.hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(37,99,235,.06) 0%,transparent 70%)}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+.tag-robot{background:rgba(37,99,235,.08);color:#2563eb;border:1px solid rgba(37,99,235,.20)}
+.tag-course{background:rgba(124,58,237,.08);color:#7c3aed;border:1px solid rgba(124,58,237,.20)}
+.tag-claw{background:rgba(217,119,6,.08);color:#d97706;border:1px solid rgba(217,119,6,.20)}
+.tag-embedded{background:rgba(5,150,105,.08);color:#059669;border:1px solid rgba(5,150,105,.20)}</style>
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<div id="particles-js" class="fixed inset-0 z-0 pointer-events-none"></div>
+<div class="fixed inset-0 bg-grid z-0 opacity-30 pointer-events-none"></div>
+
+<!-- Navigation -->
+
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+
+        <a href="../index.html" class="flex flex-col shrink-0">
+
+            <div class="flex items-center space-x-3">
+
+                <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+
+            </div>
+
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">万物拟态 | 全栈式赋能高校职校拥抱 <strong>AI+机器人</strong>专业</span>
+
+        </a>
+
+        <div class="hidden lg:flex items-center space-x-1">
+
+            <a href="../index.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">首页</a>
+
+            <div class="group relative">
+
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">产品 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+
+                <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+
+                    <a href="../products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人</a>
+                    <a href="../products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+
+                    <a href="../products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+
+                    <a href="../products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手</a>
+
+                    <a href="../products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>多功能实训平台</a>
+<a href="../products/smart-manufacturing-training.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>智能制造实训系统</a>
+<a href="../products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI纪念品</a>
+
+                </div>
+
+            </div>
+
+            <div class="group relative">
+                <a href="../courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">课程 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+<a href="../courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人课程</a>
+                    <a href="../courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini 课程</a>
+                    <a href="../courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm 机械臂课程</a>
+                    <a href="../courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手课程</a>
+                    <a href="../courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI实训箱课程</a>
+                    <a href="../products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>炎书AI</a>
+                </div>
+            </div>
+
+            <div class="group relative">
+                <a href="../solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">高校合作 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="../solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>教育方案</a>
+                    <a href="../solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>产教研合作</a>
+                </div>
+            </div>
+
+            
+
+            <a href="../news.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">新闻动态</a><a href="../opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">开源社区</a><a href="https://wwnt.ai" target="_blank" class="px-3 py-1.5 ml-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors">国际站</a>
+
+        </div>
+
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center px-4 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span>炎书AI</span>
+                <span class="text-[10px] font-normal opacity-90">建课系统</span>
+            </a>
+            <a href="../contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">预约演示</a>
+        </div>
+
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+
+    </div>
+
+    <!-- Mobile Menu -->
+
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+
+        <a href="../index.html" class="block py-3 text-accent font-medium">首页</a>
+
+        <a href="../products/robots.html" class="block py-3 text-gray-700">具身智能机器人</a>
+        <a href="../products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+
+        <a href="../products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+
+        <a href="../products/dexterous-hand.html" class="block py-3 text-gray-700">灵巧手</a>
+
+        <a href="../products/embedded-platform.html" class="block py-3 text-gray-700">多功能实训平台</a>
+<a href="../products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>智能制造实训系统</a>
+        <a href="../products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI纪念品</a>
+
+                <a href="../courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>课程</a>
+        <a href="../courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人课程</a>
+        <a href="../courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini 课程</a>
+        <a href="../courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm 机械臂课程</a>
+        <a href="../courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>灵巧手课程</a>
+        <a href="../courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI实训箱课程</a>
+        <a href="../products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>炎书AI</a>
+
+
+                <a href="../solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>高校合作</a>
+        <a href="../solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>教育方案</a>
+        <a href="../solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>产教研合作</a>
+
+        
+
+        <a href="../news.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-newspaper mr-2 text-accent text-xs"></i>新闻动态</a><a href="../opensource.html" class="block py-3 text-gray-700">开源社区</a><a href="https://wwnt.ai" target="_blank" class="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors">国际站</a>
+
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>炎书AI · 建课系统</a>
+        <a href="../contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">预约演示</a>
+
+    </div>
+
+</nav>
+
+
+<header class="relative z-10 pt-32 pb-16 hero-glow">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-4 flex-wrap">
+            <span class="px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full">智能实训系统</span>
+            <span class="ml-2 px-3 py-1 bg-yellow-50 text-yellow-700 text-xs rounded-full border border-yellow-200">【14 款教学实训设备全品类】</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight">智能制造 <span class="text-gradient">实训系统</span></h1>
+        <p class="mt-6 text-lg text-gray-600 max-w-2xl leading-relaxed">覆盖机电一体化、工业机器人、数字孪生、具身智能四大实训室场景，从基础模块化拆装实训到整线级数字孪生产线，一站式赋能高校智能制造专业建设。</p>
+        <div class="mt-8 flex flex-wrap gap-4">
+            <a href="../contact.html" class="inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-semibold rounded-xl transition-all shadow-xl hover:shadow-2xl ring-2 ring-blue-400/30 text-base">
+                <i class="fas fa-calendar-alt mr-2"></i>预约演示
+            </a>
+        </div>
+    </div>
+</header>
+
+<section class="relative z-10 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="tag tag-robot mb-4">SMART MANUFACTURING</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-4">产品总览</h2>
+            <p class="mt-3 text-gray-500">14 款产品按实训室场景划分为四大类</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-industry text-accent text-xl"></i></div>
+                <h3 class="font-bold mb-1">机电一体化实训室</h3>
+                <p class="text-xs text-gray-500">模块化教学平台 · 9 款</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+                <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-robot text-purple-500 text-xl"></i></div>
+                <h3 class="font-bold mb-1">工业机器人实训室</h3>
+                <p class="text-xs text-gray-500">机器人工作站 · 3 款</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+                <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-cubes text-emerald-600 text-xl"></i></div>
+                <h3 class="font-bold mb-1">数字孪生实验室</h3>
+                <p class="text-xs text-gray-500">智能制造产线 · 1 款</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+                <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center mx-auto mb-3"><i class="fas fa-eye text-amber-600 text-xl"></i></div>
+                <h3 class="font-bold mb-1">具身智能实训室</h3>
+                <p class="text-xs text-gray-500">视觉工作站 · 1 款</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="relative z-10 py-16 bg-gray-50/60">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8"><i class="fas fa-industry mr-2 text-accent"></i>机电一体化实训室 · 模块化教学平台</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">三轴运动模块教学实训平台</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">模拟点胶机、激光切割、上下料搬运等典型工艺。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>西门子 1200 PLC + 三轴运动滑台；X/Y/Z 轴 1610 丝杆，步进电机 + 威纶通触摸屏，支持 MCD 虚拟调试。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">旋转码垛模块教学实训平台</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">呈现机械手物料搬运码垛应用场景。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>西门子 1200 PLC + 旋转码垛机构，典型 2 轴机械手系统，配电磁铁吸盘与减速机。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">四工位转盘教学实训平台</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">观察机械结构、伺服传动机构动作过程。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>西门子 1200 PLC + 四工位转盘（直径 340mm）+ 西门子 V90 伺服系统。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">凸轮输送模块教学实训平台</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">观察物料在凸轮机构上的输送过程。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>西门子 1200 PLC + 凸轮输送机构，含滚珠花键、槽型光电传感器。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">上升下降模块教学实训平台</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">观察机械结构、升降运动控制过程。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>西门子 1200 PLC + 上下升降机构（行程 50mm），步进电机 + 减速机驱动。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">皮带输送线模块教学实训平台</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">呈现变频器物料输送应用场景。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>西门子 1200 PLC + 皮带输送线 + 西门子 V20 变频器，典型变频调速系统。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">多功能 PLC 机电一体化教学平台（西门子）</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">PLC/触摸屏/变频器/运动控制综合实训与考核。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>S7-1214C 主机 + V20 变频器 + 昆仑通态触摸屏 + 信捷伺服双轴运动机构。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">多功能 PLC 机电一体化教学平台（三菱）</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">以三菱为主 PLC 的综合实训平台。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>FX5U-32MT 主机 + FR-D740 变频器 + 昆仑通态触摸屏 + 信捷伺服双轴运动机构。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">多功能 PLC 机电一体化教学平台（汇川）</h3>
+                <span class="tag tag-embedded">机电一体化实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">以汇川为主 PLC 的综合实训平台。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>H3U 主机 + MD310 变频器 + 昆仑通态触摸屏 + 信捷伺服双轴运动机构。</p>
+        </div>
+        </div>
+    </div>
+</section>
+
+<section class="relative z-10 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8"><i class="fas fa-robot mr-2 text-purple-500"></i>工业机器人操作与运维实训室 · 机器人工作站</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">协作机器人综合应用工作站</h3>
+                <span class="tag tag-embedded">工业机器人操作与运维实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">六自由度协作机器人综合实训：搬运、码垛、视觉、打磨、仓储。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>6 轴协作机械臂（负载 5kg，±0.01mm）；快换工具、3D 轨迹、码垛、视觉检测、立体仓库等 15 个功能单元。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">拆装机器人工作站</h3>
+                <span class="tag tag-embedded">工业机器人操作与运维实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">六轴机器人本体拆装与运维实训。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>六轴立式多关节机器人（负载 5kg）；7 寸示教盒；配套全套拆装工具与物料小车。</p>
+        </div>
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">ABB 机器人综合应用工作站</h3>
+                <span class="tag tag-embedded">工业机器人操作与运维实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">ABB 工业机器人综合应用实训。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>ABB 6 轴机器人（负载 ≥3kg，±0.01mm）；快换工具、视觉装配、码垛、输送线、RFID 等模块。</p>
+        </div>
+        </div>
+    </div>
+</section>
+
+<section class="relative z-10 py-16 bg-gray-50/60">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8"><i class="fas fa-cubes mr-2 text-emerald-600"></i>数字孪生智能实验室 · 智能制造产线</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">智能制造机器人产线</h3>
+                <span class="tag tag-embedded">数字孪生智能实验室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">整线级智能电子产品生产线 + 数字孪生 + 数据采集。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>≥5000×820×1650mm 产线；供料/分拣/组装/视觉/打标等 10 站 + 6 轴协作机器人；数字孪生 + 工业数据采集。</p>
+        </div>
+        </div>
+    </div>
+</section>
+
+<section class="relative z-10 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8"><i class="fas fa-eye mr-2 text-amber-600"></i>具身智能机器人实训室 · 视觉工作站</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card-hover bg-white rounded-2xl p-6 border border-gray-200 group">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+                <h3 class="text-lg font-bold leading-snug">桌面六轴机器人视觉工作站</h3>
+                <span class="tag tag-embedded">具身智能机器人实训室</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-relaxed mb-3">桌面级六轴机器人 + 3D 视觉 + 模拟实验模块。</p>
+            <p class="text-xs text-gray-500 leading-relaxed"><i class="fas fa-cog mr-1 text-accent/50"></i>6 轴桌面机器人（负载 1kg）；ARM 主控制器 + AI 加速；3D 视觉；井式供料/皮带/立库/码垛模块。</p>
+        </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="mb-4"><a href="../index.html"><img src="../assets/images/slogan-footer.png" alt="万物拟态 Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="text-sm leading-relaxed">总部：广州增城区</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">六大产品阵列</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="robots.html" class="block hover:text-white transition-colors">具身智能机器人</a>
+                    <a href="../products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
+                    <a href="openarm.html" class="block hover:text-white transition-colors">OpenArm 开源机械臂</a>
+                    <a href="dexterous-hand.html" class="block hover:text-purple-400 transition-colors">灵巧手</a>
+                    <a href="embedded-platform.html" class="block hover:text-white transition-colors">多功能实训平台</a>
+                    <a href="courses.html" class="block hover:text-white transition-colors">炎书AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">五大合作模式</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="../solutions/education.html#model0" class="block hover:text-white transition-colors">模式零：品牌共建</a>
+                    <a href="../solutions/education.html#model1" class="block hover:text-white transition-colors">模式一：产教融合实验室共建</a>
+                    <a href="../solutions/education.html#model2" class="block hover:text-white transition-colors">模式二：联合研究院共建</a>
+                    <a href="../solutions/education.html#model3" class="block hover:text-white transition-colors">模式三：校中厂 · 真实产线共建</a>
+                    <a href="../solutions/education.html#model4" class="block hover:text-white transition-colors">模式四：成果转化与市场化</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">联系我们</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="../contact.html" class="block hover:text-white transition-colors">预约演示</a>
+                    <a href="../opensource.html" class="block hover:text-white transition-colors">开源社区</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 py-6 border-t border-gray-700 flex flex-wrap justify-between text-xs text-gray-500">
+        <span>&copy; 广东省万物拟态机器人有限公司 All rights reserved. 备案号：<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="hover:text-gray-400">粤ICP备2025486997号-1</a></span>
+        <div class="flex space-x-4">
+            <a href="../privacy.html" class="hover:text-gray-400">隐私政策</a>
+            <a href="../disclaimer.html" class="hover:text-gray-400">免责声明</a>
+        </div>
+    </div>
+</footer>
+
+<script src="../assets/particles/particles.min.js"></script>
+<script>
+particlesJS("particles-js",{particles:{number:{value:30,density:{enable:!0,value_area:800}},color:{value:"#3b82f6"},opacity:{value:.12,random:!0},size:{value:2,random:!0},line_linked:{enable:!0,distance:150,color:"#3b82f6",opacity:.06,width:1},move:{enable:!0,speed:.6}}});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  var css='.slogan-snow-wrap{position:relative;display:inline-block}.slogan-snow-particle{position:absolute;border-radius:50%;pointer-events:none;animation:snowDrift var(--dur,3s) ease-in-out infinite;animation-delay:var(--delay,0s);opacity:0}@keyframes snowDrift{0%{transform:translateY(6px) translateX(0) scale(.35);opacity:0}12%{opacity:var(--op,.65)}45%{transform:translateY(-5px) translateX(var(--dx,8px)) scale(var(--sc,1));opacity:var(--op,.65)}80%{opacity:var(--op,.65)}100%{transform:translateY(-20px) translateX(var(--dx2,-6px)) scale(.18);opacity:0}}';
+  if(!document.getElementById('snow-particle-style')){
+    var s=document.createElement('style');s.id='snow-particle-style';s.textContent=css;document.head.appendChild(s);
+  }
+  setTimeout(function(){
+    document.querySelectorAll('.slogan-snow-wrap').forEach(function(c){
+      if(c.querySelector('.slogan-snow-particle'))return;
+      var r=c.getBoundingClientRect(),w=r.width||280,h=r.height||32;
+      for(var i=0;i<18;i++){
+        var p=document.createElement('span');p.className='slogan-snow-particle';
+        var sz=2+Math.random()*3;
+        p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*w)+'px;bottom:'+(Math.random()*h*.5)+'px;--dur:'+(2.2+Math.random()*3)+'s;--delay:'+(Math.random()*3.5)+'s;--dx:'+(-10+Math.random()*20)+'px;--dx2:'+(-8+Math.random()*16)+'px;--sc:'+(.45+Math.random()*.75)+';--op:'+(.35+Math.random()*.5)+';background:rgba(255,255,255,'+(.4+Math.random()*.45)+')';
+        c.appendChild(p);
+      }
+    });
+  },400);
+})();
+</script>
+</body>
+</html>
