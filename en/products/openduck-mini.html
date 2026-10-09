@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenDuck Mini - wwntAI.com | Open-source Bipedal Robot</title>
+    <meta name="description" content="OpenDuck Mini 开源仿生双足机器人：约42cm、14+2自由度、树莓派强化学习驱动，35+件3D打印件外观随心定制。万物拟态提供整机装配、外观定制与深度开发服务。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',secondary:'#f8fafc',accent:'#2563eb',card:'#ffffff',border:'#e2e8f0',
+                        light: '#3b82f6',
+                        warm: '#d97706',
+                        accent2: '#7c3aed',
+                        cyanx: '#06b6d4',
+                        dark: '#0F172A',
+                        muted: '#64748B'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}</script>
+    <style>
+        .bg-grid{background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:40px 40px}
+        .bg-grid-dark{background-image:linear-gradient(rgba(148,163,184,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.07) 1px,transparent 1px);background-size:42px 42px}
+        .glass{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,.08)}
+        .card-hover{transition:all .35s cubic-bezier(.4,0,.2,1)}
+        .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(6,182,212,.10)}
+        .text-gradient{background:linear-gradient(135deg,#2563eb,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .text-gradient-cyan{background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .spec-table td{border-bottom:1px solid #334155;padding:10px 0}
+        .spec-table td:first-child{color:#94a3b8;width:170px}
+        .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+        .tag-duck{background:rgba(6,182,212,.12);color:#06b6d4;border:1px solid rgba(6,182,212,.30)}
+        .tag-custom{background:rgba(129,140,248,.12);color:#818cf8;border:1px solid rgba(129,140,248,.30)}
+        .hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(34,211,238,.18) 0%,transparent 65%)}
+        .neon-ring{box-shadow:0 0 0 1px rgba(34,211,238,.25),0 0 40px rgba(34,211,238,.15),0 25px 60px rgba(0,0,0,.45)}
+        .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-size:.8rem;font-weight:500;border:1px solid rgba(34,211,238,.25);background:rgba(15,23,42,.6);color:#a5f3fc}
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<div id="particles-js" class="fixed inset-0 z-0 pointer-events-none"></div>
+<div class="fixed inset-0 bg-grid z-0 opacity-30 pointer-events-none"></div>
+
+<!-- Navigation -->
+
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">WWNT Robotics | Empowering Universities &amp; Vocational Schools to Embrace <strong>AI + Robotics</strong></span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="index.html" class="px-4 py-2 text-accent text-sm font-medium">Home</a>
+            <div class="group relative">
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Products <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+                    <a href="products/unitree-robot-dog.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+                    <a href="products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald text-xs"></i>Training Platform</a>
+                    <a href="products/smart-manufacturing-training.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+                    <a href="products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Courses <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+                    <a href="courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+                    <a href="courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+                    <a href="courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+                    <a href="courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+                    <a href="products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Partnerships <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+                    <a href="solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+                </div>
+            </div>
+            <a href="news.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">News</a>
+            <a href="opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Open Source</a><a href="../index.html" class="px-3 py-1.5 ml-1 border border-gray-300 hover:border-accent hover:text-accent text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center justify-center text-center px-7 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span class="leading-tight">Yanshu AI</span>
+                <span class="text-[10px] font-normal opacity-90 leading-tight">Course Builder</span>
+            </a>
+            <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">Request a Demo</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="index.html" class="block py-3 text-accent font-medium">Home</a>
+        <a href="products/robots.html" class="block py-3 text-gray-700">Embodied AI Robots</a>
+        <a href="products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+        <a href="products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+        <a href="products/unitree-robot-dog.html" class="block py-3 text-gray-700"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+        <a href="products/dexterous-hand.html" class="block py-3 text-gray-700">Dexterous Hand</a>
+        <a href="products/embedded-platform.html" class="block py-3 text-gray-700">Training Platform</a>
+        <a href="products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+        <a href="products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+        <a href="courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>Courses</a>
+        <a href="courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+        <a href="courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+        <a href="courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+        <a href="courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+        <a href="courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+        <a href="products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>Partnerships</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+        <a href="solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+        <a href="news.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-newspaper mr-2 text-accent text-xs"></i>News</a>
+        <a href="opensource.html" class="block py-3 text-gray-700">Open Source</a><a href="../index.html" class="inline-block mt-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>Yanshu AI · Course Builder</a>
+        <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">Request a Demo</a>
+    </div>
+</nav>
+
+
+
+<!-- ============ Hero (Dark Tech Style) ============ -->
+<header class="relative overflow-hidden bg-[#0B1120] text-white">
+    <div class="absolute inset-0 bg-grid-dark opacity-60"></div>
+    <div class="absolute inset-0 hero-glow"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-32 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-16">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Left text -->
+            <div>
+                <div class="flex flex-wrap items-center gap-2 mb-5">
+                    <span class="tag tag-duck">Open-source Bionic Bipedal Robot</span>
+                    <span class="tag tag-custom">Deep customization supported</span>
+                    <span class="px-3 py-1 bg-white/5 text-cyan-200 text-xs rounded-full border border-white/10">Apache-2.0 open source</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                    OpenDuck <span class="text-gradient-cyan">Mini</span>
+                </h1>
+                <p class="mt-3 text-sm md:text-base text-cyan-300/80 font-medium tracking-wide">v2 · An open-source bipedal robot replicating Disney BDX</p>
+                <p class="mt-6 text-lg text-slate-300 leading-relaxed">
+                    A charming ~42 cm bipedal robot with 14+2 whole-body joints, walking via Raspberry Pi reinforcement learning. All 35+ 3D-printed parts are open source —<span class="text-cyan-300 font-semibold">Appearance, colors, and functions — all defined by you</span>。
+                </p>
+                <div class="mt-6 flex flex-wrap gap-2">
+                    <span class="chip"><i class="fas fa-cube"></i>3D-printed appearance customization</span>
+                    <span class="chip"><i class="fas fa-code-branch"></i>Fully open-source and secondary-development friendly</span>
+                    <span class="chip"><i class="fas fa-gamepad"></i>Gamepad-controlled walking</span>
+                    <span class="chip"><i class="fas fa-eye"></i>Facial expression interaction system</span>
+                </div>
+                <div class="mt-9 flex flex-wrap gap-4">
+                    <a href="../contact.html" class="inline-flex items-center px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all shadow-xl shadow-cyan-500/20 hover:shadow-cyan-400/30 text-base">
+                        <i class="fas fa-palette mr-2"></i>Customization Inquiry
+                    </a>
+                    <a href="https://github.com/apirrone/Open_Duck_Mini" target="_blank" class="inline-flex items-center px-7 py-3.5 border-2 border-cyan-400/40 text-cyan-200 hover:bg-cyan-400/10 font-semibold rounded-xl transition-all text-base">
+                        <i class="fab fa-github mr-2"></i>Open-source Repository
+                    </a>
+                </div>
+            </div>
+            <!-- Right product image carousel -->
+            <div class="relative flex justify-center">
+                <div class="absolute inset-0 bg-gradient-to-b from-cyan-500/20 to-transparent rounded-full blur-3xl"></div>
+                <div class="relative w-72 md:w-96 neon-ring rounded-3xl overflow-hidden border border-cyan-400/20 bg-[#0B1120]" id="product-carousel">
+                    <div class="flex transition-transform duration-500 ease-out" id="carousel-track">
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-hero.jpg" alt="OpenDuck Mini open-source bipedal robot" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-gallery-1.jpg" alt="OpenDuck Mini front view" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-gallery-2.jpg" alt="OpenDuck Mini detail view" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-view-front-1.jpg" alt="OpenDuck Mini front full view" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-view-side-1.jpg" alt="OpenDuck Mini side view" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-view-front-2.jpg" alt="OpenDuck Mini front view 2" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-view-side-2.jpg" alt="OpenDuck Mini side view 2" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                        <div class="min-w-full flex items-center justify-center bg-[#0B1120]">
+                            <img src="../Assets/images/openduck/openduck-mini-view-front-3.jpg" alt="OpenDuck Mini front view 3" class="w-full h-auto object-cover" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+                    <!-- Arrows -->
+                    <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur transition-colors" aria-label="Previous">
+                        <i class="fas fa-chevron-left text-sm"></i>
+                    </button>
+                    <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur transition-colors" aria-label="Next">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                    <!-- Indicators -->
+                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+                        <button onclick="goToSlide(0)" class="carousel-dot w-2 h-2 rounded-full bg-white/80 transition-all" aria-label="Slide 1"></button>
+                        <button onclick="goToSlide(1)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="Slide 2"></button>
+                        <button onclick="goToSlide(2)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="Slide 3"></button>
+                        <button onclick="goToSlide(3)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="Slide 4"></button>
+                        <button onclick="goToSlide(4)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="Slide 5"></button>
+                        <button onclick="goToSlide(5)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="Slide 6"></button>
+                        <button onclick="goToSlide(6)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="Slide 7"></button>
+                        <button onclick="goToSlide(7)" class="carousel-dot w-2 h-2 rounded-full bg-white/40 transition-all" aria-label="Slide 8"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data bar -->
+        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">42cm</div>
+                <div class="mt-1 text-xs text-slate-400">Overall height</div>
+            </div>
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">14+2</div>
+                <div class="mt-1 text-xs text-slate-400">Whole-body DOF</div>
+            </div>
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">35+</div>
+                <div class="mt-1 text-xs text-slate-400">3D-printed parts</div>
+            </div>
+            <div class="rounded-2xl bg-white/5 border border-white/10 p-5 text-center backdrop-blur">
+                <div class="text-3xl font-bold text-cyan-300">100%</div>
+                <div class="mt-1 text-xs text-slate-400">Open-source & customizable</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ============ Why Choose (Customization) ============ -->
+<section class="relative z-10 py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">WHY OPENDUCK MINI</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">More than just a robot,<span class="text-gradient">it is a customizable open-source platform.</span></h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">From shell color to control algorithms, from teaching materials to research experiments — every layer of OpenDuck Mini is open to developers.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-palette"></i></div>
+                <h3 class="font-bold text-lg mb-2">Fully customizable appearance</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">35+ 3D-printed structural parts (PLA/TPU) — colors, finishes, and shell shapes can all be customized to create a one-of-a-kind campus IP robot.</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-code"></i></div>
+                <h3 class="font-bold text-lg mb-2">Fully open-source</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Mechanical CAD, BOM, on-board software, simulation environment, and RL policies are all open source (Apache-2.0), safe for commercial use.</p>
+            </div>
+            <div class="rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 text-white p-7 shadow-lg card-hover">
+                <div class="w-12 h-12 rounded-xl bg-cyan-400/20 text-cyan-300 flex items-center justify-center text-xl mb-4"><i class="fas fa-microchip"></i></div>
+                <h3 class="font-bold text-lg mb-2">Free functional expansion</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">Reserved camera, microphone, LED expression, and projection interfaces let you add sensors and voice interaction for research and teaching.</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-brain"></i></div>
+                <h3 class="font-bold text-lg mb-2">Real-robot RL deployment</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">MuJoCo simulation + ready-to-use RL walking policies, with imitation learning for training your own gait — the full Sim2Real pipeline.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Specifications ============ -->
+<section class="relative py-20 bg-[#0B1120] text-white overflow-hidden">
+    <div class="absolute inset-0 bg-grid-dark opacity-50"></div>
+    <div class="relative z-10 max-w-5xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="text-sm text-cyan-400 font-semibold tracking-wider">TECHNICAL SPECS</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">Specifications</h2>
+            <p class="mt-3 text-slate-400">OpenDuck Mini v2 core specifications at a glance</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-8 backdrop-blur">
+            <table class="w-full spec-table text-sm">
+                <tr><td>Overall height</td><td class="text-slate-200">~42 cm (legs extended)</td></tr>
+                <tr><td>Robot configuration</td><td class="text-slate-200">Bipedal bionic robot (inspired by Disney BDX)</td></tr>
+                <tr><td>Drive system</td><td class="text-slate-200">14× Feetech STS3215 bus servos + 2× SG90 micro servos (antennae)</td></tr>
+                <tr><td>Joint layout</td><td class="text-slate-200">5 DOF per leg (hip yaw/roll/pitch, knee, ankle); head pitch/yaw/roll + neck pitch; 2 antennae</td></tr>
+                <tr><td>Main controller</td><td class="text-slate-200">Raspberry Pi Zero 2W（4×Cortex-A53 @1GHz，512MB RAM）</td></tr>
+                <tr><td>Sensors</td><td class="text-slate-200">BNO055 9-axis IMU, foot contact switches, camera, microphone</td></tr>
+                <tr><td>Power</td><td class="text-slate-200">2S 18650 Li-ion battery pack (~7.4V) with BMS protection</td></tr>
+                <tr><td>Audio / display</td><td class="text-slate-200">MAX98357A I2S amplifier + speaker; dual-eye LED + projected expressions</td></tr>
+                <tr><td>Mechanical structure</td><td class="text-slate-200">35+ 3D-printed parts (PLA structural / TPU flexible), M3 heat-set inserts and bearings</td></tr>
+                <tr><td>Control method</td><td class="text-slate-200">Xbox controller (Bluetooth) with start/stop, acceleration, antennae, and random sound effects</td></tr>
+                <tr><td>Open-source license</td><td class="text-cyan-300 font-medium">Apache-2.0 (commercial use allowed)</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Technical Architecture ============ -->
+<section class="relative z-10 py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">ARCHITECTURE</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">A five-in-one technical architecture</h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">Mechanics · actuation · perception · compute · software — every layer is open and modifiable</p>
+        </div>
+        <div class="grid md:grid-cols-5 gap-5">
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-cubes"></i></div>
+                <h3 class="font-semibold mb-2">Mechanical structure</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">PLA structural parts + TPU flexible soles, complete Onshape CAD models, one-click reusable print parameters</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-cogs"></i></div>
+                <h3 class="font-semibold mb-2">Drive system</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">14 serial bus servos + 2 PWM antennae, joint soft-offset calibration tool, identifiable motor parameters</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-satellite-dish"></i></div>
+                <h3 class="font-semibold mb-2">Perception system</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">BNO055 9-axis IMU attitude sensing, foot contact switches, camera and microphone for expression expansion</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-microchip"></i></div>
+                <h3 class="font-semibold mb-2">On-board compute</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">Raspberry Pi Zero 2W running ONNX RL policies, GPIO directly driving LED / projection / antennae / foot switches</p>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-6 card-hover bg-white shadow-sm">
+                <div class="w-11 h-11 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center text-lg mb-3"><i class="fas fa-terminal"></i></div>
+                <h3 class="font-semibold mb-2">Software ecosystem</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">On-board Python runtime + MuJoCo simulation + RL training pipeline, flexibly configured via duck_config.json</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Software & RL ============ -->
+<section class="relative py-20 bg-gray-50 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-sm text-cyan-600 font-semibold">SOFTWARE &amp; RL</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6">From simulation to real-robot walking,<span class="text-gradient">one seamless pipeline.</span></h2>
+                <div class="space-y-5">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-flask"></i></div>
+                        <div>
+                            <h4 class="font-semibold">MuJoCo simulation validation</h4>
+                            <p class="text-sm text-gray-500 mt-1">Built-in URDF model and Playground environment with complete Onshape-to-simulation documentation — zero-barrier simulation.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-robot"></i></div>
+                        <div>
+                            <h4 class="font-semibold">Pre-trained walking policies out of the box</h4>
+                            <p class="text-sm text-gray-500 mt-1">The repository ships an ONNX RL policy (BEST_WALK_ONNX) — it walks right out of the box with no training required.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-graduation-cap"></i></div>
+                        <div>
+                            <h4 class="font-semibold">Imitation learning + Sim2Real</h4>
+                            <p class="text-sm text-gray-500 mt-1">Reference motion generation and training docs, plus BAM motor identification to improve sim-to-real transfer.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-gamepad"></i></div>
+                        <div>
+                            <h4 class="font-semibold">Plug-and-play controller</h4>
+                            <p class="text-sm text-gray-500 mt-1">Xbox Bluetooth control: start/stop, random sounds, antennae, and speed — ready for demos and interactive scenarios.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="rounded-3xl bg-gradient-to-br from-[#0B1120] to-[#1e1b4b] p-10 text-white shadow-2xl border border-indigo-500/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-grid-dark opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-6">
+                            <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                            <span class="ml-3 text-xs text-slate-400 font-mono">python v2_rl_walk_mujoco.py</span>
+                        </div>
+                        <pre class="text-xs leading-relaxed text-cyan-200/90 font-mono overflow-x-auto"><code><span class="text-slate-500"># OpenDuck Mini Runtime</span>
+<span class="text-purple-300">from</span> runtime <span class="text-purple-300">import</span> Duck
+
+duck = Duck(<span class="text-emerald-300">config</span>=<span class="text-amber-300">'duck_config.json'</span>)
+duck.<span class="text-cyan-300">calibrate</span>()        <span class="text-slate-500"># Joint soft-offset calibration</span>
+duck.<span class="text-cyan-300">load_policy</span>(<span class="text-amber-300">'BEST_WALK_ONNX.onnx'</span>)
+duck.<span class="text-cyan-300">walk</span>()              <span class="text-slate-500"># Reinforcement-learning gait</span>
+duck.<span class="text-cyan-300">blink_eyes</span>(<span class="text-emerald-300">2</span>)  <span class="text-slate-500"># Expression interaction ✨</span></code></pre>
+                        <div class="mt-6 flex flex-wrap gap-3 text-[11px]">
+                            <span class="px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-300 border border-cyan-400/20">Runtime Python</span>
+                            <span class="px-3 py-1 rounded-full bg-indigo-400/10 text-indigo-300 border border-indigo-400/20">ONNX inference</span>
+                            <span class="px-3 py-1 rounded-full bg-emerald-400/10 text-emerald-300 border border-emerald-400/20">MuJoCo simulation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Customization Services ============ -->
+<section class="relative z-10 py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">CUSTOMIZATION</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">Three customization options,<span class="text-gradient">one is right for you.</span></h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">WWNT Robotics offers a full customization service from turnkey delivery to joint R&D.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="rounded-2xl border border-gray-100 p-8 shadow-sm card-hover bg-white">
+                <span class="tag tag-duck mb-4">Standard Edition</span>
+                <h3 class="text-xl font-bold mb-3">Turnkey, ready out of the box</h3>
+                <p class="text-sm text-gray-500 mb-6">Fully assembled delivery with pre-trained walking policy — controllable right out of the box, ideal for course demos and hobby use.</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Fully assembled unit + battery power kit</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Preloaded runtime and walking policy</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Xbox controller + user guide</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Free open-source materials and community support</li>
+                </ul>
+            </div>
+            <div class="rounded-3xl bg-gradient-to-br from-slate-900 to-slate-800 text-white p-8 shadow-xl card-hover relative overflow-hidden">
+                <div class="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold rounded-bl-2xl">Most Popular</div>
+                <span class="tag tag-custom mb-4">Custom Appearance Edition</span>
+                <h3 class="text-xl font-bold mb-3">Campus IP customization</h3>
+                <p class="text-sm text-slate-300 mb-6">Shell customization incorporating school logos, mascots, and anniversary elements to create a campus-exclusive AI ambassador.</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>Shell color / finish / school-badge customization</li>
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>Custom mascot head design</li>
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>Anniversary / event-themed skins</li>
+                    <li class="flex items-start gap-2 text-slate-200"><i class="fas fa-check text-cyan-400 mt-1"></i>Batch customization (class / club kits)</li>
+                </ul>
+            </div>
+            <div class="rounded-2xl border border-gray-100 p-8 shadow-sm card-hover bg-white">
+                <span class="tag tag-duck mb-4">Deep Development Edition</span>
+                <h3 class="text-xl font-bold mb-3">Joint R&D customization</h3>
+                <p class="text-sm text-gray-500 mb-6">Joint R&D for university labs and research teams, with deep customization from hardware to algorithms.</p>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Sensor / end-effector add-ons</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Custom gait and motion training</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Teaching materials and lab manuals</li>
+                    <li class="flex items-start gap-2 text-gray-600"><i class="fas fa-check text-cyan-500 mt-1"></i>Joint papers and grant applications</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Application Scenarios ============ -->
+<section class="relative py-20 bg-gray-50 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">SCENARIOS</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">From classroom to lab,<span class="text-gradient">everywhere.</span></h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3 class="font-bold mb-2">University course teaching</h3>
+                <p class="text-sm text-gray-500">A full-chain training platform spanning robotics, motion control, embedded systems, and reinforcement learning — from theory to real robot.</p>
+            </div>
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-flask"></i></div>
+                <h3 class="font-bold mb-2">Research validation</h3>
+                <p class="text-sm text-gray-500">A low-cost bipedal platform for rapid iteration in gait control, Sim2Real, and imitation learning.</p>
+            </div>
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-tools"></i></div>
+                <h3 class="font-bold mb-2">Maker education</h3>
+                <p class="text-sm text-gray-500">From assembly to secondary development, with open BOM and assembly guides that build hands-on and engineering skills.</p>
+            </div>
+            <div class="rounded-2xl bg-white border border-gray-100 p-7 shadow-sm card-hover">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center text-xl mb-4"><i class="fas fa-flag-checkered"></i></div>
+                <h3 class="font-bold mb-2">Competitions and events</h3>
+                <p class="text-sm text-gray-500">The interactive star of campus tech festivals, open days, and welcome ceremonies — customized to become a campus IP.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Curriculum ============ -->
+<section class="relative py-20 bg-white overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14">
+            <span class="text-sm text-cyan-600 font-semibold tracking-wider">CURRICULUM</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-2">Companion Curriculum</h2>
+            <p class="mt-4 text-gray-500 max-w-2xl mx-auto">From embodied intelligence concepts to MuJoCo simulation, 16 systematic lessons covering the full bipedal robot pipeline</p>
+            <p class="mt-3 text-sm"><a href="../courses.html#openduck-courses" class="text-cyan-600 font-semibold hover:underline"><i class="fas fa-external-link-alt mr-1"></i>This is one of our curriculum modules · View the full curriculum</a></p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Module 1: Course Introduction -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center"><i class="fas fa-book-open"></i></div>
+                    <h3 class="text-lg font-bold">Module 1: Course Introduction</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-cyan-600 bg-cyan-50 px-2 py-1 rounded h-fit">01</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Course overview and schedule</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Overview of course objectives, knowledge map, learning path, and assessment.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-cyan-600 bg-cyan-50 px-2 py-1 rounded h-fit">02</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Synchronization software used in class</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Configure the dev environment, SSH remote connection, and file sync toolchain.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Module 2: Embodied Intelligence Fundamentals -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center"><i class="fas fa-brain"></i></div>
+                    <h3 class="text-lg font-bold">Module 2: Embodied Intelligence Fundamentals</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">03</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Defining embodied intelligence</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">From traditional AI to embodied intelligence: the closed loop of perception, decision, and action.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">04</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Control systems for embodied intelligence</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Layered control architecture: high-level task planning, mid-level motion control, low-level servo actuation.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">05</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Two approaches to robot motion control</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Model-based vs. learning-based control — comparison, use cases, and evolution.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Module 3: Bipedal Motion Control -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center"><i class="fas fa-running"></i></div>
+                    <h3 class="text-lg font-bold">Module 3: Bipedal Motion Control</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">06</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Center-of-mass projection</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">The geometric relationship among center of mass, support polygon, and static stability.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">07</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Introduction to the Capture Point</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">The linear inverted pendulum model and the physical meaning and calculation of the capture point.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">08</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Weight transfer between support foot and body</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Single/double support transitions, COM trajectory planning, and stability criteria.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">09</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Forward and inverse kinematics</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">DH parameter modeling, forward kinematics solving, and numerical inverse kinematics.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">10</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Swing-foot end-effector motion control</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Foot trajectory planning: constraints and interpolation across lift-off, swing, and touch-down phases.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">11</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Computing the swing-foot Capture Point</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Predicting swing-foot touch-down using COM velocity and position.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">12</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Analyzing the bipedal walking process</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">From state machine to gait cycle: decomposing the full bipedal walking control flow.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">13</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">A complete walkthrough of bipedal gait</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Engineering practice in parameter tuning, online debugging, and real-robot gait validation.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Module 4: MuJoCo Simulation -->
+            <div class="rounded-2xl border border-gray-100 bg-white p-7 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center"><i class="fas fa-cube"></i></div>
+                    <h3 class="text-lg font-bold">Module 4: MuJoCo Simulation</h3>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">14</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Introduction to MuJoCo</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">MuJoCo physics engine features, URDF/MJCF models, and contact models.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">15</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Command-line installation of MuJoCo</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Installing MuJoCo on Linux/Raspberry Pi and binding Python with dependencies.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">16</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">MuJoCo Hello World</h4>
+                            <p class="text-xs text-gray-500 mt-0.5">Load the OpenDuck Mini model, run the first simulation step, and visualize it.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-12 text-center">
+            <a href="../contact.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-500/20">
+                <i class="fas fa-play-circle mr-2"></i>Get the full syllabus and sample lessons
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="relative z-10 py-20">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="rounded-3xl bg-gradient-to-r from-[#0B1120] to-[#1e1b4b] text-white p-12 relative overflow-hidden">
+            <div class="absolute inset-0 bg-grid-dark opacity-50"></div>
+            <div class="absolute -top-20 -right-20 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-4xl font-bold">Let this robot<span class="text-gradient-cyan">become your own.</span></h2>
+                <p class="mt-4 text-slate-300 max-w-xl mx-auto">Whether a campus IP mascot, a teaching platform, or a research testbed, OpenDuck Mini can be customized to your vision.</p>
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <a href="../contact.html" class="inline-flex items-center px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all shadow-xl shadow-cyan-500/25 text-base">
+                        <i class="fas fa-paper-plane mr-2"></i>Book a Customization Consultation
+                    </a>
+                    <a href="../opensource.html" class="inline-flex items-center px-8 py-3.5 border-2 border-white/20 text-white hover:bg-white/10 font-semibold rounded-xl transition-all text-base">
+                        <i class="fab fa-github mr-2"></i>Explore the Open-source Community
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="mb-4"><a href="index.html"><img src="../../assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="text-sm leading-relaxed">Headquarters: Zengcheng District, Guangzhou</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Six Product Lines</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="products/robots.html" class="block hover:text-white transition-colors">Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block hover:text-white transition-colors">OpenArm Robotic Arm</a>
+                    <a href="products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block hover:text-white transition-colors">Training Platform</a>
+                    <a href="products/yanshi-ai.html" class="block hover:text-white transition-colors">Yanshu AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Five Partnership Models</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="solutions/education.html#model0" class="block hover:text-white transition-colors">Model 0: Brand Co-building</a>
+                    <a href="solutions/education.html#model1" class="block hover:text-white transition-colors">Model 1: Industry-Education Lab</a>
+                    <a href="solutions/education.html#model2" class="block hover:text-white transition-colors">Model 2: Joint Research Institute</a>
+                    <a href="solutions/education.html#model3" class="block hover:text-white transition-colors">Model 3: On-campus Factory</a>
+                    <a href="solutions/education.html#model4" class="block hover:text-white transition-colors">Model 4: Commercialization</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contact Us</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="contact.html" class="block hover:text-white transition-colors">Request a Demo</a>
+                    <a href="opensource.html" class="block hover:text-white transition-colors">Open Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 py-6 border-t border-gray-700 flex flex-wrap justify-between text-xs text-gray-500">
+        <span>&copy; Guangdong WWNT Robotics Co., Ltd. All rights reserved. <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="hover:text-gray-400">ICP: 粤ICP备2025486997号-1</a></span>
+        <div class="flex space-x-4">
+            <a href="privacy.html" class="hover:text-gray-400">Privacy Policy</a>
+            <a href="disclaimer.html" class="hover:text-gray-400">Disclaimer</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+let currentSlide = 0;
+const track = document.getElementById('carousel-track');
+const slides = track ? track.querySelectorAll(':scope > div') : [];
+const dots = document.querySelectorAll('.carousel-dot');
+function updateCarousel() {
+    if (!track) return;
+    track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    dots.forEach(function(dot, i) {
+        dot.classList.toggle('bg-white/80', i === currentSlide);
+        dot.classList.toggle('bg-white/40', i !== currentSlide);
+    });
+}
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateCarousel();
+}
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateCarousel();
+}
+function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+if (slides.length > 0) {
+    updateCarousel();
+    setInterval(nextSlide, 5000);
+}
+</script>
+
+</body>
+</html>
