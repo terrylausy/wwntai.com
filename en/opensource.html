@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source - wwntAI.com</title>
+    <meta name="description" content="wwntAI 开源社区 — 广东省万物拟态机器人股份有限公司官方开源组织。4个公开仓库覆盖灵巧手、双臂机械臂、人形机器人、仿真孪生工具，2个私有仓库承载成套教学资料与工业定制项目。">
+    <meta name="keywords" content="wwntAI,开源,GitHub,灵巧手,OpenArm,MiniPI,Sim2Real,数字孪生,机器人教育">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ffffff',
+                        secondary: '#f1f5f9',
+                        accent: '#2563eb',
+                        accent2: '#7C3AED',
+                        light: '#3b82f6',
+                        warm: '#d97706',
+                        card: '#ffffff',
+                        border: '#e2e8f0',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+                        display: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-grid{background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:40px 40px}
+        .glass{background:rgba(255,255,255,.9);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,.08)}
+        .card-hover{transition:all .35s cubic-bezier(.4,0,.2,1)}
+        .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(37,99,235,.10)}
+        .text-gradient{background:linear-gradient(135deg,#2563eb,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(37,99,235,.06) 0%,transparent 70%)}
+
+        .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+        .tag-robot{background:rgba(37,99,235,.08);color:#2563eb;border:1px solid rgba(37,99,235,.20)}
+        .tag-course{background:rgba(124,58,237,.08);color:#7c3aed;border:1px solid rgba(124,58,237,.20)}
+        .tag-claw{background:rgba(217,119,6,.08);color:#d97706;border:1px solid rgba(217,119,6,.20)}
+        .tag-embedded{background:rgba(5,150,105,.08);color:#059669;border:1px solid rgba(5,150,105,.20)}
+
+        .repo-card {
+            transition: all .35s cubic-bezier(.4,0,.2,1);
+            position: relative;
+            overflow: hidden;
+        }
+        .repo-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color, #2563eb), transparent);
+            opacity: 0;
+            transition: opacity .3s;
+        }
+        .repo-card:hover::before { opacity: 1; }
+        .repo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(37,99,235,.10);
+        }
+
+        .tag-os {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .03em;
+        }
+        .tag-gpl { background: rgba(37,99,235,.08); color: #2563eb; border: 1px solid rgba(37,99,235,.20); }
+        .tag-apache { background: rgba(5,150,105,.08); color: #059669; border: 1px solid rgba(5,150,105,.20); }
+        .tag-agpl { background: rgba(124,58,237,.08); color: #7c3aed; border: 1px solid rgba(124,58,237,.20); }
+        .tag-private { background: rgba(217,119,6,.08); color: #d97706; border: 1px solid rgba(217,119,6,.20); }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            animation: pulse-grow 2s ease-in-out infinite;
+        }
+        @keyframes pulse-grow {
+            0%, 100% { opacity: .4; transform: scale(.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .code-block {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .code-line { display: flex; align-items: center; }
+        .code-line .ln { color: #94a3b8; min-width: 28px; text-align: right; margin-right: 16px; user-select: none; }
+
+        .path-line {
+            position: relative;
+        }
+        .path-line::after {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 40px;
+            bottom: -16px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(37,99,235,.2), rgba(37,99,235,.05));
+        }
+        .path-line:last-child::after { display: none; }
+
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .license-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .feature-chip {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            background: rgba(37,99,235,.06);
+            color: #475569;
+            border: 1px solid rgba(37,99,235,.12);
+            margin: 2px;
+        }
+
+        .corner-deco {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: rgba(37,99,235,.2);
+        }
+        .corner-tl { top: 0; left: 0; border-top: 1px solid; border-left: 1px solid; }
+        .corner-tr { top: 0; right: 0; border-top: 1px solid; border-right: 1px solid; }
+        .corner-bl { bottom: 0; left: 0; border-bottom: 1px solid; border-left: 1px solid; }
+        .corner-br { bottom: 0; right: 0; border-bottom: 1px solid; border-right: 1px solid; }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(37,99,235,.15), transparent);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<div id="particles-js" class="fixed inset-0 z-0"></div>
+<div class="fixed inset-0 bg-grid z-0 opacity-40"></div>
+
+<!-- Navigation -->
+
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">WWNT Robotics | Empowering Universities &amp; Vocational Schools to Embrace <strong>AI + Robotics</strong></span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="index.html" class="px-4 py-2 text-accent text-sm font-medium">Home</a>
+            <div class="group relative">
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Products <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+                    <a href="products/unitree-robot-dog.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+                    <a href="products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald text-xs"></i>Training Platform</a>
+                    <a href="products/smart-manufacturing-training.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+                    <a href="products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Courses <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+                    <a href="courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+                    <a href="courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+                    <a href="courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+                    <a href="courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+                    <a href="products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Partnerships <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+                    <a href="solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+                </div>
+            </div>
+            <a href="news.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">News</a>
+            <a href="opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Open Source</a><a href="../index.html" class="px-3 py-1.5 ml-1 border border-gray-300 hover:border-accent hover:text-accent text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center justify-center text-center px-7 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span class="leading-tight">Yanshu AI</span>
+                <span class="text-[10px] font-normal opacity-90 leading-tight">Course Builder</span>
+            </a>
+            <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">Request a Demo</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="index.html" class="block py-3 text-accent font-medium">Home</a>
+        <a href="products/robots.html" class="block py-3 text-gray-700">Embodied AI Robots</a>
+        <a href="products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+        <a href="products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+        <a href="products/unitree-robot-dog.html" class="block py-3 text-gray-700"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+        <a href="products/dexterous-hand.html" class="block py-3 text-gray-700">Dexterous Hand</a>
+        <a href="products/embedded-platform.html" class="block py-3 text-gray-700">Training Platform</a>
+        <a href="products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+        <a href="products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+        <a href="courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>Courses</a>
+        <a href="courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+        <a href="courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+        <a href="courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+        <a href="courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+        <a href="courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+        <a href="products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>Partnerships</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+        <a href="solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+        <a href="news.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-newspaper mr-2 text-accent text-xs"></i>News</a>
+        <a href="opensource.html" class="block py-3 text-gray-700">Open Source</a><a href="../index.html" class="inline-block mt-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>Yanshu AI · Course Builder</a>
+        <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">Request a Demo</a>
+    </div>
+</nav>
+
+
+
+<!-- ==================== HERO ==================== -->
+<header class="relative z-10 pt-36 pb-20 hero-glow">
+    <div class="max-w-7xl mx-auto px-6 relative">
+        <div class="max-w-3xl">
+            <div class="inline-flex items-center space-x-2 mb-6 px-4 py-2 glass rounded-full">
+                <span class="pulse-dot bg-green-400"></span>
+                <span class="text-sm text-gray-600 font-mono">github.com/wwntAI</span>
+                <span class="text-xs text-gray-400">·</span>
+                <span class="text-sm text-accent font-mono">6 repositories</span>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+                <span class="text-gradient">Open Source Community</span>
+            </h1>
+            <p class="mt-3 text-lg text-gray-400 font-display tracking-wide">OPEN SOURCE COMMUNITY</p>
+
+            <p class="mt-6 text-base text-gray-600 leading-relaxed max-w-2xl">
+                The official and only open-source organization of Guangdong Wanwu Nita Robotics Co., Ltd.
+                <span class="text-accent font-semibold">4 public repositories</span>Free access to low-level SDKs, simulation demos, and algorithm projects.
+                <span class="text-warm font-semibold">2 private repositories</span>holding complete paid teaching materials and industrial customization projects. Hardware is fully decoupled, with public/private tiers covering teaching, competition, and research.
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-4">
+                <a href="https://github.com/wwntAI" target="_blank" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="px-7 py-3 text-white font-semibold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-600/25">
+                    <i class="fab fa-github"></i> Visit GitHub Org
+                </a>
+                <a href="#repos" class="px-7 py-3 glass hover:bg-gray-100/70 text-gray-700 font-semibold rounded-xl transition-all flex items-center gap-2">
+                    <i class="fas fa-layer-group"></i> Browse Repositories
+                </a>
+                <a href="#paths" class="px-7 py-3 glass hover:bg-gray-100/70 text-accent2 font-semibold rounded-xl transition-all flex items-center gap-2">
+                    <i class="fas fa-route"></i> Training Path
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-xl p-5 relative border border-gray-100 shadow-sm">
+                <div class="corner-deco corner-tl"></div>
+                <div class="corner-deco corner-br"></div>
+                <div class="stat-number text-3xl">6</div>
+                <div class="text-sm text-gray-500 mt-1">Total repositories</div>
+            </div>
+            <div class="bg-white rounded-xl p-5 relative border border-gray-100 shadow-sm">
+                <div class="corner-deco corner-tl"></div>
+                <div class="corner-deco corner-br"></div>
+                <div class="stat-number text-3xl">4</div>
+                <div class="text-sm text-gray-500 mt-1">Public Repositories</div>
+            </div>
+            <div class="bg-white rounded-xl p-5 relative border border-gray-100 shadow-sm">
+                <div class="corner-deco corner-tl"></div>
+                <div class="corner-deco corner-br"></div>
+                <div class="stat-number text-3xl">3</div>
+                <div class="text-sm text-gray-500 mt-1">License types</div>
+            </div>
+            <div class="bg-white rounded-xl p-5 relative border border-gray-100 shadow-sm">
+                <div class="corner-deco corner-tl"></div>
+                <div class="corner-deco corner-br"></div>
+                <div class="stat-number text-3xl">5</div>
+                <div class="text-sm text-gray-500 mt-1">Training deployment path</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="section-divider max-w-7xl mx-auto"></div>
+
+<!-- ==================== ARCHITECTURE OVERVIEW ==================== -->
+<section class="relative z-10 py-20" id="architecture">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 mb-3">
+                <span class="text-accent font-mono text-sm">01</span>
+                <span class="text-gray-300 text-xs">/</span>
+                <span class="text-gray-500 text-sm font-medium">ARCHITECTURE</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Repository Architecture Overview</h2>
+            <p class="mt-2 text-gray-500 text-sm">Hardware fully decoupled, public/private repos separated, flexible combination by need</p>
+        </div>
+
+        <!-- Architecture Diagram -->
+        <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm relative overflow-hidden">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Public Repos -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                            <i class="fas fa-globe text-accent text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-900 font-bold">Public Repositories</h3>
+                            <p class="text-xs text-gray-400">Accessible to all · free Clone/Fork/Star</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-gray-50 rounded-lg p-4 flex items-center gap-4 border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
+                            <i class="fas fa-hand-sparkles text-purple-500 text-lg w-6 text-center"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-900 font-medium">wwntAI_LinkerHand_Edu</div>
+                                <div class="text-xs text-gray-500">Dexterous hand standalone teaching SDK · simulation · teleoperation</div>
+                            </div>
+                            <span class="tag-os tag-apache">Apache 2.0</span>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4 flex items-center gap-4 border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
+                            <i class="fas fa-industry text-orange-500 text-lg w-6 text-center"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-900 font-medium">wwntAI_OpenArm_Edu</div>
+                                <div class="text-xs text-gray-500">Dual-arm teaching code · ROS2 · VLA</div>
+                            </div>
+                            <span class="tag-os tag-gpl">GPL-3.0</span>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4 flex items-center gap-4 border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
+                            <i class="fas fa-robot text-accent text-lg w-6 text-center"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-900 font-medium">wwntAI_MiniPI_Plus_Edu</div>
+                                <div class="text-xs text-gray-500">20-DOF humanoid full-stack code · Sim2Real</div>
+                            </div>
+                            <span class="tag-os tag-gpl">GPL-3.0</span>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4 flex items-center gap-4 border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors">
+                            <i class="fas fa-cube text-cyan-500 text-lg w-6 text-center"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-900 font-medium">wwntAI_Sim_Twin_Tools</div>
+                                <div class="text-xs text-gray-500">General Simulation · Digital Twin · Sim2Real Toolkit</div>
+                            </div>
+                            <span class="tag-os tag-agpl">AGPL-3.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Private Repos -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
+                            <i class="fas fa-lock text-warm text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-900 font-bold">Private Restricted Repositories</h3>
+                            <p class="text-xs text-gray-400">Open to authorized customers only · commercial confidentiality</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-gray-50 rounded-lg p-4 flex items-center gap-4 border border-gray-100 hover:border-amber-200 hover:bg-amber-50/30 transition-colors">
+                            <i class="fas fa-book text-warm text-lg w-6 text-center"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-900 font-medium">wwntAI_Course_Docs</div>
+                                <div class="text-xs text-gray-500">Full tiered course PPTs · lab guides · training lab plans</div>
+                            </div>
+                            <span class="tag-os tag-private">PRIVATE</span>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4 flex items-center gap-4 border border-gray-100 hover:border-amber-200 hover:bg-amber-50/30 transition-colors">
+                            <i class="fas fa-industry text-warm text-lg w-6 text-center"></i>
+                            <div class="flex-1">
+                                <div class="text-sm text-gray-900 font-medium">wwntAI_Industry_Project</div>
+                                <div class="text-xs text-gray-500">Industrial lines · custom labs · MES integration</div>
+                            </div>
+                            <span class="tag-os tag-private">PRIVATE</span>
+                        </div>
+                    </div>
+
+                    <!-- Terminal Mini -->
+                    <div class="mt-6 bg-gray-900 rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                            <span class="text-xs text-gray-500 ml-2 font-mono">terminal</span>
+                        </div>
+                        <div class="code-block text-gray-400">
+                            <div class="code-line"><span class="ln">1</span><span class="text-green-400">$</span> git clone https://github.com/wwntAI/wwntAI_OpenArm_Edu.git</div>
+                            <div class="code-line"><span class="ln">2</span><span class="text-gray-600">Cloning into 'wwntAI_OpenArm_Edu'...</span></div>
+                            <div class="code-line"><span class="ln">3</span><span class="text-blue-400">✓</span> <span class="text-gray-500">Repository cloned successfully</span></div>
+                            <div class="code-line"><span class="ln">4</span><span class="text-green-400">$</span> cd wwntAI_OpenArm_Edu && bash install_env.sh</div>
+                            <div class="code-line"><span class="ln">5</span><span class="text-cyan-400">→</span> <span class="text-gray-500">Setting up ROS2 environment...</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PUBLIC REPOS DETAIL ==================== -->
+<section class="relative z-10 py-20 bg-gray-50/60" id="repos">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 mb-3">
+                <span class="text-accent font-mono text-sm">02</span>
+                <span class="text-gray-300 text-xs">/</span>
+                <span class="text-gray-500 text-sm font-medium">PUBLIC REPOSITORIES</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Public Repository Details</h2>
+            <p class="mt-2 text-gray-500 text-sm">Low-level SDKs, simulation demos, and algorithm projects — barrier-free for global developers</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+
+            <!-- Repo 1: LinkerHand -->
+            <div class="repo-card bg-white rounded-2xl p-7 border border-gray-100 shadow-sm" style="--accent-color: #7c3aed;">
+                <div class="flex items-start justify-between mb-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center">
+                            <i class="fas fa-hand-sparkles text-purple-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-900 font-bold text-lg">wwntAI_LinkerHand_Edu</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">LinkerHand Bionic Dexterous Hand — Standalone Teaching</p>
+                        </div>
+                    </div>
+                    <span class="license-badge bg-green-50 text-green-600 border border-green-200">
+                        <i class="fas fa-balance-scale text-[10px]"></i> Apache 2.0
+                    </span>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                    Fully deployable and teachable independent of the robotic arm. Aligned with the upstream linker-bot ecosystem; low-level drivers under Apache 2.0, freely modifiable for commercial use.
+                </p>
+                <div class="flex flex-wrap mb-5">
+                    <span class="feature-chip">CAN/C++/Python SDK</span>
+                    <span class="feature-chip">ROS2 full-stack</span>
+                    <span class="feature-chip">Isaac hand simulation</span>
+                    <span class="feature-chip">Desktop vision grasping</span>
+                    <span class="feature-chip">Motion-capture glove / VR teleoperation</span>
+                    <span class="feature-chip">Multimodal dataset collection</span>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span class="text-xs text-gray-400"><i class="fas fa-link mr-1"></i> Website → Hardware → LinkerHand standalone desktop dexterous hand training kit</span>
+                    <a href="https://github.com/wwntAI/wwntAI_LinkerHand_Edu" target="_blank" class="text-purple-500 hover:text-purple-600 text-sm font-semibold flex items-center gap-1.5 transition-colors">
+                        <i class="fab fa-github"></i> Repository <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Repo 2: OpenArm -->
+            <div class="repo-card bg-white rounded-2xl p-7 border border-gray-100 shadow-sm" style="--accent-color: #f97316;">
+                <div class="flex items-start justify-between mb-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center">
+                            <i class="fas fa-industry text-orange-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-900 font-bold text-lg">wwntAI_OpenArm_Edu</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">OpenArm Dual-arm Teaching</p>
+                        </div>
+                    </div>
+                    <span class="license-badge bg-blue-50 text-blue-600 border border-blue-200">
+                        <i class="fas fa-balance-scale text-[10px]"></i> GPL-3.0
+                    </span>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                    The bare standard gripper completes all required courses; the dexterous hand is an optional add-on. Unrestricted for on-campus use; commercial derivatives must fully open-source their code.
+                </p>
+                <div class="flex flex-wrap mb-5">
+                    <span class="feature-chip">Full-body motion library</span>
+                    <span class="feature-chip">ROS2 MoveIt2 motion planning</span>
+                    <span class="feature-chip">Stereo AI defect inspection</span>
+                    <span class="feature-chip">Web digital twin</span>
+                    <span class="feature-chip">Voice LLM control</span>
+                    <span class="feature-chip">Isaac Sim2Real RL</span>
+                    <span class="feature-chip">Optional_LinkerHand extension</span>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span class="text-xs text-gray-400"><i class="fas fa-link mr-1"></i> Website → Hardware → OpenArm Standard / Waist-Neck Edition</span>
+                    <a href="https://github.com/wwntAI/wwntAI_OpenArm_Edu" target="_blank" class="text-orange-500 hover:text-orange-600 text-sm font-semibold flex items-center gap-1.5 transition-colors">
+                        <i class="fab fa-github"></i> Repository <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Repo 3: MiniPI Plus -->
+            <div class="repo-card bg-white rounded-2xl p-7 border border-gray-100 shadow-sm" style="--accent-color: #2563eb;">
+                <div class="flex items-start justify-between mb-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                            <i class="fas fa-robot text-accent text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-900 font-bold text-lg">wwntAI_MiniPI_Plus_Edu</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">Mini Pi Plus 20-DOF Humanoid Full-stack</p>
+                        </div>
+                    </div>
+                    <span class="license-badge bg-blue-50 text-blue-600 border border-blue-200">
+                        <i class="fas fa-balance-scale text-[10px]"></i> GPL-3.0
+                    </span>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                    A 20-DOF humanoid with eight fully independent core teaching modules — an embodied intelligence research platform for undergraduate theses, graduate projects, and innovation competitions.
+                </p>
+                <div class="flex flex-wrap mb-5">
+                    <span class="feature-chip">Full-body motion library</span>
+                    <span class="feature-chip">Isaac humanoid simulation</span>
+                    <span class="feature-chip">Sim2Real transfer</span>
+                    <span class="feature-chip">Offline speech ASR/TTS</span>
+                    <span class="feature-chip">LLM voice command control</span>
+                    <span class="feature-chip">Human pose digital twin</span>
+                    <span class="feature-chip">Compliant drag teaching</span>
+                    <span class="feature-chip">VLA end-to-end grasping</span>
+                    <span class="feature-chip">Optional_Dex_Hand extension</span>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span class="text-xs text-gray-400"><i class="fas fa-link mr-1"></i> Website → Hardware → Mini Pi Plus humanoid</span>
+                    <a href="https://github.com/wwntAI/wwntAI_MiniPI_Plus_Edu" target="_blank" class="text-accent hover:text-blue-700 text-sm font-semibold flex items-center gap-1.5 transition-colors">
+                        <i class="fab fa-github"></i> Repository <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Repo 4: Sim Twin Tools -->
+            <div class="repo-card bg-white rounded-2xl p-7 border border-gray-100 shadow-sm" style="--accent-color: #06b6d4;">
+                <div class="flex items-start justify-between mb-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-50 flex items-center justify-center">
+                            <i class="fas fa-cube text-cyan-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gray-900 font-bold text-lg">wwntAI_Sim_Twin_Tools</h3>
+                            <p class="text-xs text-gray-400 mt-0.5">General Simulation · Digital Twin · Sim2Real Toolkit</p>
+                        </div>
+                    </div>
+                    <span class="license-badge bg-purple-50 text-purple-600 border border-purple-200">
+                        <i class="fas fa-balance-scale text-[10px]"></i> AGPL-3.0
+                    </span>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                    Common tools across all product lines with no hardware coupling. Unrestricted local offline use; providing services via web/cloud requires fully open-sourcing the code.
+                </p>
+                <div class="flex flex-wrap mb-5">
+                    <span class="feature-chip">Isaac Lab watermark-free recording</span>
+                    <span class="feature-chip">Web digital twin frontend/backend</span>
+                    <span class="feature-chip">ONNX/TensorRT/RKNN conversion</span>
+                    <span class="feature-chip">Pose retargeting algorithms</span>
+                    <span class="feature-chip">Unified ROS message packages</span>
+                    <span class="feature-chip">Audio denoising tools</span>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span class="text-xs text-gray-400"><i class="fas fa-link mr-1"></i> Website → Capabilities → Simulation / Digital Twin / Sim2Real</span>
+                    <a href="https://github.com/wwntAI/wwntAI_Sim_Twin_Tools" target="_blank" class="text-cyan-500 hover:text-cyan-600 text-sm font-semibold flex items-center gap-1.5 transition-colors">
+                        <i class="fab fa-github"></i> Repository <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PRIVATE REPOS ==================== -->
+<section class="relative z-10 py-20" id="private-repos">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 mb-3">
+                <span class="text-warm font-mono text-sm">03</span>
+                <span class="text-gray-300 text-xs">/</span>
+                <span class="text-gray-500 text-sm font-medium">PRIVATE REPOSITORIES</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Private Restricted Repositories</h2>
+            <p class="mt-2 text-gray-500 text-sm">Access granted after hardware purchase + school-enterprise agreement + business review</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+            <!-- Course Docs -->
+            <div class="bg-white rounded-2xl p-7 border border-gray-100 shadow-sm relative overflow-hidden card-hover">
+                <div class="flex items-start gap-4 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
+                        <i class="fas fa-book-reader text-warm text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-gray-900 font-bold text-lg">wwntAI_Course_Docs</h3>
+                            <span class="tag-os tag-private">PRIVATE</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-0.5">Full tiered teaching materials · lab construction plans · school-enterprise documents</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed mb-5">
+                    Four independent course packages, each mapped to open-source code repos with fully decoupled hardware. Institutions can purchase hardware and obtain documents separately.
+                </p>
+
+                <!-- Course tree -->
+                <div class="bg-gray-50 rounded-xl p-4 mb-5 code-block text-gray-600 border border-gray-100">
+                    <div>📁 OpenArm dual-arm course system/</div>
+                    <div>📁 MiniPi humanoid course system/</div>
+                    <div>📁 LinkerHand dexterous hand course system/</div>
+                    <div>📁 OpenEmbeddy multi-functional AI training kit course system/</div>
+                    <div>📁 School-enterprise cooperation documents/</div>
+                    <div>📁 Commercial marketing materials/</div>
+                </div>
+
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span class="text-xs text-gray-400"><i class="fas fa-link mr-1"></i> Website → Teaching Services → Tiered Curriculum</span>
+                    <a href="https://github.com/wwntAI/wwntAI_Course_Docs" target="_blank" class="text-warm hover:text-amber-600 text-sm font-semibold flex items-center gap-1.5 transition-colors">
+                        <i class="fas fa-lock"></i> Authorization required <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Industry Project -->
+            <div class="bg-white rounded-2xl p-7 border border-gray-100 shadow-sm relative overflow-hidden card-hover">
+                <div class="flex items-start gap-4 mb-5">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
+                        <i class="fas fa-project-diagram text-warm text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3">
+                            <h3 class="text-gray-900 font-bold text-lg">wwntAI_Industry_Project</h3>
+                            <span class="tag-os tag-private">PRIVATE</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-0.5">Industrial automation lines · custom lab commercial projects</p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 leading-relaxed mb-5">
+                    Subdirectories fully isolated and independent, holding on-site debugging code, factory MES integration, custom AI defect-detection models, and acceptance documents.
+                </p>
+
+                <div class="space-y-2 mb-5">
+                    <div class="bg-gray-50 rounded-lg p-3 flex items-center gap-3 border border-gray-100">
+                        <i class="fas fa-industry text-orange-500 text-sm w-5"></i>
+                        <span class="text-sm text-gray-600">OpenArm adhesive workpiece sorting/inspection line full project</span>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3 flex items-center gap-3 border border-gray-100">
+                        <i class="fas fa-hand-sparkles text-purple-500 text-sm w-5"></i>
+                        <span class="text-sm text-gray-600">LinkerHand precision assembly workstation project</span>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3 flex items-center gap-3 border border-gray-100">
+                        <i class="fas fa-robot text-accent text-sm w-5"></i>
+                        <span class="text-sm text-gray-600">Mini Pi humanoid collaborative custom project</span>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3 flex items-center gap-3 border border-gray-100">
+                        <i class="fas fa-microchip text-emerald-500 text-sm w-5"></i>
+                        <span class="text-sm text-gray-600">OpenEmbeddy embedded AI training kit custom project</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span class="text-xs text-gray-400"><i class="fas fa-link mr-1"></i> Website → Production Lines → Intelligent Sorting & Inspection Workstation</span>
+                    <a href="https://github.com/wwntAI/wwntAI_Industry_Project" target="_blank" class="text-warm hover:text-amber-600 text-sm font-semibold flex items-center gap-1.5 transition-colors">
+                        <i class="fas fa-lock"></i> Authorization required <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== LEARNING PATHS ==================== -->
+<section class="relative z-10 py-20 bg-gray-50/60" id="paths">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 mb-3">
+                <span class="text-cyan-500 font-mono text-sm">04</span>
+                <span class="text-gray-300 text-xs">/</span>
+                <span class="text-gray-500 text-sm font-medium">LEARNING PATHS</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Tiered Training Deployment Path</h2>
+            <p class="mt-2 text-gray-500 text-sm">Public code + private courseware, flexible purchasing and course launch</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Path 1 -->
+            <div class="path-line bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex items-start gap-5 card-hover">
+                <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center shrink-0 mt-1">
+                    <span class="text-purple-500 font-bold font-mono">01</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-gray-900 font-bold mb-1">Low-cost entry — LinkerHand dexterous hand only</h3>
+                    <p class="text-sm text-gray-500 mb-3">For: freshman mechatronics and AI basic training, no arm needed</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="feature-chip"><i class="fas fa-download text-purple-500 mr-1"></i> Clone: wwntAI_LinkerHand_Edu</span>
+                        <span class="feature-chip"><i class="fas fa-download text-cyan-500 mr-1"></i> Clone: wwntAI_Sim_Twin_Tools</span>
+                        <span class="feature-chip"><i class="fas fa-lock text-warm mr-1"></i> Apply: Course_Docs → Dexterous Hand curriculum</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Path 2 -->
+            <div class="path-line bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex items-start gap-5 card-hover">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center shrink-0 mt-1">
+                    <span class="text-orange-500 font-bold font-mono">02</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-gray-900 font-bold mb-1">Industrial robot standard teaching — OpenArm dual-arm only</h3>
+                    <p class="text-sm text-gray-500 mb-3">Delete the Optional_LinkerHand directory for pure dual-arm teaching with no dependencies</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="feature-chip"><i class="fas fa-download text-orange-500 mr-1"></i> Clone: wwntAI_OpenArm_Edu</span>
+                        <span class="feature-chip"><i class="fas fa-download text-cyan-500 mr-1"></i> Clone: wwntAI_Sim_Twin_Tools</span>
+                        <span class="feature-chip"><i class="fas fa-lock text-warm mr-1"></i> Apply: Course_Docs → OpenArm curriculum</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Path 3 -->
+            <div class="path-line bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex items-start gap-5 card-hover">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 mt-1">
+                    <span class="text-accent font-bold font-mono">03</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-gray-900 font-bold mb-1">Humanoid embodied AI research — Mini Pi Plus only</h3>
+                    <p class="text-sm text-gray-500 mb-3">Access full humanoid curriculum lectures, theses, and competition guides</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="feature-chip"><i class="fas fa-download text-accent mr-1"></i> Clone: wwntAI_MiniPI_Plus_Edu</span>
+                        <span class="feature-chip"><i class="fas fa-download text-cyan-500 mr-1"></i> Clone: wwntAI_Sim_Twin_Tools</span>
+                        <span class="feature-chip"><i class="fas fa-lock text-warm mr-1"></i> Apply: Course_Docs → Humanoid curriculum</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Path 4 -->
+            <div class="path-line bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex items-start gap-5 card-hover">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 mt-1">
+                    <span class="text-emerald-500 font-bold font-mono">04</span>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-gray-900 font-bold mb-1">Embedded AI basics — OpenEmbeddy training kit only</h3>
+                    <p class="text-sm text-gray-500 mb-3">For computer science, embedded, and AI basics; no robot needed</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="feature-chip"><i class="fas fa-download text-cyan-500 mr-1"></i> Clone: wwntAI_Sim_Twin_Tools</span>
+                        <span class="feature-chip"><i class="fas fa-lock text-warm mr-1"></i> Apply: Course_Docs → OpenEmbeddy curriculum</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Path 5 -->
+            <div class="path-line bg-white rounded-2xl p-6 border-2 shadow-sm flex items-start gap-5 card-hover" style="border-image: linear-gradient(135deg, rgba(37,99,235,.3), rgba(124,58,237,.3)) 1;">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-1" style="background:linear-gradient(135deg,rgba(37,99,235,.08),rgba(124,58,237,.08));">
+                    <span class="font-bold font-mono text-gradient">05</span>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <h3 class="text-gray-900 font-bold">Advanced integrated lab — full hardware set</h3>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 text-accent font-medium border border-blue-200">FULL STACK</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-3">Supports dual-arm assembly, humanoid fine manipulation, multimodal VLA grasping, and embedded AI training for advanced theses, competitions, and research.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="feature-chip"><i class="fas fa-download text-accent mr-1"></i> Clone: all 4 public repositories</span>
+                        <span class="feature-chip"><i class="fas fa-lock text-warm mr-1"></i> Apply: full access to both private repositories</span>
+                        <span class="feature-chip"><i class="fas fa-cube text-purple-500 mr-1"></i> Enable: all Optional extension folders</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== LICENSE OVERVIEW ==================== -->
+<section class="relative z-10 py-20" id="licenses">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 mb-3">
+                <span class="text-emerald-500 font-mono text-sm">05</span>
+                <span class="text-gray-300 text-xs">/</span>
+                <span class="text-gray-500 text-sm font-medium">LICENSE OVERVIEW</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Unified License Disclosure</h2>
+            <p class="mt-2 text-gray-500 text-sm">Compliant and controllable, with clear on-campus and commercial licensing</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- GPL -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden card-hover">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full blur-3xl"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
+                        <i class="fas fa-balance-scale text-accent text-xl"></i>
+                    </div>
+                    <span class="license-badge bg-blue-50 text-accent border border-blue-200 mb-3">GPL-3.0</span>
+                    <h3 class="text-gray-900 font-bold mb-2">GNU GPLv3</h3>
+                    <p class="text-xs text-gray-400 mb-4">Applies to: OpenArm_Edu · MiniPi_Plus_Edu</p>
+                    <ul class="space-y-2 text-xs text-gray-600">
+                        <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> No mandatory open-source requirement for on-campus labs, teaching, or theses</li>
+                        <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> Selling hardware or delivering commercial platforms after modification requires fully open-sourcing derivative code</li>
+                        <li class="flex gap-2"><i class="fas fa-times text-red-400 mt-0.5"></i> Closed-source repackaging and resale as similar teaching products is prohibited</li>
+                        <li class="flex gap-2"><i class="fas fa-info-circle text-warm mt-0.5"></i> For commercial closed-source licensing, contact our business channel</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Apache -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden card-hover">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-full blur-3xl"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center mb-4">
+                        <i class="fas fa-balance-scale text-emerald-500 text-xl"></i>
+                    </div>
+                    <span class="license-badge bg-green-50 text-emerald-600 border border-green-200 mb-3">Apache 2.0</span>
+                    <h3 class="text-gray-900 font-bold mb-2">Apache License 2.0</h3>
+                    <p class="text-xs text-gray-400 mb-4">Applies to: LinkerHand_Edu</p>
+                    <ul class="space-y-2 text-xs text-gray-600">
+                        <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> Aligned with the upstream linker-bot ecosystem</li>
+                        <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> Freely modifiable and commercializable</li>
+                        <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> Only retain the original copyright notice</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AGPL -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm relative overflow-hidden card-hover">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-purple-50 rounded-full blur-3xl"></div>
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-4">
+                        <i class="fas fa-balance-scale text-accent2 text-xl"></i>
+                    </div>
+                    <span class="license-badge bg-purple-50 text-accent2 border border-purple-200 mb-3">AGPL-3.0</span>
+                    <h3 class="text-gray-900 font-bold mb-2">GNU AGPLv3</h3>
+                    <p class="text-xs text-gray-400 mb-4">Applies to: Sim_Twin_Tools</p>
+                    <ul class="space-y-2 text-xs text-gray-600">
+                        <li class="flex gap-2"><i class="fas fa-check text-emerald-500 mt-0.5"></i> No mandatory open-source requirement for local offline use</li>
+                        <li class="flex gap-2"><i class="fas fa-times text-red-400 mt-0.5"></i> Providing services via web/cloud/online platforms requires fully open-sourcing the code</li>
+                        <li class="flex gap-2"><i class="fas fa-times text-red-400 mt-0.5"></i> Unauthorized replication of digital-twin online services for profit is prohibited</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Private notice -->
+        <div class="mt-6 bg-white rounded-2xl p-6 border border-amber-200 shadow-sm flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
+                <i class="fas fa-shield-alt text-warm text-xl"></i>
+            </div>
+            <div>
+                <h3 class="text-gray-900 font-bold mb-1">Private Repository Confidentiality Statement</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    wwntAI_Course_Docs and wwntAI_Industry_Project are internal paid deliverables of Guangdong Wanwu Nita Robotics Co., Ltd., for teaching use only by contracted institutions/enterprises. Copying, forwarding, commercial reuse, or public disclosure is prohibited. Access is granted only after business review; sharing accounts or leaking internal materials is prohibited.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== UNIFIED STANDARDS ==================== -->
+<section class="relative z-10 py-20 bg-gray-50/60" id="standards">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <div class="inline-flex items-center gap-2 mb-3">
+                <span class="text-accent2 font-mono text-sm">06</span>
+                <span class="text-gray-300 text-xs">/</span>
+                <span class="text-gray-500 text-sm font-medium">UNIFIED STANDARDS</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Unified Repository Standards</h2>
+            <p class="mt-2 text-gray-500 text-sm">Standardized base files · asset routing · access control</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Standard files -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm card-hover">
+                <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-4">
+                    <i class="fas fa-file-code text-accent text-lg"></i>
+                </div>
+                <h3 class="text-gray-900 font-bold mb-3">Standardized Base Files</h3>
+                <div class="space-y-2 text-xs text-gray-600">
+                    <div class="flex items-center gap-2"><i class="fas fa-file-alt text-gray-400"></i> <span class="font-mono text-gray-500">README.md</span> Company entity · website link · hardware adaptation · deployment guide</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-400"></i> <span class="font-mono text-gray-500">install_env.sh</span> One-click Ubuntu environment deployment</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-list text-gray-400"></i> <span class="font-mono text-gray-500">requirements.txt</span> Complete Python/ROS dependency list</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-filter text-gray-400"></i> <span class="font-mono text-gray-500">.gitignore</span> Filters videos / datasets / model weights / caches</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-balance-scale text-gray-400"></i> <span class="font-mono text-gray-500">LICENSE</span> Corresponding license text</div>
+                </div>
+            </div>
+
+            <!-- Asset management -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm card-hover">
+                <div class="w-10 h-10 rounded-lg bg-cyan-50 flex items-center justify-center mb-4">
+                    <i class="fas fa-database text-cyan-500 text-lg"></i>
+                </div>
+                <h3 class="text-gray-900 font-bold mb-3">Asset Routing</h3>
+                <p class="text-xs text-gray-600 leading-relaxed mb-3">
+                    Simulation recordings and data-collection scripts go to public repos; full teaching videos, large datasets, and 3D model packages are not uploaded to GitHub.
+                </p>
+                <div class="bg-gray-50 rounded-lg p-3 text-xs text-gray-600 space-y-1 border border-gray-100">
+                    <div><i class="fas fa-arrow-right text-cyan-500 mr-1"></i> Public repos → scripts, code, small demos</div>
+                    <div><i class="fas fa-arrow-right text-cyan-500 mr-1"></i> Website download center → cloud links (videos / datasets / models)</div>
+                    <div><i class="fas fa-arrow-right text-cyan-500 mr-1"></i> Private repos → companion courseware assets</div>
+                </div>
+            </div>
+
+            <!-- Access control -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm card-hover">
+                <div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center mb-4">
+                    <i class="fas fa-key text-accent2 text-lg"></i>
+                </div>
+                <h3 class="text-gray-900 font-bold mb-3">Access Control Rules</h3>
+                <div class="space-y-3 text-xs text-gray-600">
+                    <div class="flex items-start gap-2">
+                        <i class="fas fa-globe text-accent mt-0.5"></i>
+                        <div><span class="text-gray-900 font-medium">Public repositories:</span>Open to global users for Clone, Fork, Star, supporting teaching and non-commercial secondary development</div>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <i class="fas fa-lock text-warm mt-0.5"></i>
+                        <div><span class="text-gray-900 font-medium">Private repositories:</span>Access granted after business review; sharing accounts or leaking materials is prohibited</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="relative z-10 py-20">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="glass rounded-3xl p-12 relative overflow-hidden text-center">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-64 h-64 bg-purple-50 rounded-full blur-3xl"></div>
+            <div class="relative">
+                <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-blue-50 border border-blue-200">
+                    <i class="fab fa-github text-accent"></i>
+                    <span class="text-sm text-accent font-mono">github.com/wwntAI</span>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Start Your Open-source Journey</h2>
+                <p class="text-gray-500 mb-8 max-w-xl mx-auto">
+                    Clone public repos for free evaluation → after purchasing hardware, gain private repo access for full teaching materials, completing lab deployment in one stop.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://github.com/wwntAI" target="_blank" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="px-8 py-3.5 text-white font-semibold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-600/25">
+                        <i class="fab fa-github"></i> GitHub Org Home
+                    </a>
+                    <a href="https://github.com/wwntAI/overview" target="_blank" class="px-8 py-3.5 glass hover:bg-gray-100/70 text-gray-700 font-semibold rounded-xl transition-all flex items-center gap-2">
+                        <i class="fas fa-book"></i> Repository Overview Docs
+                    </a>
+                    <a href="contact.html" class="px-8 py-3.5 glass hover:bg-gray-100/70 text-accent2 font-semibold rounded-xl transition-all flex items-center gap-2">
+                        <i class="fas fa-phone"></i> Business Inquiry
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="mb-4"><a href="index.html"><img src="../assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="text-sm leading-relaxed">Headquarters: Zengcheng District, Guangzhou</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Six Product Lines</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="products/robots.html" class="block hover:text-white transition-colors">Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block hover:text-white transition-colors">OpenArm Robotic Arm</a>
+                    <a href="products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block hover:text-white transition-colors">Training Platform</a>
+                    <a href="products/yanshi-ai.html" class="block hover:text-white transition-colors">Yanshu AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Five Partnership Models</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="solutions/education.html#model0" class="block hover:text-white transition-colors">Model 0: Brand Co-building</a>
+                    <a href="solutions/education.html#model1" class="block hover:text-white transition-colors">Model 1: Industry-Education Lab</a>
+                    <a href="solutions/education.html#model2" class="block hover:text-white transition-colors">Model 2: Joint Research Institute</a>
+                    <a href="solutions/education.html#model3" class="block hover:text-white transition-colors">Model 3: On-campus Factory</a>
+                    <a href="solutions/education.html#model4" class="block hover:text-white transition-colors">Model 4: Commercialization</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contact Us</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="contact.html" class="block hover:text-white transition-colors">Request a Demo</a>
+                    <a href="opensource.html" class="block hover:text-white transition-colors">Open Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 py-6 border-t border-gray-700 flex flex-wrap justify-between text-xs text-gray-500">
+        <span>&copy; Guangdong WWNT Robotics Co., Ltd. All rights reserved. <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="hover:text-gray-400">ICP: 粤ICP备2025486997号-1</a></span>
+        <div class="flex space-x-4">
+            <a href="privacy.html" class="hover:text-gray-400">Privacy Policy</a>
+            <a href="disclaimer.html" class="hover:text-gray-400">Disclaimer</a>
+        </div>
+    </div>
+</footer>
+
+<script src="particles.min.js"></script>
+<script>
+particlesJS("particles-js", {
+    particles:{number:{value:30,density:{enable:!0,value_area:900}},color:{value:"#3b82f6"},shape:{type:"circle"},opacity:{value:.08,random:!0},size:{value:2,random:!0},line_linked:{enable:!0,distance:150,color:"#3b82f6",opacity:.04,width:1},move:{enable:!0,speed:.5,direction:"none",random:!0,out_mode:"out"}},
+    interactivity:{detect_on:"canvas",events:{onhover:{enable:!0,mode:"grab"},resize:!0},modes:{grab:{distance:140,line_linked:{opacity:.1}}}},
+    retina_detect:!0
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+</script>
+</body>
+</html>
