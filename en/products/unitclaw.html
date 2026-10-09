@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Shrimp Drive｜a multi-skill paper U-drive workstation</title>
+    <meta name="description" content="Paper Shrimp Driveis a portable plug-and-play USB research workstation based on OpenClawUU-drive research workstation，with a large library of pre-installed paperSkills，for undergraduate/graduate/full-process assistance for STEM and mechanical theses，ensuring academic data security。">
+    <meta name="keywords" content="Paper Shrimp Drive,OpenClaw,paper writing,researchUdrive,paperSkills,academic security,mechanicalpaper,aquatic processing">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0b1120',
+                        accent: '#3b82f6',
+                        warm: '#f59e0b',
+                        card: '#111827',
+                        border: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-grid{background-image:linear-gradient(rgba(59,130,246,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.06) 1px,transparent 1px);background-size:40px 40px}
+        .glass{background:rgba(17,24,39,.85);backdrop-filter:blur(16px);border:1px solid rgba(59,130,246,.15)}
+        .glass-light{background:rgba(30,41,59,.6);backdrop-filter:blur(12px);border:1px solid rgba(59,130,246,.1)}
+        .text-gradient{background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .text-gradient-blue{background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .skill-card{background:rgba(17,24,39,.9);border:1px solid rgba(245,158,11,.15);border-radius:1rem;padding:2rem;transition:all .3s}
+        .skill-card:hover{border-color:rgba(245,158,11,.4);transform:translateY(-4px);box-shadow:0 12px 32px rgba(245,158,11,.08)}
+        .tag{display:inline-block;padding:4px 14px;border-radius:9999px;font-size:.75rem;font-weight:600}
+        .tag-warm{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25)}
+        .tag-blue{background:rgba(59,130,246,.12);color:#3b82f6;border:1px solid rgba(59,130,246,.25)}
+        .tag-green{background:rgba(16,185,129,.12);color:#10b981;border:1px solid rgba(16,185,129,.25)}
+        .tag-purple{background:rgba(139,92,246,.12);color:#8b5cf6;border:1px solid rgba(139,92,246,.25)}
+        .step-num{width:48px;height:48px;background:linear-gradient(135deg,#f59e0b,#f97316);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.25rem;color:#0b1120;flex-shrink:0}
+        .compare-table th{background:rgba(245,158,11,.1);color:#f59e0b;font-weight:700;padding:16px 20px;border-bottom:1px solid rgba(245,158,11,.15)}
+        .compare-table td{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05);color:#cbd5e1}
+        .compare-table tr:last-child td{border-bottom:none}
+        .highlight-box{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(249,115,22,.04));border:1px solid rgba(245,158,11,.2);border-radius:1rem;padding:2rem}
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<div id="particles-js" class="fixed inset-0 z-0"></div>
+<div class="fixed inset-0 bg-grid z-0 opacity-40"></div>
+
+<!-- Navigation -->
+
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">WWNT Robotics | Empowering Universities &amp; Vocational Schools to Embrace <strong>AI + Robotics</strong></span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="index.html" class="px-4 py-2 text-accent text-sm font-medium">Home</a>
+            <div class="group relative">
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Products <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+                    <a href="products/unitree-robot-dog.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+                    <a href="products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald text-xs"></i>Training Platform</a>
+                    <a href="products/smart-manufacturing-training.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+                    <a href="products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Courses <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+                    <a href="courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+                    <a href="courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+                    <a href="courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+                    <a href="courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+                    <a href="products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Partnerships <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+                    <a href="solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+                </div>
+            </div>
+            <a href="news.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">News</a>
+            <a href="opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Open Source</a><a href="../index.html" class="px-3 py-1.5 ml-1 border border-gray-300 hover:border-accent hover:text-accent text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center justify-center text-center px-7 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span class="leading-tight">Yanshu AI</span>
+                <span class="text-[10px] font-normal opacity-90 leading-tight">Course Builder</span>
+            </a>
+            <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">Request a Demo</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="index.html" class="block py-3 text-accent font-medium">Home</a>
+        <a href="products/robots.html" class="block py-3 text-gray-700">Embodied AI Robots</a>
+        <a href="products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+        <a href="products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+        <a href="products/unitree-robot-dog.html" class="block py-3 text-gray-700"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+        <a href="products/dexterous-hand.html" class="block py-3 text-gray-700">Dexterous Hand</a>
+        <a href="products/embedded-platform.html" class="block py-3 text-gray-700">Training Platform</a>
+        <a href="products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+        <a href="products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+        <a href="courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>Courses</a>
+        <a href="courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+        <a href="courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+        <a href="courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+        <a href="courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+        <a href="courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+        <a href="products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>Partnerships</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+        <a href="solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+        <a href="news.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-newspaper mr-2 text-accent text-xs"></i>News</a>
+        <a href="opensource.html" class="block py-3 text-gray-700">Open Source</a><a href="../index.html" class="inline-block mt-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>Yanshu AI · Course Builder</a>
+        <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">Request a Demo</a>
+    </div>
+</nav>
+
+
+
+<!-- Hero -->
+<header class="relative z-10 pt-36 pb-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-wrap items-center gap-3 mb-6">
+            <span class="tag tag-warm"><i class="fas fa-graduation-cap mr-1"></i> Paper-writing Power Tool</span>
+            <span class="tag tag-blue"><i class="fas fa-shield-alt mr-1"></i> Academic data security</span>
+            <span class="tag tag-green"><i class="fas fa-plug mr-1"></i> Plug-and-play</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+            Paper Shrimp Drive
+        </h1>
+        <p class="mt-6 text-xl text-gray-300 max-w-3xl leading-relaxed">
+            A multi-skill paper U-drive workstation<br>
+            <span class="text-gray-400 text-lg">Full-process assistance for undergraduate and graduate STEM and mechanical theses</span>
+        </p>
+        <div class="mt-10 flex flex-wrap gap-4">
+            <a href="#product-definition" class="px-8 py-3.5 bg-warm hover:bg-amber-600 text-black font-semibold rounded-xl transition-colors">
+                <i class="fas fa-book-open mr-2"></i>Learn More
+            </a>
+            <a href="#skills-library" class="px-8 py-3.5 glass hover:bg-white/5 text-white font-semibold rounded-xl transition-colors border border-white/10">
+                <i class="fas fa-toolbox mr-2"></i>View Skill Library
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Section 1: Product definition -->
+<section id="product-definition" class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <span class="text-warm text-sm font-bold tracking-widest uppercase">Product Definition</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3">Product Definition</h2>
+            <p class="mt-4 text-gray-400 max-w-2xl text-lg">The Paper Shrimp Drive is a portable plug-and-play USB research workstation built on the open-source OpenClaw agent framework.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="glass rounded-2xl p-8">
+                <div class="w-14 h-14 bg-warm/10 rounded-2xl flex items-center justify-center mb-5">
+                    <i class="fas fa-hdd text-2xl text-warm"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Core Positioning</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    With a large library of pre-installed paper <span class="text-warm font-semibold">Skills</span>(AI skill plugins) for full-process STEM thesis assistance. The drive ships with a complete runtime,<span class="text-white">no local software installation required</span>, usable across computers, labs, and libraries.
+                </p>
+            </div>
+            <div class="glass rounded-2xl p-8">
+                <div class="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-5">
+                    <i class="fas fa-lock text-2xl text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Data security</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    All paper data and skill configs stay on the drive,<span class="text-white">leaving no trace when unplugged</span>. Unpublished papers, simulation data, and test data never upload to the cloud — ideal for confidential labs and offline intranets.
+                </p>
+            </div>
+        </div>
+
+        <!-- Hardware base -->
+        <div class="highlight-box mb-8">
+            <h3 class="text-xl font-bold mb-6"><i class="fas fa-microchip text-warm mr-2"></i>Hardware Base</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-primary/50 rounded-xl p-5">
+                    <div class="text-warm font-bold text-lg mb-2"><i class="fas fa-usb-drive mr-2"></i>Dual-interface drive</div>
+                    <p class="text-gray-400 text-sm">USB-A + Type-C, fully Windows/macOS compatible, switching freely across machines.</p>
+                </div>
+                <div class="bg-primary/50 rounded-xl p-5">
+                    <div class="text-accent font-bold text-lg mb-2"><i class="fas fa-folder-tree mr-2"></i>exFAT filesystem</div>
+                    <p class="text-gray-400 text-sm">Cross-device with Node.js, Python, and inference gateway — zero-config.</p>
+                </div>
+                <div class="bg-primary/50 rounded-xl p-5">
+                    <div class="text-green-400 font-bold text-lg mb-2"><i class="fas fa-exchange-alt mr-2"></i>Dual run modes</div>
+                    <p class="text-gray-400 text-sm">Portable (all data on drive) / local install modes, one-click switching.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 2: Multi-skill paper library -->
+<section id="skills-library" class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <span class="text-warm text-sm font-bold tracking-widest uppercase">Skills Library</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3">Built-in multi-skill paper library</h2>
+            <p class="mt-4 text-gray-400 max-w-2xl text-lg">Four categories tailored to your gripper and shrimp-plate mechanical projects</p>
+        </div>
+
+        <!-- Category 1: General paper -->
+        <div class="mb-12">
+            <div class="flex items-center mb-6">
+                <span class="w-10 h-10 bg-warm/20 rounded-lg flex items-center justify-center text-warm font-bold mr-4">01</span>
+                <div>
+                    <h3 class="text-2xl font-bold">General paper Skills</h3>
+                    <p class="text-gray-400 text-sm">Built-in · covering the full paper lifecycle</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="skill-card">
+                    <div class="text-warm text-2xl mb-3"><i class="fas fa-sitemap"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Paper outline generation</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">One-click full outlines for proposals, mid-terms, and theses, with mechanical/automation/aquatic templates.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-warm text-2xl mb-3"><i class="fas fa-book-open"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Literature review</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Batch-reads PDFs, extracts methods, innovations, and gaps, and generates review paragraphs with GB/T 7714, IEEE, and APA citations.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-warm text-2xl mb-3"><i class="fas fa-pen-fancy"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Academic polishing & humanizer</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Removes AI patterns, adjusts academic phrasing, reduces AI-detection and duplication, with bilingual abstracts and SCI-style rewriting.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-warm text-2xl mb-3"><i class="fas fa-align-left"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Formatting</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Word and LaTeX thesis templates, figure/table captions, acknowledgments, appendices, and formula standardization.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 2: Mechanical -->
+        <div class="mb-12">
+            <div class="flex items-center mb-6">
+                <span class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 font-bold mr-4">02</span>
+                <div>
+                    <h3 class="text-2xl font-bold">Mechanical engineering Skills</h3>
+                    <p class="text-gray-400 text-sm">Tailored to gripper and shrimp-plate device projects</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="skill-card">
+                    <div class="text-blue-400 text-2xl mb-3"><i class="fas fa-cogs"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Mechanical design</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Auto-writes gripper, frame, transmission, and tray design with material selection, force calculation, and drive comparison.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-blue-400 text-2xl mb-3"><i class="fas fa-chart-line"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Dynamics / simulation</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Standardizes SolidWorks/ADAMS/CFD results into error analysis, grip-force interpretation, and stress descriptions.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-blue-400 text-2xl mb-3"><i class="fas fa-fish"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Aquatic automation</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">A dedicated terminology base for shrimp-plate automation, patents, and pain points to extract innovations.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-blue-400 text-2xl mb-3"><i class="fas fa-vial"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Experimental data</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Imports breakage rate, success rate, and capacity data, auto-cleaning and generating experimental conclusions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 3: Research office -->
+        <div class="mb-12">
+            <div class="flex items-center mb-6">
+                <span class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-400 font-bold mr-4">03</span>
+                <div>
+                    <h3 class="text-2xl font-bold">Research office Skills</h3>
+                    <p class="text-gray-400 text-sm">Daily tools to boost research efficiency</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="skill-card">
+                    <div class="text-green-400 text-2xl mb-3"><i class="fas fa-file-pdf"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Batch PDF</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Auto-categorize references and batch rename, merge, and split PDFs.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-green-400 text-2xl mb-3"><i class="fas fa-clipboard-list"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Experiment logs</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Innovation mining, patent drafting, and standardized experiment records.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-green-400 text-2xl mb-3"><i class="fas fa-calculator"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Formula formatting</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Device diagrams and LaTeX formula formatting.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="text-green-400 text-2xl mb-3"><i class="fas fa-lightbulb"></i></div>
+                    <h4 class="font-bold text-lg mb-2">Innovation mining</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Analyzes existing-scheme flaws, extracts innovations, and generates patent frameworks.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 4: Extensions -->
+        <div>
+            <div class="flex items-center mb-6">
+                <span class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 font-bold mr-4">04</span>
+                <div>
+                    <h3 class="text-2xl font-bold">Extend custom Skills</h3>
+                    <p class="text-gray-400 text-sm">One-click installs from the Clawhub skill market</p>
+                </div>
+            </div>
+            <div class="glass rounded-2xl p-8">
+                <div class="flex items-start space-x-6">
+                    <div class="text-purple-400 text-4xl"><i class="fas fa-store"></i></div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-3">Clawhub Skill Market</h4>
+                        <p class="text-gray-400 leading-relaxed mb-4">
+                            built-in skill store <span class="text-purple-400 font-semibold">Clawhub</span>, for code debugging, AI diagrams, journal polishing, and data fitting<span class="text-white">tens of thousands of extensions</span>, all permanently stored on the drive.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag tag-purple">Code debugging</span>
+                            <span class="tag tag-purple">AI diagramming</span>
+                            <span class="tag tag-purple">Journal polishing</span>
+                            <span class="tag tag-purple">Data fitting</span>
+                            <span class="tag tag-purple">More skills →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 3: Plug-and-play workflow -->
+<section class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12 text-center">
+            <span class="text-warm text-sm font-bold tracking-widest uppercase">Plug & Play</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3">Plug-and-play workflow</h2>
+            <p class="mt-4 text-gray-400 max-w-2xl mx-auto text-lg">Launch your paper workstation in 30 seconds</p>
+        </div>
+
+        <div class="max-w-3xl mx-auto">
+            <div class="space-y-8">
+                <!-- Step 1 -->
+                <div class="flex items-start space-x-5">
+                    <div class="step-num">1</div>
+                    <div class="glass rounded-2xl p-6 flex-1">
+                        <h4 class="font-bold text-lg mb-2">Insert the drive</h4>
+                        <p class="text-gray-400">Insert the drive and open it — no installation.</p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex items-start space-x-5">
+                    <div class="step-num">2</div>
+                    <div class="glass rounded-2xl p-6 flex-1">
+                        <h4 class="font-bold text-lg mb-2">Double-click the launcher</h4>
+                        <p class="text-gray-400">Auto-loads all skills, runtime, and model configs.</p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex items-start space-x-5">
+                    <div class="step-num">3</div>
+                    <div class="glass rounded-2xl p-6 flex-1">
+                        <h4 class="font-bold text-lg mb-2">Open the console</h4>
+                        <p class="text-gray-400">Auto-opens a local web console (127.0.0.1:18789) with a visual skill panel.</p>
+                    </div>
+                </div>
+                <!-- Step 4 -->
+                <div class="flex items-start space-x-5">
+                    <div class="step-num">4</div>
+                    <div class="glass rounded-2xl p-6 flex-1">
+                        <h4 class="font-bold text-lg mb-2">Unplug and go</h4>
+                        <p class="text-gray-400">All files and caches stay in the data folder; unplugging leaves nothing behind.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 4: Advantages -->
+<section class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <span class="text-warm text-sm font-bold tracking-widest uppercase">Comparison</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3">Advantages vs. online AI / local LLM</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full compare-table" style="min-width:700px">
+                <thead>
+                    <tr>
+                        <th class="text-left">Dimension</th>
+                        <th class="text-center">Online AI</th>
+                        <th class="text-center">Local LLM</th>
+                        <th class="text-center text-warm">Paper Shrimp Drive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-semibold text-white">Skill library</td>
+                        <td>No fixed library, prompts rewritten each time</td>
+                        <td>Self-config, high barrier</td>
+                        <td class="text-warm font-semibold">Full pre-installed plugins, permanent</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold text-white">Data security</td>
+                        <td class="text-red-400">Uploads to cloud, leak risk</td>
+                        <td class="text-green-400">Local, data stays on machine</td>
+                        <td class="text-warm font-semibold">Drive-isolated, no trace</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold text-white">Environment</td>
+                        <td class="text-green-400">No config, needs network</td>
+                        <td class="text-red-400">Frequent CUDA/dependency/port errors</td>
+                        <td class="text-warm font-semibold">Zero config, plug and run</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold text-white">Domain fit</td>
+                        <td class="text-red-400">Generic AI</td>
+                        <td class="text-yellow-400">Self fine-tuning, costly</td>
+                        <td class="text-warm font-semibold">Domain skills with precise terminology</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold text-white">Portability</td>
+                        <td class="text-red-400">Needs network, re-login on device switch</td>
+                        <td class="text-red-400">Single-machine bound</td>
+                        <td class="text-warm font-semibold">Drive portable, plug anywhere</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Section 5: Examples -->
+<section class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <span class="text-warm text-sm font-bold tracking-widest uppercase">Examples</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3">Practical examples</h2>
+            <p class="mt-4 text-gray-400 max-w-2xl text-lg">Copy into the workstation and get instant results</p>
+        </div>
+
+        <div class="space-y-6 max-w-4xl">
+            <!-- Example 1 -->
+            <div class="glass rounded-2xl p-8">
+                <div class="flex items-center mb-4">
+                    <span class="tag tag-warm mr-3">Example 1</span>
+                    <span class="text-gray-400 text-sm">Call the mechanical design skill</span>
+                </div>
+                <div class="bg-primary/60 rounded-xl p-5 font-mono text-sm text-gray-300 leading-relaxed">
+                    Write the gripper integration chapter, comparing straight-jaw breakage and U-grip stress advantages.
+                </div>
+            </div>
+            <!-- Example 2 -->
+            <div class="glass rounded-2xl p-8">
+                <div class="flex items-center mb-4">
+                    <span class="tag tag-blue mr-3">Example 2</span>
+                    <span class="text-gray-400 text-sm">Call the literature review skill</span>
+                </div>
+                <div class="bg-primary/60 rounded-xl p-5 font-mono text-sm text-gray-300 leading-relaxed">
+                    Organize 5 years of shrimp-plate literature, summarize gaps, and extract innovations.
+                </div>
+            </div>
+            <!-- Example 3 -->
+            <div class="glass rounded-2xl p-8">
+                <div class="flex items-center mb-4">
+                    <span class="tag tag-green mr-3">Example 3</span>
+                    <span class="text-gray-400 text-sm">Call the simulation skill</span>
+                </div>
+                <div class="bg-primary/60 rounded-xl p-5 font-mono text-sm text-gray-300 leading-relaxed">
+                    Write simulation analysis, error sources, and prototype validation from stress data.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 6: Key notes -->
+<section class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+            <span class="text-warm text-sm font-bold tracking-widest uppercase">Notes</span>
+            <h2 class="text-3xl md:text-4xl font-bold mt-3">Key notes</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="glass rounded-2xl p-7">
+                <div class="text-accent text-2xl mb-4"><i class="fas fa-wifi"></i></div>
+                <h4 class="font-bold text-lg mb-2">Network</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">First-time API key config needs network; then fully offline for campus intranets.</p>
+            </div>
+            <div class="glass rounded-2xl p-7">
+                <div class="text-accent text-2xl mb-4"><i class="fas fa-laptop"></i></div>
+                <h4 class="font-bold text-lg mb-2">Compatibility</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Windows 10/11 and macOS M-series native; exFAT for cross-platform use.</p>
+            </div>
+            <div class="glass rounded-2xl p-7">
+                <div class="text-accent text-2xl mb-4"><i class="fas fa-puzzle-piece"></i></div>
+                <h4 class="font-bold text-lg mb-2">Skill expansion</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Free/paid skills from Clawhub install permanently; the library updates continuously.</p>
+            </div>
+            <div class="glass rounded-2xl p-7">
+                <div class="text-accent text-2xl mb-4"><i class="fas fa-user-shield"></i></div>
+                <h4 class="font-bold text-lg mb-2">Data security</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">Supports drive encryption; nothing syncs to cloud, complying with research confidentiality.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="relative z-10 py-24">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="glass rounded-3xl p-12 md:p-16">
+            <div class="text-5xl mb-6"><i class="fas fa-graduation-cap text-warm"></i></div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">You are not alone in writing your thesis</h2>
+            <p class="text-gray-400 mb-10 max-w-xl mx-auto text-lg leading-relaxed">The Paper Shrimp Drive — your portable paper workstation.<br>Plug in and use, unplug and go — academic data never leaks.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="../contact.html" class="px-10 py-4 bg-warm hover:bg-amber-600 text-black font-bold rounded-xl transition-colors text-lg">
+                    <i class="fas fa-paper-plane mr-2"></i>Apply for Trial
+                </a>
+                <a href="#skills-library" class="px-10 py-4 glass hover:bg-white/5 text-white font-bold rounded-xl transition-colors border border-white/10 text-lg">
+                    <i class="fas fa-toolbox mr-2"></i>View Skill Library
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="mb-4"><a href="index.html"><img src="../../assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="text-sm leading-relaxed">Headquarters: Zengcheng District, Guangzhou</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Six Product Lines</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="products/robots.html" class="block hover:text-white transition-colors">Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block hover:text-white transition-colors">OpenArm Robotic Arm</a>
+                    <a href="products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block hover:text-white transition-colors">Training Platform</a>
+                    <a href="products/yanshi-ai.html" class="block hover:text-white transition-colors">Yanshu AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Five Partnership Models</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="solutions/education.html#model0" class="block hover:text-white transition-colors">Model 0: Brand Co-building</a>
+                    <a href="solutions/education.html#model1" class="block hover:text-white transition-colors">Model 1: Industry-Education Lab</a>
+                    <a href="solutions/education.html#model2" class="block hover:text-white transition-colors">Model 2: Joint Research Institute</a>
+                    <a href="solutions/education.html#model3" class="block hover:text-white transition-colors">Model 3: On-campus Factory</a>
+                    <a href="solutions/education.html#model4" class="block hover:text-white transition-colors">Model 4: Commercialization</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contact Us</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="contact.html" class="block hover:text-white transition-colors">Request a Demo</a>
+                    <a href="opensource.html" class="block hover:text-white transition-colors">Open Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 py-6 border-t border-gray-700 flex flex-wrap justify-between text-xs text-gray-500">
+        <span>&copy; Guangdong WWNT Robotics Co., Ltd. All rights reserved. <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="hover:text-gray-400">ICP: 粤ICP备2025486997号-1</a></span>
+        <div class="flex space-x-4">
+            <a href="privacy.html" class="hover:text-gray-400">Privacy Policy</a>
+            <a href="disclaimer.html" class="hover:text-gray-400">Disclaimer</a>
+        </div>
+    </div>
+</footer>
+
+<script src="../particles.min.js"></script>
+<script>
+    particlesJS("particles-js", {
+        particles: {
+            number: { value: 30 },
+            color: { value: "#f59e0b" },
+            opacity: { value: .12, random: !0 },
+            size: { value: 2, random: !0 },
+            line_linked: { enable: !0, distance: 150, color: "#f59e0b", opacity: .06, width: 1 },
+            move: { enable: !0, speed: .6 }
+        }
+    });
+</script>
+</body>
+</html>

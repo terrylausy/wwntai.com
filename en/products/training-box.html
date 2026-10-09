@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AIAI Training Kit - wwntAI.com | AI Embedded Teaching Platform</title>
+
+    <meta name="description" content="wwntAI AIAI training kit centered on the machine-vision kit with a high-compute embedded board、multi-sensor、voice and vision modules, covering 6 core courses、100+lab projects, providing a full-stack hardware + software + curriculum + labs platform.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',accent:'#2563eb',emerald:'#10b981',card:'#ffffff',border:'#e2e8f0',
+                        secondary: '#f1f5f9',
+                        light: '#3b82f6',
+                        warm: '#d97706',
+                        accent2: '#7c3aed',
+                        dark: '#0F172A',
+                        muted: '#64748B'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}}</script>
+
+    <style>
+
+        .bg-grid{background-image:linear-gradient(rgba(16,185,129,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,.06) 1px,transparent 1px);background-size:40px 40px}
+
+        .glass{background:rgba(17,24,39,.85);backdrop-filter:blur(16px);border:1px solid rgba(16,185,129,.15)}
+
+        .card-hover{transition:all .35s cubic-bezier(.4,0,.2,1)}
+
+        .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(16,185,129,.15)}
+
+        .text-gradient{background:linear-gradient(135deg,#10b981,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+        .feature-icon{width:48px;height:48px;background:rgba(16,185,129,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+
+        #sidebar{position:fixed;top:0;left:-320px;width:280px;height:100vh;z-index:100;transition:left .35s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+
+        #sidebar.open{left:0}
+
+        #sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;opacity:0;visibility:hidden;transition:all .35s}
+
+        #sidebar-overlay.show{opacity:1;visibility:visible}
+
+        .menu-btn{position:fixed;top:16px;left:16px;z-index:98;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
+
+        .menu-btn:hover{background:rgba(16,185,129,.15)}
+
+        .menu-btn.open{left:296px}
+
+        .nav-link{display:flex;align-items:center;gap:10px;padding:12px 20px;color:#94a3b8;font-size:.9rem;font-weight:500;transition:all .2s;border-radius:8px;margin:2px 12px}
+
+        .nav-link:hover,.nav-link.active{color:#fff;background:rgba(59,130,246,.12)}
+
+        .nav-link i{width:20px;text-align:center;font-size:.85rem}
+
+        .nav-section{color:#64748b;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;padding:16px 20px 6px 20px}
+
+        .top-nav{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(11,17,32,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,.1)}
+
+        .top-nav .nav-container{max-width:1280px;margin:0 auto;padding:0 32px 0 124px;display:flex;align-items:center;height:72px}
+
+        .top-nav .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+
+        .top-nav .nav-links{display:none;align-items:center;gap:2px;margin-left:40px;flex:1}
+
+        @media(min-width:1024px){.top-nav .nav-links{display:flex}}
+
+        .nav-item{position:relative}
+
+        .nav-item>a,.nav-item>button{display:flex;align-items:center;gap:6px;padding:8px 16px;color:#cbd5e1;font-size:.9rem;font-weight:500;text-decoration:none;border-radius:8px;transition:all .2s;background:none;border:none;cursor:pointer;font-family:inherit;white-space:nowrap}
+
+        .nav-item>a:hover,.nav-item:hover>a{color:#fff;background:rgba(59,130,246,.12)}
+
+        .nav-item>a i.chevron{font-size:.65rem;transition:transform .2s;color:#64748b}
+
+        .nav-item:hover>a i.chevron{transform:rotate(180deg);color:#2563eb}
+
+        .nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:10px;opacity:0;visibility:hidden;transition:all .25s;pointer-events:none}
+
+        .nav-item:hover .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto}
+
+        .nav-dropdown-inner{background:rgba(17,24,39,.98);backdrop-filter:blur(20px);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:24px;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+
+        .nav-dropdown-inner.mega{display:grid;gap:20px;min-width:680px}
+
+        .nav-dropdown-inner.compact{min-width:320px;display:flex;flex-direction:column;gap:6px}
+
+        .dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:all .2s}
+
+        .dd-item:hover{background:rgba(59,130,246,.1)}
+
+        .dd-item .dd-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+
+        .dd-item .dd-icon.blue{background:rgba(37,99,235,.08);color:#2563eb}
+
+        .dd-item .dd-icon.purple{background:rgba(124,58,237,.08);color:#7c3aed}
+
+        .dd-item .dd-icon.emerald{background:rgba(16,185,129,.15);color:#34d399}
+
+        .dd-item .dd-text .dd-title{color:#f1f5f9;font-weight:600;font-size:.9rem}
+
+        .dd-item .dd-text .dd-sub{color:#64748b;font-size:.75rem;margin-top:1px}
+
+        .dd-compact-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:#cbd5e1;text-decoration:none;font-size:.85rem;transition:all .2s}
+
+        .dd-compact-item:hover{background:rgba(59,130,246,.1);color:#fff}
+
+        .dd-compact-item .sub{font-size:.75rem;color:#64748b}
+
+        .nav-right{display:flex;align-items:center;gap:12px;margin-left:auto;flex-shrink:0}
+
+        .nav-right .btn-contact{color:#94a3b8;font-size:.85rem;text-decoration:none;padding:8px 14px;border-radius:8px;transition:all .2s}
+
+        .nav-right .btn-contact:hover{color:#fff;background:rgba(255,255,255,.05)}
+
+        .nav-right .btn-demo{background:#3b82f6;color:#fff;font-size:.85rem;font-weight:600;padding:8px 18px;border-radius:8px;text-decoration:none;transition:all .2s}
+
+        .nav-right .btn-demo:hover{background:#2563eb;box-shadow:0 4px 16px rgba(59,130,246,.3)}
+
+        .mobile-menu-btn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.1);cursor:pointer;color:#cbd5e1;font-size:1.2rem;margin-left:auto}
+
+        @media(min-width:1024px){.mobile-menu-btn{display:none}}
+
+    
+
+/* === Language Toggle === */
+
+.lang-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;flex-shrink:0;margin-left:8px}
+
+.lang-toggle:hover{border-color:#3b82f6;color:#3b82f6;background:rgba(59,130,246,.1)}
+
+.lang-toggle-en{font-family:'Inter',system-ui,sans-serif;letter-spacing:.02em}
+
+.lang-toggle-zh{font-family:'Noto Sans SC',system-ui,sans-serif}
+.hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(37,99,235,.06) 0%,transparent 70%)}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+.tag-robot{background:rgba(37,99,235,.08);color:#2563eb;border:1px solid rgba(37,99,235,.20)}
+.tag-course{background:rgba(124,58,237,.08);color:#7c3aed;border:1px solid rgba(124,58,237,.20)}
+.tag-claw{background:rgba(217,119,6,.08);color:#d97706;border:1px solid rgba(217,119,6,.20)}
+.tag-embedded{background:rgba(5,150,105,.08);color:#059669;border:1px solid rgba(5,150,105,.20)}</style>
+
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<div id="particles-js" class="fixed inset-0 z-0"></div>
+<div class="fixed inset-0 bg-grid z-0 opacity-40"></div>
+
+<!-- Navigation -->
+
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">WWNT Robotics | Empowering Universities &amp; Vocational Schools to Embrace <strong>AI + Robotics</strong></span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="index.html" class="px-4 py-2 text-accent text-sm font-medium">Home</a>
+            <div class="group relative">
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Products <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+                    <a href="products/unitree-robot-dog.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+                    <a href="products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald text-xs"></i>Training Platform</a>
+                    <a href="products/smart-manufacturing-training.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+                    <a href="products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Courses <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+                    <a href="courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+                    <a href="courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+                    <a href="courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+                    <a href="courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+                    <a href="products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Partnerships <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+                    <a href="solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+                </div>
+            </div>
+            <a href="news.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">News</a>
+            <a href="opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Open Source</a><a href="../index.html" class="px-3 py-1.5 ml-1 border border-gray-300 hover:border-accent hover:text-accent text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center justify-center text-center px-7 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span class="leading-tight">Yanshu AI</span>
+                <span class="text-[10px] font-normal opacity-90 leading-tight">Course Builder</span>
+            </a>
+            <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">Request a Demo</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="index.html" class="block py-3 text-accent font-medium">Home</a>
+        <a href="products/robots.html" class="block py-3 text-gray-700">Embodied AI Robots</a>
+        <a href="products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+        <a href="products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+        <a href="products/unitree-robot-dog.html" class="block py-3 text-gray-700"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+        <a href="products/dexterous-hand.html" class="block py-3 text-gray-700">Dexterous Hand</a>
+        <a href="products/embedded-platform.html" class="block py-3 text-gray-700">Training Platform</a>
+        <a href="products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+        <a href="products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+        <a href="courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>Courses</a>
+        <a href="courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+        <a href="courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+        <a href="courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+        <a href="courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+        <a href="courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+        <a href="products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>Partnerships</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+        <a href="solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+        <a href="news.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-newspaper mr-2 text-accent text-xs"></i>News</a>
+        <a href="opensource.html" class="block py-3 text-gray-700">Open Source</a><a href="../index.html" class="inline-block mt-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>Yanshu AI · Course Builder</a>
+        <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">Request a Demo</a>
+    </div>
+</nav>
+
+
+
+        <div class="nav-right"><a href="../en/products/training-box.html" class="lang-toggle lang-toggle-en" title="English">EN</a>
+
+            <a href="../contact.html" class="btn-contact hidden lg:inline-flex"><i class="fas fa-phone-alt mr-1.5 text-xs text-gray-500"></i>Contact Us</a>
+
+            <a href="../contact.html" class="btn-demo">Request a Demo</a>
+
+            <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<button class="menu-btn glass" onclick="toggleSidebar()"><i class="fas fa-bars text-white text-lg"></i></button>
+
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<nav id="sidebar" class="glass">
+
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+
+        <a href="../index.html" class="flex items-center space-x-2.5" onclick="toggleSidebar()">
+
+            <span class="text-base font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-xs font-normal">.com</span></span>
+
+        </a>
+
+        <button onclick="toggleSidebar()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100/70 transition-colors"><i class="fas fa-times text-gray-600 text-lg"></i></button>
+
+    </div>
+
+    <div class="py-3">
+
+        <a href="../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
+
+        <div class="nav-section">Robots</div>
+
+        <a href="../robots/index.html" class="nav-link"><i class="fas fa-robot text-accent"></i>Robot Overview</a>
+
+        <a href="../robots/mini-pi.html" class="nav-link"><i class="fas fa-running pl-2"></i>Bipedal Robot Pi</a>
+
+        <a href="../robots/pi-plus.html" class="nav-link"><i class="fas fa-cubes pl-2"></i>Modular Open Pi+</a>
+
+        <a href="../robots/mini-hi.html" class="nav-link"><i class="fas fa-child pl-2"></i>Humanoid Robot Hi</a>
+
+        <div class="nav-section">Core Components</div>
+
+        <a href="../components/index.html" class="nav-link"><i class="fas fa-cogs text-warm"></i>Core Components</a>
+
+        <div class="nav-section">More</div>
+
+        <a href="../courses.html" class="nav-link"><i class="fas fa-book"></i>Curriculum</a>
+
+        <a href="../download/index.html" class="nav-link"><i class="fas fa-download"></i>Downloads</a>
+
+        <a href="../solutions/education.html" class="nav-link"><i class="fas fa-university"></i>Partnerships</a>
+
+        <div class="nav-section">Product Lines</div>
+
+        <a href="robots.html" class="nav-link"><i class="fas fa-robot text-accent"></i>Embodied AI Robots</a>
+
+        <a href="openarm.html" class="nav-link"><i class="fas fa-industry text-orange-500"></i>OpenArm</a>
+
+        <a href="courses.html" class="nav-link"><i class="fas fa-graduation-cap text-purple-400"></i>Yanshu AI</a>
+
+        <a href="training-box.html" class="nav-link active"><i class="fas fa-box text-emerald"></i>AI Training Kit</a>
+
+        <div class="nav-section">Ecosystem Partners</div>
+
+        <a href="../partnerships/hightorque.html" class="nav-link"><i class="fas fa-handshake"></i>× HighTorque</a>
+
+        <a href="../partnerships/suiguangming.html" class="nav-link"><i class="fas fa-handshake"></i>× Suiguangming</a>
+
+    </div>
+
+</nav>
+
+
+
+<header class="relative z-10 pt-32 pb-16">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="flex items-center mb-4">
+
+            <span class="px-3 py-1 bg-emerald/10 text-emerald text-xs font-semibold rounded-full border border-emerald/20">Self-developed</span>
+
+            <span class="ml-3 px-3 py-1 bg-gray-100/50 text-gray-600 text-xs rounded-full border border-gray-200">Hardware + software + curriculum + labs, four-in-one</span>
+
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight">AI<span class="text-gradient">AI Training Kit</span></h1>
+
+        <p class="mt-6 text-lg text-gray-600 max-w-2xl leading-relaxed">
+            The core AI embedded teaching platform, built on a high-compute embedded board integrating<span class="text-emerald font-semibold">machine vision, voice processing, and multi-sensors</span>and expansion ports, pre-installed with Linux and AI frameworks, ready out of the box.
+        </p>
+
+    </div>
+
+</header>
+
+
+
+<!-- Platform positioning -->
+
+<section class="relative z-10 py-16">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center mb-14">
+
+            <h2 class="text-3xl font-bold">"hardware + software + curriculum + labs" <span class="text-gradient">full-stack teaching platform</span></h2>
+
+            <p class="mt-3 text-gray-600 max-w-3xl mx-auto">Covering teaching, learning, training, assessment, and evaluation — for AI, robotics, and electronic science majors.</p>
+
+        </div>
+
+
+
+        <!-- Core hardware modules -->
+
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+
+            <div class="glass rounded-2xl p-6 card-hover">
+
+                <div class="feature-icon"><i class="fas fa-microchip text-2xl text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Core compute module</h3>
+
+                <p class="text-sm text-gray-600">Raspberry Pi 5 edge terminal with pre-installed Linux, vision libraries, and inference frameworks</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 card-hover">
+
+                <div class="feature-icon"><i class="fas fa-eye text-2xl text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Machine vision module</h3>
+
+                <p class="text-sm text-gray-600">Driver-free USB camera with AI vision/voice, supporting TensorFlow/PyTorch</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 card-hover">
+
+                <div class="feature-icon"><i class="fas fa-microphone text-2xl text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Voice processing module</h3>
+
+                <p class="text-sm text-gray-600">Plug-and-play USB mic with speech recognition and multimodal interaction</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 card-hover">
+
+                <div class="feature-icon"><i class="fas fa-thermometer-half text-2xl text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Embedded sensor module</h3>
+
+                <p class="text-sm text-gray-600">Temp/humidity, ultrasonic, curtain, LED, and fan actuators for multi-module labs</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 card-hover">
+
+                <div class="feature-icon"><i class="fas fa-desktop text-2xl text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Display & input module</h3>
+
+                <p class="text-sm text-gray-600">15.6-inch touchscreen, keyboard, and mouse with graphical programming</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 card-hover">
+
+                <div class="feature-icon"><i class="fas fa-toolbox text-2xl text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Auxiliary kit</h3>
+
+                <p class="text-sm text-gray-600">Lab tools and magnetic mounting for bulk deployment</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Platform advantages -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-3xl font-bold text-center mb-12">Platform<span class="text-gradient">Advantages</span></h2>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="text-4xl mb-4"><i class="fas fa-lock-open text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Strong openness</h3>
+
+                <p class="text-xs text-gray-600 leading-relaxed">Supports TensorFlow/PyTorch, open source code and docs for secondary development</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="text-4xl mb-4"><i class="fas fa-layer-group text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Multi-tech integration</h3>
+
+                <p class="text-xs text-gray-600 leading-relaxed">Integrates Linux, deep learning, machine vision, speech, and sensors</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="text-4xl mb-4"><i class="fas fa-box-open text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Integrated design</h3>
+
+                <p class="text-xs text-gray-600 leading-relaxed">Integrated vision, voice, sensors, and touchscreen — no extra peripherals</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="text-4xl mb-4"><i class="fas fa-th-large text-emerald"></i></div>
+
+                <h3 class="font-bold mb-2">Broad compatibility</h3>
+
+                <p class="text-xs text-gray-600 leading-relaxed">Covers 8+ courses across levels, from basic programming to integrated development</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Platform courses -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-3xl font-bold text-center mb-4">Platform<span class="text-gradient">Courses</span></h2>
+
+        <p class="text-center text-gray-600 mb-12">Supports terminal verification, multi-student parallel models, and teacher-defined tasks</p>
+
+
+
+        <!-- Stats -->
+
+        <div class="grid grid-cols-3 gap-6 mb-16">
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 text-center">
+
+                <div class="text-5xl font-bold text-emerald mb-2">6</div>
+
+                <div class="text-sm text-gray-600">cross-disciplinary core courses</div>
+
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 text-center">
+
+                <div class="text-5xl font-bold text-emerald mb-2">36</div>
+
+                <div class="text-sm text-gray-600">disciplinary lab projects</div>
+
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 text-center">
+
+                <div class="text-5xl font-bold text-emerald mb-2">100+</div>
+
+                <div class="text-sm text-gray-600">Lab Projects</div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Course list -->
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+
+            <div class="glass rounded-xl p-5 card-hover">
+
+                <i class="fas fa-camera text-emerald mb-3 text-lg"></i>
+
+                <h4 class="font-bold mb-2">Computer Vision</h4>
+
+                <p class="text-xs text-gray-500">Classic algorithm teaching and lab verification — classification, detection, segmentation</p>
+
+            </div>
+
+            <div class="glass rounded-xl p-5 card-hover">
+
+                <i class="fas fa-image text-emerald mb-3 text-lg"></i>
+
+                <h4 class="font-bold mb-2">Visual Image Processing in Practice</h4>
+
+                <p class="text-xs text-gray-500">End-to-end training from preprocessing to advanced analysis</p>
+
+            </div>
+
+            <div class="glass rounded-xl p-5 card-hover">
+
+                <i class="fas fa-terminal text-emerald mb-3 text-lg"></i>
+
+                <h4 class="font-bold mb-2">Linux OS</h4>
+
+                <p class="text-xs text-gray-500">Embedded Linux administration and environment setup</p>
+
+            </div>
+
+            <div class="glass rounded-xl p-5 card-hover">
+
+                <i class="fas fa-brain text-emerald mb-3 text-lg"></i>
+
+                <h4 class="font-bold mb-2">Embedded AI Applications</h4>
+
+                <p class="text-xs text-gray-500">Lightweight deployment, edge inference, and HRI development</p>
+
+            </div>
+
+            <div class="glass rounded-xl p-5 card-hover">
+
+                <i class="fas fa-cogs text-emerald mb-3 text-lg"></i>
+
+                <h4 class="font-bold mb-2">Embedded System Development</h4>
+
+                <p class="text-xs text-gray-500">Sensor drivers, peripheral control, and system integration</p>
+
+            </div>
+
+            <div class="glass rounded-xl p-5 card-hover">
+
+                <i class="fas fa-ruler text-emerald mb-3 text-lg"></i>
+
+                <h4 class="font-bold mb-2">Sensor Technology</h4>
+
+                <p class="text-xs text-gray-500">Multi-sensor acquisition and fusion</p>
+
+            </div>
+
+        </div>
+
+        <div class="text-center mt-8">
+
+            <a href="../courses.html#ai-courses" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald hover:bg-emerald-600 text-white font-semibold rounded-xl transition-all text-sm">
+
+                View the full AI training kit curriculum <i class="fas fa-arrow-right text-xs"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Lab projects -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-3xl font-bold text-center mb-12"><span class="text-gradient">Lab Projects</span>Showcase</h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 card-hover text-center">
+
+                <div class="w-16 h-16 bg-emerald/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+
+                    <i class="fas fa-user-check text-3xl text-emerald"></i>
+
+                </div>
+
+                <h3 class="font-bold mb-3">Face + image recognition</h3>
+
+                <p class="text-sm text-gray-600">Face detection, identity recognition, and classification joint labs</p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 card-hover text-center">
+
+                <div class="w-16 h-16 bg-emerald/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+
+                    <i class="fas fa-plug text-3xl text-emerald"></i>
+
+                </div>
+
+                <h3 class="font-bold mb-3">MCP hardware calls</h3>
+
+                <p class="text-sm text-gray-600">AI models control sensors and actuators for a physical control loop</p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 card-hover text-center">
+
+                <div class="w-16 h-16 bg-emerald/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+
+                    <i class="fas fa-search-plus text-3xl text-emerald"></i>
+
+                </div>
+
+                <h3 class="font-bold mb-3">Machine vision inspection</h3>
+
+                <p class="text-sm text-gray-600">Industrial defect detection and quality control</p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 card-hover text-center">
+
+                <div class="w-16 h-16 bg-emerald/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+
+                    <i class="fas fa-eye text-3xl text-emerald"></i>
+
+                </div>
+
+                <h3 class="font-bold mb-3">Integrated computer vision</h3>
+
+                <p class="text-sm text-gray-600">Cross-course integrated vision projects</p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 card-hover text-center">
+
+                <div class="w-16 h-16 bg-emerald/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+
+                    <i class="fas fa-comment-dots text-3xl text-emerald"></i>
+
+                </div>
+
+                <h3 class="font-bold mb-3">Intelligent voice interaction</h3>
+
+                <p class="text-sm text-gray-600">Wake word, command recognition, and synthesis labs</p>
+
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 card-hover text-center">
+
+                <div class="w-16 h-16 bg-emerald/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+
+                    <i class="fas fa-puzzle-piece text-3xl text-emerald"></i>
+
+                </div>
+
+                <h3 class="font-bold mb-3">Custom experiments</h3>
+
+                <p class="text-sm text-gray-600">Teacher-defined tasks and code for student innovation</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Applicable majors -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-3xl font-bold text-center mb-4">For<span class="text-gradient">vocational / undergraduate</span>majors</h2>
+
+        <p class="text-center text-gray-600 mb-10">Covering 10+ majors for interdisciplinary teaching</p>
+
+        <div class="flex flex-wrap justify-center gap-3">
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Computer Science & Technology</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Electrical Engineering & Automation</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Automation</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Electronic Information Engineering</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Electronic Information Science & Technology</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Mechanical Engineering</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Robotics Engineering</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Communication Engineering</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">Microelectronics</span>
+
+            <span class="px-5 py-2.5 glass rounded-lg text-sm text-gray-700">IC & Software Engineering</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Core application scenarios -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-3xl font-bold text-center mb-12">Core<span class="text-gradient">Application Scenarios</span></h2>
+
+        <div class="grid md:grid-cols-4 gap-6">
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <i class="fas fa-university text-3xl text-emerald mb-4"></i>
+
+                <h3 class="font-bold mb-2">Program reform</h3>
+
+                <p class="text-xs text-gray-600">Boost new-engineering and AI programs</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <i class="fas fa-flask text-3xl text-emerald mb-4"></i>
+
+                <h3 class="font-bold mb-2">University lab construction</h3>
+
+                <p class="text-xs text-gray-600">Complete AI embedded lab solutions</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <i class="fas fa-trophy text-3xl text-emerald mb-4"></i>
+
+                <h3 class="font-bold mb-2">Competition training platform</h3>
+
+                <p class="text-xs text-gray-600">Support competitions and skill contests</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <i class="fas fa-shopping-cart text-3xl text-emerald mb-4"></i>
+
+                <h3 class="font-bold mb-2">Curriculum-matched procurement</h3>
+
+                <p class="text-xs text-gray-600">One platform shared across courses</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Significance -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <h2 class="text-3xl font-bold text-center mb-12"><span class="text-gradient">Significance</span></h2>
+
+        <div class="space-y-6">
+
+            <div class="glass rounded-2xl p-6 flex items-start gap-5">
+
+                <div class="w-10 h-10 bg-emerald/10 rounded-xl flex items-center justify-center shrink-0 mt-1">
+
+                    <span class="text-emerald font-bold">01</span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-bold mb-1">Improve program building</h3>
+
+                    <p class="text-sm text-gray-600">Fill practical teaching gaps and improve curriculum resources</p>
+
+                </div>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 flex items-start gap-5">
+
+                <div class="w-10 h-10 bg-emerald/10 rounded-xl flex items-center justify-center shrink-0 mt-1">
+
+                    <span class="text-emerald font-bold">02</span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-bold mb-1">Strengthen practice</h3>
+
+                    <p class="text-sm text-gray-600">Build integrated hardware-software environments to close the theory-practice gap</p>
+
+                </div>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 flex items-start gap-5">
+
+                <div class="w-10 h-10 bg-emerald/10 rounded-xl flex items-center justify-center shrink-0 mt-1">
+
+                    <span class="text-emerald font-bold">03</span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-bold mb-1">Support faculty</h3>
+
+                    <p class="text-sm text-gray-600">Provide platforms for research, curriculum reform, and project development</p>
+
+                </div>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 flex items-start gap-5">
+
+                <div class="w-10 h-10 bg-emerald/10 rounded-xl flex items-center justify-center shrink-0 mt-1">
+
+                    <span class="text-emerald font-bold">04</span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-bold mb-1">Empower innovation</h3>
+
+                    <p class="text-sm text-gray-600">Support student innovation, competitions, and theses</p>
+
+                </div>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 flex items-start gap-5">
+
+                <div class="w-10 h-10 bg-emerald/10 rounded-xl flex items-center justify-center shrink-0 mt-1">
+
+                    <span class="text-emerald font-bold">05</span>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-bold mb-1">Deepen industry-education integration</h3>
+
+                    <p class="text-sm text-gray-600">Match industry AI embedded needs and narrow the talent-industry gap</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- CTA -->
+
+<section class="relative z-10 py-20">
+
+    <div class="max-w-4xl mx-auto px-6 text-center">
+
+        <div class="bg-white rounded-3xl p-12 shadow-sm border border-gray-200">
+
+            <h2 class="text-3xl font-bold mb-4">Build an AI Embedded Training Benchmark</h2>
+
+            <p class="text-gray-600 mb-8 max-w-xl mx-auto">From hardware to curriculum, from standalone training to full lab construction, tailored AI education solutions.</p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+
+                <a href="../contact.html" class="px-8 py-3.5 bg-emerald hover:bg-emerald-600 text-white font-semibold rounded-xl transition-all inline-block">Request a Demo</a>
+
+                <a href="../solutions/education.html" class="px-8 py-3.5 glass hover:bg-gray-100/70 text-gray-700 font-semibold rounded-xl transition-all inline-block">View Solution Details</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="mb-4"><a href="index.html"><img src="../../assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="text-sm leading-relaxed">Headquarters: Zengcheng District, Guangzhou</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Six Product Lines</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="products/robots.html" class="block hover:text-white transition-colors">Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block hover:text-white transition-colors">OpenArm Robotic Arm</a>
+                    <a href="products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block hover:text-white transition-colors">Training Platform</a>
+                    <a href="products/yanshi-ai.html" class="block hover:text-white transition-colors">Yanshu AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Five Partnership Models</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="solutions/education.html#model0" class="block hover:text-white transition-colors">Model 0: Brand Co-building</a>
+                    <a href="solutions/education.html#model1" class="block hover:text-white transition-colors">Model 1: Industry-Education Lab</a>
+                    <a href="solutions/education.html#model2" class="block hover:text-white transition-colors">Model 2: Joint Research Institute</a>
+                    <a href="solutions/education.html#model3" class="block hover:text-white transition-colors">Model 3: On-campus Factory</a>
+                    <a href="solutions/education.html#model4" class="block hover:text-white transition-colors">Model 4: Commercialization</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contact Us</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="contact.html" class="block hover:text-white transition-colors">Request a Demo</a>
+                    <a href="opensource.html" class="block hover:text-white transition-colors">Open Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 py-6 border-t border-gray-700 flex flex-wrap justify-between text-xs text-gray-500">
+        <span>&copy; Guangdong WWNT Robotics Co., Ltd. All rights reserved. <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="hover:text-gray-400">ICP: 粤ICP备2025486997号-1</a></span>
+        <div class="flex space-x-4">
+            <a href="privacy.html" class="hover:text-gray-400">Privacy Policy</a>
+            <a href="disclaimer.html" class="hover:text-gray-400">Disclaimer</a>
+        </div>
+    </div>
+</footer>
+
+
+
+<script src="../particles.min.js"></script>
+
+<script>
+
+function toggleSidebar(){
+
+    const sb = document.getElementById('sidebar');
+
+    const ov = document.getElementById('sidebar-overlay');
+
+    const btn = document.querySelector('.menu-btn');
+
+    const isOpen = sb.classList.contains('open');
+
+    if(isOpen){sb.classList.remove('open');ov.classList.remove('show');btn.classList.remove('open');}
+
+    else{sb.classList.add('open');ov.classList.add('show');btn.classList.add('open');}
+
+}
+
+particlesJS("particles-js",{particles:{number:{value:30},color:{value:"#10b981"},opacity:{value:.12,random:!0},size:{value:2,random:!0},line_linked:{enable:!0,distance:150,color:"#10b981",opacity:.06,width:1},move:{enable:!0,speed:.6}}});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  var css='.slogan-snow-wrap{position:relative;display:inline-block}.slogan-snow-particle{position:absolute;border-radius:50%;pointer-events:none;animation:snowDrift var(--dur,3s) ease-in-out infinite;animation-delay:var(--delay,0s);opacity:0}@keyframes snowDrift{0%{transform:translateY(6px) translateX(0) scale(.35);opacity:0}12%{opacity:var(--op,.65)}45%{transform:translateY(-5px) translateX(var(--dx,8px)) scale(var(--sc,1));opacity:var(--op,.65)}80%{opacity:var(--op,.65)}100%{transform:translateY(-20px) translateX(var(--dx2,-6px)) scale(.18);opacity:0}}';
+  if(!document.getElementById('snow-particle-style')){
+    var s=document.createElement('style');s.id='snow-particle-style';s.textContent=css;document.head.appendChild(s);
+  }
+  setTimeout(function(){
+    document.querySelectorAll('.slogan-snow-wrap').forEach(function(c){
+      if(c.querySelector('.slogan-snow-particle'))return;
+      var r=c.getBoundingClientRect(),w=r.width||280,h=r.height||32;
+      for(var i=0;i<18;i++){
+        var p=document.createElement('span');p.className='slogan-snow-particle';
+        var sz=2+Math.random()*3;
+        p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*w)+'px;bottom:'+(Math.random()*h*.5)+'px;--dur:'+(2.2+Math.random()*3)+'s;--delay:'+(Math.random()*3.5)+'s;--dx:'+(-10+Math.random()*20)+'px;--dx2:'+(-8+Math.random()*16)+'px;--sc:'+(.45+Math.random()*.75)+';--op:'+(.35+Math.random()*.5)+';background:rgba(255,255,255,'+(.4+Math.random()*.45)+')';
+        c.appendChild(p);
+      }
+    });
+  },400);
+})();
+</script>
+</body>
+
+</html>
+
