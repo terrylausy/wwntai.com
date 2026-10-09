@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum - wwntAI.com</title>
+    <meta name="description" content="wwntAI四大课程体系：人工智能实训箱6 core courses + OpenArm开源机械臂五大类课程 + Mini Pi具身智能机器人10节54学时课程 + 灵巧手ROS SDK分层课程体系，覆盖高职/本科/研究生全学段。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ffffff',
+                        secondary: '#F8FAFC',
+                        accent: '#2563EB',
+                        accent2: '#7C3AED',
+                        warm: '#d97706',
+                        dark: '#0F172A',
+                        muted: '#64748B',
+                        border: '#E2E8F0',
+                    ,
+                        light: '#3b82f6',
+                        card: '#ffffff'},
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .bg-grid{background-image:linear-gradient(rgba(37,99,235,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.03) 1px,transparent 1px);background-size:40px 40px}
+        .glass{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,.06)}
+        .text-gradient{background:linear-gradient(135deg,#2563EB,#7C3AED);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .text-gradient-warm{background:linear-gradient(135deg,#d97706,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .card-hover{transition:all .3s ease}
+        .card-hover:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.08)}
+        .tab-active{border-bottom:2px solid #2563EB;color:#2563EB;font-weight:600}
+        .tab-inactive{color:#94a3b8}
+        html{scroll-behavior:smooth}
+.hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(37,99,235,.06) 0%,transparent 70%)}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+.tag-robot{background:rgba(37,99,235,.08);color:#2563eb;border:1px solid rgba(37,99,235,.20)}
+.tag-course{background:rgba(124,58,237,.08);color:#7c3aed;border:1px solid rgba(124,58,237,.20)}
+.tag-claw{background:rgba(217,119,6,.08);color:#d97706;border:1px solid rgba(217,119,6,.20)}
+.tag-embedded{background:rgba(5,150,105,.08);color:#059669;border:1px solid rgba(5,150,105,.20)}</style>
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<div id="particles-js" class="fixed inset-0 z-0"></div>
+<div class="fixed inset-0 bg-grid z-0 opacity-40"></div>
+
+<!-- Navigation -->
+
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">WWNT Robotics | Empowering Universities &amp; Vocational Schools to Embrace <strong>AI + Robotics</strong></span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="index.html" class="px-4 py-2 text-accent text-sm font-medium">Home</a>
+            <div class="group relative">
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Products <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+                    <a href="products/unitree-robot-dog.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+                    <a href="products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald text-xs"></i>Training Platform</a>
+                    <a href="products/smart-manufacturing-training.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+                    <a href="products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Courses <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+                    <a href="courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+                    <a href="courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+                    <a href="courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+                    <a href="courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+                    <a href="products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Partnerships <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+                    <a href="solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+                </div>
+            </div>
+            <a href="news.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">News</a>
+            <a href="opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Open Source</a><a href="../index.html" class="px-3 py-1.5 ml-1 border border-gray-300 hover:border-accent hover:text-accent text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center justify-center text-center px-7 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span class="leading-tight">Yanshu AI</span>
+                <span class="text-[10px] font-normal opacity-90 leading-tight">Course Builder</span>
+            </a>
+            <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">Request a Demo</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="index.html" class="block py-3 text-accent font-medium">Home</a>
+        <a href="products/robots.html" class="block py-3 text-gray-700">Embodied AI Robots</a>
+        <a href="products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+        <a href="products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+        <a href="products/unitree-robot-dog.html" class="block py-3 text-gray-700"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+        <a href="products/dexterous-hand.html" class="block py-3 text-gray-700">Dexterous Hand</a>
+        <a href="products/embedded-platform.html" class="block py-3 text-gray-700">Training Platform</a>
+        <a href="products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+        <a href="products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+        <a href="courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>Courses</a>
+        <a href="courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+        <a href="courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+        <a href="courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+        <a href="courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+        <a href="courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+        <a href="products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>Partnerships</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+        <a href="solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+        <a href="news.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-newspaper mr-2 text-accent text-xs"></i>News</a>
+        <a href="opensource.html" class="block py-3 text-gray-700">Open Source</a><a href="../index.html" class="inline-block mt-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>Yanshu AI · Course Builder</a>
+        <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">Request a Demo</a>
+    </div>
+</nav>
+
+
+
+<!-- ====== Hero ====== -->
+<header class="relative z-10 pt-32 pb-20">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <div class="inline-flex items-center space-x-2 mb-6 px-4 py-2 glass rounded-full">
+            <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+            <span class="text-sm text-muted">WWNT Robotics · Curriculum</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight">
+            <span class="text-gradient">Curriculum</span>
+        </h1>
+        <p class="mt-6 text-lg text-muted max-w-2xl mx-auto leading-relaxed">
+            Five core curricula, spanning from<strong class="text-accent">embedded AI training</strong>to<strong class="text-orange-500">the OpenArm open-source arm</strong>then to<strong class="text-accent2">embodied AI robots</strong>、<strong class="text-purple-600">dexterous hands</strong>and<strong class="text-cyan-600">OpenDuck Mini</strong>— a full-chain talent pipeline for new-engineering programs.
+        </p>
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <a href="#ai-courses" class="px-8 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                <i class="fas fa-microchip mr-2"></i>AI Training Kit Courses
+            </a>
+            <a href="#openarm-courses" class="px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                <i class="fas fa-industry mr-2"></i>OpenArm Robotic Arm Courses
+            </a>
+            <a href="#robot-courses" class="px-8 py-3.5 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                <i class="fas fa-robot mr-2"></i>Embodied AI Robot Courses
+            </a>
+            <a href="#dexterous-hand-courses" class="px-8 py-3.5 bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                <i class="fas fa-hand-sparkles mr-2"></i>Dexterous Hand Courses
+            </a>
+            <a href="#openduck-courses" class="px-8 py-3.5 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                <i class="fas fa-robot mr-2"></i>OpenDuck Mini Courses
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- ====== I. AI Training Kit Curriculum ====== -->
+<section id="ai-courses" class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-accent font-bold text-sm tracking-wider uppercase">01</span>
+            <h2 class="text-3xl font-bold">AI Training Kit Curriculum</h2>
+        </div>
+        <p class="text-muted mb-4 max-w-3xl leading-relaxed">
+            Built on the WWNT training kit hardware, spanning from<strong>low-level systems, embedded development, and computer vision to edge AI deployment</strong>— a closed-loop teaching path. 6 core courses, 100+ lab projects, covering 36 interdisciplinary majors.
+        </p>
+
+        <!-- Platform core advantages -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-microchip text-accent"></i>
+                </div>
+                <h4 class="font-bold mb-2 text-sm">High-performance edge computing</h4>
+                <p class="text-xs text-muted leading-relaxed">Powered by a Raspberry Pi 5 terminal with strong compute for complex algorithms and a stable embedded base.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-satellite-dish text-accent"></i>
+                </div>
+                <h4 class="font-bold mb-2 text-sm">Full-scenario sensor matrix</h4>
+                <p class="text-xs text-muted leading-relaxed">Plug-and-play temperature/humidity, light, and ultrasonic sensors covering the full IoT sensing layer.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-eye text-accent"></i>
+                </div>
+                <h4 class="font-bold mb-2 text-sm">Multimodal vision interaction</h4>
+                <p class="text-xs text-muted leading-relaxed">Driver-free camera, touchscreen, and microphone for computer vision and human-robot interaction labs.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fas fa-magnet text-accent"></i>
+                </div>
+                <h4 class="font-bold mb-2 text-sm">Magnetic WWNT architecture</h4>
+                <p class="text-xs text-muted leading-relaxed">Modules snap together magnetically, building scenarios from simple control to complex AIoT with a low setup barrier.</p>
+            </div>
+        </div>
+
+        <!-- Learning path -->
+        <div class="mb-12">
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-route text-accent"></i> Progressive Learning Path
+            </h3>
+            <div class="relative">
+                <div class="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-border z-0"></div>
+                <div class="grid md:grid-cols-4 gap-6 relative z-10">
+                    <div class="bg-white rounded-2xl p-6 border border-border text-center">
+                        <div class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">01</div>
+                        <h4 class="font-bold mb-2 text-sm">Foundational grounding</h4>
+                        <p class="text-xs text-muted">Linux OS · sensor technology<br>Building the hardware and system base</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 border border-border text-center">
+                        <div class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">02</div>
+                        <h4 class="font-bold mb-2 text-sm">Core development skills</h4>
+                        <p class="text-xs text-muted">Embedded system development<br>System architecture and driver development</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 border border-border text-center">
+                        <div class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">03</div>
+                        <h4 class="font-bold mb-2 text-sm">Algorithm advancement</h4>
+                        <p class="text-xs text-muted">Computer vision · image processing<br>Algorithm validation and engineering practice</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 border border-border text-center">
+                        <div class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">04</div>
+                        <h4 class="font-bold mb-2 text-sm">Integrated innovation</h4>
+                        <p class="text-xs text-muted">Embedded AI applications<br>Algorithm + hardware closed loop</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6 core courses -->
+        <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-book text-accent"></i> 6 core courses
+            </h3>
+            <div class="space-y-6">
+                <!-- Course 1: Linux OS -->
+                <div class="bg-white rounded-2xl p-8 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-terminal text-accent text-lg"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Linux OS</h4>
+                                <span class="text-xs px-2 py-0.5 bg-accent/10 text-accent rounded-full">Core</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed mb-4">The cornerstone of embedded development — master Linux architecture, core operations, and advanced administration, from command line to kernel and embedded adaptation.</p>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Module 1: Linux Basics</h5>
+                                    <p class="text-xs text-muted">System architecture and distro differences, terminal, filesystem, Vim, pipes and I/O redirection</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Module 2: System Administration & Processes</h5>
+                                    <p class="text-xs text-muted">Process lifecycle, network config, systemd services, RPM/DEB packages, environment variables</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Module 3: Embedded Linux</h5>
+                                    <p class="text-xs text-muted">Cross-compilation, ARM toolchain, kernel boot, root filesystem, shell scripts and autostart</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2: Sensor Technology -->
+                <div class="bg-white rounded-2xl p-8 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-satellite-dish text-green-600 text-lg"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Sensor Technology</h4>
+                                <span class="text-xs px-2 py-0.5 bg-green-100 text-green-700 rounded-full">Perception basics</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed mb-4">Covers common sensor principles and applications, building multi-sensor acquisition, processing, and fusion skills for a full perception-processing-transmission chain.</p>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Fundamental principles</h5>
+                                    <p class="text-xs text-muted">Photoelectric/temp/humidity/inertial sensors, AD conversion and digital filtering, I2C/SPI/UART protocols</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Multi-scenario practice</h5>
+                                    <p class="text-xs text-muted">Environmental sensing, attitude calculation, camera/IR/ultrasonic experiments</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Embedded deployment</h5>
+                                    <p class="text-xs text-muted">Linux sensor drivers, multi-device sync acquisition, MQTT/HTTP cloud upload</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3: Embedded System Development -->
+                <div class="bg-white rounded-2xl p-8 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-microchip text-purple-600 text-lg"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Embedded system development</h4>
+                                <span class="text-xs px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full">Core Development</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed mb-4">Focuses on core embedded technology, covering the full flow from hardware architecture to software implementation, building low-level driver, peripheral debugging, and complex application skills.</p>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Hardware architecture base</h5>
+                                    <p class="text-xs text-muted">ARM architecture, MCU/MPU differences, GPIO/UART principles and register operations</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Driver development core</h5>
+                                    <p class="text-xs text-muted">Linux character device drivers, I2C/SPI frameworks, interrupt and timer drivers</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Application practice</h5>
+                                    <p class="text-xs text-muted">C embedded programming, multithreading and synchronization, network socket programming</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 4: Computer Vision -->
+                <div class="bg-white rounded-2xl p-8 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-eye text-blue-600 text-lg"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Computer Vision</h4>
+                                <span class="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">Vision basics</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed mb-4">Introduces classic computer vision algorithms and OpenCV, combining theory with practice to build image processing and feature analysis skills for real projects.</p>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Vision fundamentals</h5>
+                                    <p class="text-xs text-muted">Image representation, color space conversion, filtering, edge detection, thresholding</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Classic vision algorithms</h5>
+                                    <p class="text-xs text-muted">Geometric transforms, SIFT/ORB feature matching, object and scene matching</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Embedded deployment</h5>
+                                    <p class="text-xs text-muted">OpenCV engineering, ARM/Linux cross-compilation, real-time video and algorithm optimization</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 5: Visual Image Processing -->
+                <div class="bg-white rounded-2xl p-8 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-image text-amber-600 text-lg"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Visual Image Processing in Practice</h4>
+                                <span class="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full">Engineering practice</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed mb-4">Deep application of vision algorithms in industry and daily life, turning core algorithms into deployable solutions through real projects.</p>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Engineering preprocessing</h5>
+                                    <p class="text-xs text-muted">Industrial preprocessing, denoising/correction/illumination, semantic/instance segmentation and subpixel detection</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Intelligent recognition</h5>
+                                    <p class="text-xs text-muted">Barcode and OCR, defect detection, keypoint localization and part pose analysis</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">Embedded optimization</h5>
+                                    <p class="text-xs text-muted">ROI extraction and NEON acceleration, dynamic frame rate and compute allocation, low-power operation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 6: Embedded AI Applications -->
+                <div class="bg-white rounded-2xl p-8 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fas fa-brain text-rose-600 text-lg"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Embedded AI applications</h4>
+                                <span class="text-xs px-2 py-0.5 bg-rose-100 text-rose-700 rounded-full">AIoT Summit</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed mb-4">The capstone of the AIoT curriculum — deep learning from algorithm to hardware, covering training, lightweight optimization, and edge deployment.</p>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">01 AI basics and lightweight models</h5>
+                                    <p class="text-xs text-muted">CNN, MobileNet/YOLO-Nano lightweight models, quantization and pruning</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">02 Full training and cross-platform conversion</h5>
+                                    <p class="text-xs text-muted">Industrial dataset annotation, PyTorch→ONNX→Tengine/NCNN conversion</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">03 Edge inference and hardware integration</h5>
+                                    <p class="text-xs text-muted">Linux edge inference, real-time camera + AI, GPIO/display closed loop</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h5 class="font-semibold text-sm mb-2">04 Hardware application: AI deployment</h5>
+                                    <p class="text-xs text-muted">Deploy lightweight YOLO to Raspberry Pi 5 for real-time detection and GPIO integration</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== II. OpenArm Curriculum ====== -->
+<section id="openarm-courses" class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-orange-500 font-bold text-sm tracking-wider uppercase">02</span>
+            <h2 class="text-3xl font-bold">OpenArm <span class="text-gradient-warm">Open-source Robotic Arm</span>Curriculum</h2>
+        </div>
+        <p class="text-muted mb-8 max-w-3xl leading-relaxed">
+            A fully open-source domestic humanoid arm built on open hardware and ROS2, focused on cross-disciplinary practice. Five categories:<strong class="text-orange-500">Foundations, Core Majors, AI Integration, Mechanical Design, Integrated Practice</strong>, covering core undergraduate and vocational courses.
+        </p>
+        <div class="mb-6">
+            <a href="products/openarm.html" class="text-sm text-orange-500 font-semibold hover:text-orange-600 transition-colors"><i class="fas fa-external-link-alt mr-1"></i>View OpenArm details →</a>
+        </div>
+
+        <!-- Five course tiers -->
+        <div class="grid md:grid-cols-5 gap-4 mb-12">
+            <div class="bg-white rounded-xl p-5 border border-blue-200 text-center card-hover">
+                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-sm">F</div>
+                <h4 class="font-bold text-sm mb-1">Foundations</h4>
+                <p class="text-xs text-muted">Vocational / lower-division</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-purple-200 text-center card-hover">
+                <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-sm">C</div>
+                <h4 class="font-bold text-sm mb-1">Core Majors</h4>
+                <p class="text-xs text-muted">Advanced undergraduate / vocational</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-pink-200 text-center card-hover">
+                <div class="w-10 h-10 bg-pink-100 text-pink-600 rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-sm">AI</div>
+                <h4 class="font-bold text-sm mb-1">AI Integration</h4>
+                <p class="text-xs text-muted">Undergraduate / AI track</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-amber-200 text-center card-hover">
+                <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-sm">M</div>
+                <h4 class="font-bold text-sm mb-1">Mechanical Design</h4>
+                <p class="text-xs text-muted">Mechanical majors</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-indigo-200 text-center card-hover">
+                <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-sm">I</div>
+                <h4 class="font-bold text-sm mb-1">Integrated Practice</h4>
+                <p class="text-xs text-muted">Campus electives · innovation</p>
+            </div>
+        </div>
+
+        <!-- Course list -->
+        <div class="space-y-6">
+            <!-- Foundations -->
+            <div class="bg-white rounded-2xl p-8 border border-blue-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-blue-100 text-blue-600 text-xs font-bold rounded-full">Foundations</span>
+                    <h4 class="font-bold">Foundation courses — vocational / lower-division</h4>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-blue-400 mt-2"></i><div><span class="text-sm font-semibold">Embedded systems / ARM</span><span class="text-xs text-muted ml-2">Hardware circuits · drivers · cross-compilation · Linux</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-blue-400 mt-2"></i><div><span class="text-sm font-semibold">Microcontrollers & interfaces</span><span class="text-xs text-muted ml-2">GPIO · serial · CAN · I2C/SPI labs</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-blue-400 mt-2"></i><div><span class="text-sm font-semibold">Linux OS (embedded)</span><span class="text-xs text-muted ml-2">Terminal · processes · services</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-blue-400 mt-2"></i><div><span class="text-sm font-semibold">Python / C++ programming</span><span class="text-xs text-muted ml-2">Arm commands · data acquisition · motion control</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-blue-400 mt-2"></i><div><span class="text-sm font-semibold">Sensor technology & detection</span><span class="text-xs text-muted ml-2">Force · attitude · vision sensors</span></div></div>
+                </div>
+            </div>
+            <!-- Core majors -->
+            <div class="bg-white rounded-2xl p-8 border border-purple-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-purple-100 text-purple-600 text-xs font-bold rounded-full">Core Majors</span>
+                    <h4 class="font-bold">Core robotics courses — advanced undergraduate / vocational</h4>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-purple-400 mt-2"></i><div><span class="text-sm font-semibold">Robotics / fundamentals</span><span class="text-xs text-muted ml-2">Forward/inverse kinematics · statics · dynamics</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-purple-400 mt-2"></i><div><span class="text-sm font-semibold">Robot motion control</span><span class="text-xs text-muted ml-2">PID · impedance · trajectory · joint tuning</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-purple-400 mt-2"></i><div><span class="text-sm font-semibold">Industrial robotics</span><span class="text-xs text-muted ml-2">Teach programming · point control · path motion · tooling</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-purple-400 mt-2"></i><div><span class="text-sm font-semibold">Robot drive & electrical control</span><span class="text-xs text-muted ml-2">Servo motors · drivers · schematics · wiring</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-purple-400 mt-2"></i><div><span class="text-sm font-semibold">ROS / ROS2</span><span class="text-xs text-muted ml-2">Nodes · topics · simulation · multi-robot</span></div></div>
+                </div>
+            </div>
+            <!-- AI fusion -->
+            <div class="bg-white rounded-2xl p-8 border border-pink-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-pink-100 text-pink-600 text-xs font-bold rounded-full">AI Integration</span>
+                    <h4 class="font-bold">AI & vision fusion courses — undergraduate / AI track</h4>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-pink-400 mt-2"></i><div><span class="text-sm font-semibold">Computer vision & image processing</span><span class="text-xs text-muted ml-2">Acquisition · detection · matching · vision grasping</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-pink-400 mt-2"></i><div><span class="text-sm font-semibold">Deep learning & robot applications</span><span class="text-xs text-muted ml-2">Model deployment · imitation learning · RL</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-pink-400 mt-2"></i><div><span class="text-sm font-semibold">Human-robot interaction</span><span class="text-xs text-muted ml-2">Voice · vision · force-control interaction</span></div></div>
+                </div>
+            </div>
+            <!-- Mechanical design -->
+            <div class="bg-white rounded-2xl p-8 border border-amber-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-amber-100 text-amber-600 text-xs font-bold rounded-full">Mechanical Design</span>
+                    <h4 class="font-bold">Mechanical design courses — mechanical majors</h4>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-amber-400 mt-2"></i><div><span class="text-sm font-semibold">Mechanisms / machine design</span><span class="text-xs text-muted ml-2">Linkages · joints · transmission analysis</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-amber-400 mt-2"></i><div><span class="text-sm font-semibold">3D modeling & mechanical innovation</span><span class="text-xs text-muted ml-2">Open CAD redesign · 3D printing · modification</span></div></div>
+                </div>
+            </div>
+            <!-- Integrated practice -->
+            <div class="bg-white rounded-2xl p-8 border border-indigo-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="px-3 py-1 bg-indigo-100 text-indigo-600 text-xs font-bold rounded-full">Integrated Practice</span>
+                    <h4 class="font-bold">Integrated training / competition — campus electives</h4>
+                </div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-indigo-400 mt-2"></i><div><span class="text-sm font-semibold">Integrated robotics / engineering innovation</span><span class="text-xs text-muted ml-2">Cross-disciplinary: mechanics + electronics + code + vision</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-indigo-400 mt-2"></i><div><span class="text-sm font-semibold">Competition coaching</span><span class="text-xs text-muted ml-2">Robotics · vocational skills · AI innovation contests</span></div></div>
+                    <div class="flex items-start gap-2 p-3 bg-gray-50 rounded-lg"><i class="fas fa-circle text-[6px] text-indigo-400 mt-2"></i><div><span class="text-sm font-semibold">Open hardware & maker practice</span><span class="text-xs text-muted ml-2">Assembly · secondary development · creative projects</span></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Institution fit stats -->
+        <div class="mt-12 grid md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl p-6 border border-border">
+                <div class="text-xs text-muted mb-2">For Undergraduate Institutions</div>
+                <div class="text-sm text-muted leading-relaxed">Robotics, automation, mechatronics, CS, AI, smart manufacturing — foundation, major, and graduate courses</div>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-border">
+                <div class="text-xs text-muted mb-2">For Vocational Institutions</div>
+                <div class="text-sm text-muted leading-relaxed">Industrial robotics, mechatronics, electrical automation, IoT, AI applications, mechanical manufacturing</div>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-border text-center">
+                <div class="text-4xl font-light text-orange-500">10+</div>
+                <div class="text-sm text-muted mt-1">undergraduate institutions have adopted it into regular courses and research</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== III. Embodied AI Robot Curriculum ====== -->
+<section id="robot-courses" class="relative z-10 py-20 bg-secondary">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-accent2 font-bold text-sm tracking-wider uppercase">03</span>
+            <h2 class="text-3xl font-bold">Embodied AI Robot Curriculum</h2>
+        </div>
+        <p class="text-muted mb-4 max-w-3xl leading-relaxed">
+            Based on<strong class="text-accent2">the Mini Pi embodied robot</strong>hardware platform, spanning from<strong class="text-accent2">environment setup, device debugging, and interaction control to simulation and deployment</strong>— a closed-loop practice path with 10 core lessons (54 hours) in basic (1–5) and advanced (6–10) modules, plus competition, resources, faculty, and industry-research support.
+        </p>
+
+        <!-- Course stats -->
+        <div class="grid grid-cols-3 gap-6 mb-12">
+            <div class="bg-white rounded-2xl p-8 border border-border text-center">
+                <div class="text-5xl font-bold text-accent2 mb-2">10</div>
+                <div class="text-sm text-muted">core lessons</div>
+            </div>
+            <div class="bg-white rounded-2xl p-8 border border-border text-center">
+                <div class="text-5xl font-bold text-accent2 mb-2">54</div>
+                <div class="text-sm text-muted">hours</div>
+            </div>
+            <div class="bg-white rounded-2xl p-8 border border-border text-center">
+                <div class="text-5xl font-bold text-accent2 mb-2">2</div>
+                <div class="text-sm text-muted">progressive modules</div>
+            </div>
+        </div>
+
+        <!-- Basic module (lessons 1-5) -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="px-3 py-1 bg-accent2/10 text-accent2 text-xs font-semibold rounded-full">Basic Module</span>
+                <h3 class="text-xl font-bold">Lessons 1–5: Basics and Core Control</h3>
+            </div>
+            <div class="space-y-4">
+                <!-- Lesson 1: Environment Setup -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-accent2 font-bold">01</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Environment Setup</h4>
+                                <span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full">Getting started</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">Set up the dev environment — simulation platform, dependency config, and toolchain — laying the software and system foundation.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Simulation platform install</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Dependency config</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Toolchain deployment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 2: Device Debugging -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-green-600 font-bold">02</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Device Debugging</h4>
+                                <span class="text-xs px-2 py-0.5 bg-green-50 text-green-700 rounded-full">Hardware basics</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">Robot hardware deployment and debugging — sensor calibration, actuator calibration, and comms testing, from unboxing to running.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Sensor calibration</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Actuator calibration</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Comms testing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 3: Voice Input & Output -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-purple-600 font-bold">03</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Voice input & output</h4>
+                                <span class="text-xs px-2 py-0.5 bg-purple-50 text-purple-700 rounded-full">Flagship lesson</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">A flagship voice-interaction lesson covering ASR/TTS APIs and multi-turn dialogue to build full voice interaction.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Speech recognition</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Speech synthesis</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Multi-turn dialogue</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 4: API Calls -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-amber-600 font-bold">04</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">API calls</h4>
+                                <span class="text-xs px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full">Interface development</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">Hands-on tool integration — RESTful APIs, sensor data reading, and command dispatch for robot-system interconnection.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">RESTful API</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Sensor data reading</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Command dispatch</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 5: Motion Calls -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-rose-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-rose-600 font-bold">05</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Motion calls</h4>
+                                <span class="text-xs px-2 py-0.5 bg-rose-50 text-rose-700 rounded-full">Motion control</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">Basic motion command programming — joint control, motion sequencing, and kinematics, from single to multi-joint coordination.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Joint motion control</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Motion sequencing</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Kinematics basics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced module (lessons 6-10) -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="px-3 py-1 bg-accent2/10 text-accent2 text-xs font-semibold rounded-full">Advanced Module</span>
+                <h3 class="text-xl font-bold">Lessons 6–10: Simulation and Deployment</h3>
+            </div>
+            <div class="space-y-4">
+                <!-- Lesson 6: Digital Twin Setup -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-indigo-600 font-bold">06</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Digital Twin Setup</h4>
+                                <span class="text-xs px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-full">Simulation modeling</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">Build simulation scenes in Isaac Sim / NVIDIA Omniverse with asset import, providing a digital base for RL training and algorithm validation.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Isaac Sim</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Omniverse</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Asset import</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 7: Motion Import & Teaching -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-cyan-600 font-bold">07</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Motion Import & Teaching</h4>
+                                <span class="text-xs px-2 py-0.5 bg-cyan-50 text-cyan-700 rounded-full">Teach programming</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">Hands-on drag-teaching — motion recording, trajectory replay, and teach programming, enabling zero-code robot motion learning.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Drag teaching</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Motion recording</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Trajectory replay</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 8: Isaac Lab Motion Training -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-violet-600 font-bold">08</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Isaac Lab Motion Training</h4>
+                                <span class="text-xs px-2 py-0.5 bg-violet-50 text-violet-700 rounded-full">Flagship lesson</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">A flagship RL training lesson — policy training, domain randomization, and Sim2Real transfer, from virtual to real.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">RL training</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Domain randomization</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Sim2Real transfer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 9: Real-robot Deployment -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-orange-600 font-bold">09</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Real-robot Deployment</h4>
+                                <span class="text-xs px-2 py-0.5 bg-orange-50 text-orange-700 rounded-full">Sim-to-real transfer</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">Deploy simulated models to real robots — conversion, firmware flashing, and testing — closing the sim-to-real loop.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Model conversion</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Firmware flashing</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Real-robot debugging</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 10: Soccer Case -->
+                <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                    <div class="flex flex-wrap items-start gap-4">
+                        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center shrink-0">
+                            <span class="text-emerald-600 font-bold">10</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h4 class="font-bold text-lg">Soccer Case</h4>
+                                <span class="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-full">Integrated Practice</span>
+                            </div>
+                            <p class="text-sm text-muted leading-relaxed">An integrated project — perception → planning → execution — using robot soccer to tie together all prior lessons and validate the full tech stack.</p>
+                            <div class="flex flex-wrap gap-1 mt-3">
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Perception</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Planning</span>
+                                <span class="text-xs px-2 py-0.5 bg-gray-100 rounded">Execution</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Companion Expansion System -->
+        <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-puzzle-piece text-accent2"></i> Companion Expansion System
+            </h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                    <div class="text-3xl mb-3">🏆</div>
+                    <h4 class="font-bold mb-2 text-sm">Competition-empowering courses</h4>
+                    <p class="text-xs text-muted leading-relaxed">Focused on computer application and digital literacy competitions, with WorldSkills embodied intelligence coaching through real cases and teamwork.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                    <div class="text-3xl mb-3">📚</div>
+                    <h4 class="font-bold mb-2 text-sm">Premium digital resources</h4>
+                    <p class="text-xs text-muted leading-relaxed">A full resource library — syllabus, lesson design, per-chapter videos, and source code, with workbook and project-based textbooks for blended teaching.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                    <div class="text-3xl mb-3">👨🏫</div>
+                    <h4 class="font-bold mb-2 text-sm">Faculty development</h4>
+                    <p class="text-xs text-muted leading-relaxed">Holiday training on cutting-edge tech, deep teaching and curriculum design, building dual-qualified faculty through hands-on practice.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                    <div class="text-3xl mb-3">🤝</div>
+                    <h4 class="font-bold mb-2 text-sm">Industry-Education-Research Projects</h4>
+                    <p class="text-xs text-muted leading-relaxed">Guide teaching reform and industry-education projects, landing MOE partnerships with real enterprise projects and data annotation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== IV. Dexterous Hand Curriculum ====== -->
+<section id="dexterous-hand-courses" class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-purple-600 font-bold text-sm tracking-wider uppercase">04</span>
+            <h2 class="text-3xl font-bold">dexterous hands <span class="text-gradient" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent">ROS SDK Tiered Curriculum</span>System</h2>
+        </div>
+        <p class="text-muted mb-2 max-w-3xl leading-relaxed">
+            WWNT Robotics · based on <strong class="text-purple-600">LinkerHand ROS SDK</strong> a tiered curriculum for vocational, undergraduate, and graduate levels. Built on the full LinkerHand ROS1/ROS2 SDK and wwntAI integration, delivering a three-tier standardized dexterous-hand teaching system.
+        </p>
+        <p class="text-sm text-gray-400 mb-6">
+            <i class="fas fa-link mr-1"></i>SDK reference:<a href="https://document.linkeros.cn/developer/41" target="_blank" class="text-purple-600 hover:underline">LinkerHand ROS SDK docs</a>
+            <span class="mx-2">|</span>
+            <a href="products/dexterous-hand.html" class="text-purple-600 hover:underline"><i class="fas fa-external-link-alt mr-1"></i>View dexterous hand details</a>
+        </p>
+
+        <!-- Curriculum Positioning -->
+        <div class="bg-white rounded-2xl shadow-sm border border-purple-100 p-8 mb-10">
+            <h3 class="text-xl font-bold text-purple-700 mb-6"><i class="fas fa-sitemap mr-2"></i>Curriculum Positioning</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+                    <div class="flex items-center mb-3"><i class="fas fa-microchip text-blue-600 text-xl mr-2"></i><h4 class="font-bold text-gray-800">Hardware foundation</h4></div>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li>• Full LinkerHand line: O7/L6/L10/L16/L20/L25, spanning low-to-high DOF</li>
+                        <li>• wwntAI unified teaching platform, sim system, and training benches</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+                    <div class="flex items-center mb-3"><i class="fas fa-code text-green-600 text-xl mr-2"></i><h4 class="font-bold text-gray-800">Software base</h4></div>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li>• Native LinkerHand ROS SDK (ROS1 Noetic / ROS2 Humble)</li>
+                        <li>• Reuse 100+ official open-source examples plus wwntAI teaching wrappers</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100">
+                    <div class="flex items-center mb-3"><i class="fas fa-layer-group text-orange-600 text-xl mr-2"></i><h4 class="font-bold text-gray-800">Tiered training logic</h4></div>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li>• <strong>Vocational:</strong>Operations + basic programming → equipment debugging and line integration roles</li>
+                        <li>• <strong>Undergraduate:</strong>ROS + hand-eye coordination + force-tactile perception → robot system development</li>
+                        <li>• <strong>Graduate:</strong>Embodied AI algorithms + imitation learning + grasping models → research and competitions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tier 1: Vocational -->
+        <div class="bg-white rounded-2xl shadow-sm border border-border p-8 mb-8">
+            <div class="flex items-center mb-6">
+                <span class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 text-white rounded-xl flex items-center justify-center font-bold mr-4 shrink-0">1</span>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Vocational / Associate: "Bionic Dexterous Hand Basic Training"</h3>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>48 hours · industrial robotics / mechatronics</p>
+                </div>
+            </div>
+            <p class="mb-4 text-gray-600"><strong>Objectives:</strong>Master dexterous hand assembly, GUI control, Python basics, and industrial grasping to debug devices and develop simple automation stations.</p>
+            <p class="mb-4 text-muted text-sm"><strong>Hardware:</strong>L6/O7 low-cost hands, desktop bench, wwntAI visual control software</p>
+            <div class="space-y-6 mt-6">
+                <div class="border-l-4 border-blue-300 pl-4">
+                    <h4 class="font-semibold text-blue-700 mb-2">Module 1: Hardware & Environment Setup (8h)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• LinkerHand linkage/tendon/direct-drive teardown; DOF, servo, e-skin, fingertip sensor principles</li>
+                        <li>• Ubuntu install, ROS1 setup, LinkerHand SDK source pull and build</li>
+                        <li>• setting.yaml config, left/right hand matching, CAN fault diagnosis</li>
+                        <li><strong class="text-blue-600">Assessment:</strong>Independently start the SDK, run comms self-check, and troubleshoot faults</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-cyan-300 pl-4">
+                    <h4 class="font-semibold text-cyan-700 mb-2">Module 2: GUI Control (12h)<span class="text-xs font-normal text-gray-400 ml-2">→ SDK 0002-gui_control</span></h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• GUI sliders for single-joint control and five-finger pose adjustment</li>
+                        <li>• Save waypoints, replay poses, and record gesture sequences</li>
+                        <li>• Group labs: fist, spread, pinch, and wave gestures</li>
+                        <li><strong class="text-cyan-600">Integrated task:</strong>Build a product-display gesture flow, replayable via GUI in one click</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-sky-300 pl-4">
+                    <h4 class="font-semibold text-sky-700 mb-2">Module 3: Python Basics (16h)<span class="text-xs font-normal text-gray-400 ml-2">→ Python L20 basic examples</span></h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• 0102-gesture-Show-OK: OK gesture program and speed tuning</li>
+                        <li>• 0103-gesture-Show-Surround-Index-Finger: index rotation</li>
+                        <li>• 0104-gesture-Show-Wave: four-finger wave loop</li>
+                        <li>• 0106-gesture-Loop: cyclic grasp/release</li>
+                        <li>• 0101-lipcontroller: tactile-triggered pinch (flexible materials)</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-teal-300 pl-4">
+                    <h4 class="font-semibold text-teal-700 mb-2">Module 4: Industrial Grasping (12h)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• Force sensor reading (0003) to detect material presence by grip force</li>
+                        <li>• Speed and current tuning (0004/0005/0006/0007) for soft/hard materials</li>
+                        <li><strong class="text-teal-600">Final project:</strong>A sorting station — the hand auto-recognizes, grasps, and sorts materials</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4 p-3 bg-blue-50 rounded-lg text-xs text-blue-700"><i class="fas fa-box-open mr-1"></i><strong>Companion resources (self-developed):</strong>Lab guides, videos, Python templates, troubleshooting manual, and 1+X skill exam bank</div>
+        </div>
+
+        <!-- Tier 2: Undergraduate -->
+        <div class="bg-white rounded-2xl shadow-sm border border-border p-8 mb-8">
+            <div class="flex items-center mb-6">
+                <span class="w-10 h-10 bg-gradient-to-br from-purple-500 to-violet-500 text-white rounded-xl flex items-center justify-center font-bold mr-4 shrink-0">2</span>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Undergraduate: "ROS Dexterous Hand and Hand-Eye Coordination"</h3>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>64 hours · robotics / automation / AI</p>
+                </div>
+            </div>
+            <p class="mb-4 text-gray-600"><strong>Objectives:</strong>Master ROS1/ROS2, multimodal fusion, hand-eye coordination, simulation, and teleoperation to independently integrate systems and design courses.</p>
+            <p class="mb-4 text-muted text-sm"><strong>Hardware:</strong>L10/L16 hands, PyBullet workstation, monocular camera, wwntAI cluster system</p>
+            <div class="space-y-6 mt-6">
+                <div class="border-l-4 border-purple-300 pl-4">
+                    <h4 class="font-semibold text-purple-700 mb-2">Module 1: ROS & Low-level Driver Dev (16h)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• ROS concepts: nodes, topics, services, parameters; SDK architecture</li>
+                        <li>• Source study: joint state (0001), force/speed/current reading</li>
+                        <li>• Secondary dev: custom topics for real-time five-finger force and position visualization</li>
+                        <li>• L25 extension: disable/enable/teleoperation mode switching</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-violet-300 pl-4">
+                    <h4 class="font-semibold text-violet-700 mb-2">Module 2: PyBullet Simulation (12h)<span class="text-xs font-normal text-gray-400 ml-2">→ SDK 0000-PyBullet</span></h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• Environment setup, virtual hand loading, offline debugging</li>
+                        <li>• Sim-real code interop — one program for both environments</li>
+                        <li><strong class="text-violet-600">Lab project:</strong>Trajectory planning for grasping irregular objects in simulation</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-fuchsia-300 pl-4">
+                    <h4 class="font-semibold text-fuchsia-700 mb-2">Module 3: Hand-Eye Coordination & Tactile Fusion (16h)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• Vision + tactile fusion grasping with RGB camera and fingertip force</li>
+                        <li>• Rock-paper-scissors project (0009): vision gesture recognition + hand feedback</li>
+                        <li>• Flexible object manipulation: adaptive grip force via tactile feedback</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-pink-300 pl-4">
+                    <h4 class="font-semibold text-pink-700 mb-2">Module 4: Teleoperation & Cluster System (10h)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• L25 teleoperation config, motion-capture glove / vision teaching</li>
+                        <li>• wwntAI cluster scheduling of multiple hands and teacher-side monitoring</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-rose-300 pl-4">
+                    <h4 class="font-semibold text-rose-700 mb-2">Module 5: Integrated Design Project (10h)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• Complete a full ROS project (choose one):<strong>A.</strong> Service robot display/interaction system / <strong>B.</strong> Industrial precision assembly hand-eye grasping system</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4 p-3 bg-purple-50 rounded-lg text-xs text-purple-700"><i class="fas fa-box-open mr-1"></i><strong>Companion resources:</strong>Full PPTs, complete ROS source, simulation guides, design briefs, and exams</div>
+        </div>
+
+        <!-- Tier 3: Graduate -->
+        <div class="bg-white rounded-2xl shadow-sm border border-border p-8 mb-10">
+            <div class="flex items-center mb-6">
+                <span class="w-10 h-10 bg-gradient-to-br from-pink-500 to-red-500 text-white rounded-xl flex items-center justify-center font-bold mr-4 shrink-0">3</span>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Graduate / Innovation: "Embodied Dexterous Manipulation & RL"</h3>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>32 hours · elective / research</p>
+                </div>
+            </div>
+            <p class="mb-4 text-gray-600"><strong>Objectives:</strong>Use the LinkerHand SDK for imitation learning, grasp generation, and embodied model deployment, supporting theses, competitions, and grants.</p>
+            <p class="mb-4 text-muted text-sm"><strong>Hardware:</strong>L20 flagship 21-DOF hand, humanoid robot, GPU workstation, DexScale tactile dataset license</p>
+            <div class="space-y-6 mt-6">
+                <div class="border-l-4 border-pink-300 pl-4">
+                    <h4 class="font-semibold text-pink-700 mb-2">Module 1: Human-Dex Imitation Learning (12h)<span class="text-xs font-normal text-gray-400 ml-2">→ SDK 1001-human-dex</span></h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• Conda environment, HDF5 data collection node deployment</li>
+                        <li>• Human-taught grasping data collection, HIT RL training</li>
+                        <li>• Real-robot reproduction and grasp generalization</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-red-300 pl-4">
+                    <h4 class="font-semibold text-red-700 mb-2">Module 2: Unidexgrasp Porting (12h)<span class="text-xs font-normal text-gray-400 ml-2">→ SDK 1002-linker_unidexgrasp</span></h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• Map ShadowHand grasps to Linker L20 joint space</li>
+                        <li>• Train and evaluate GraspIPDF, GraspGlow, ContactNet</li>
+                        <li>• Grasp visualization and RL dataset generation</li>
+                    </ul>
+                </div>
+                <div class="border-l-4 border-orange-300 pl-4">
+                    <h4 class="font-semibold text-orange-700 mb-2">Module 3: Integrated Research Project (8h)</h4>
+                    <ul class="text-sm text-gray-600 space-y-1 ml-2">
+                        <li>• Optional directions:
+                            <br>&nbsp;&nbsp;① Multimodal tactile-vision LLM dexterous manipulation
+                            <br>&nbsp;&nbsp;② Humanoid hand-foot coordinated motion control
+                            <br>&nbsp;&nbsp;③ Competition: RoboMaster / bionic robot dexterous algorithm optimization
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4 p-3 bg-pink-50 rounded-lg text-xs text-pink-700"><i class="fas fa-box-open mr-1"></i><strong>Companion resources:</strong>Algorithm source, dataset license, paper guidance, competition support</div>
+        </div>
+
+        <!-- Cross-level Support & Delivery -->
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-border p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4"><i class="fas fa-tools text-purple-500 mr-2"></i>Cross-level Training Support</h3>
+                <div class="space-y-4 text-sm text-gray-600">
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <strong class="text-purple-700 block mb-1">1. Unified teaching software — wwntAI Teaching Platform</strong>
+                        Compatible with the full LinkerHand line, one-click ROS SDK launch, visual entry to all SDK examples (no terminal commands), auto task dispatch, data logging, and one-click report export.
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <strong class="text-purple-700 block mb-1">2. Complete tiered teaching material pack</strong>
+                        Theory slides: mechanical structure, servo drive, ROS, embodied AI<br>
+                        Lab manuals: step-by-step docs and troubleshooting per SDK example<br>
+                        Code library: 100+ categorized SDK examples, annotated and simplified for teaching<br>
+                        Competition resources: algorithm templates for rock-paper-scissors, grasping, and humanoid interaction
+                    </div>
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <strong class="text-purple-700 block mb-1">3. Faculty support services</strong>
+                        On-site training: SDK setup, case practice, teaching methods<br>
+                        Year-round Q&A: ROS build errors, hardware comms, algorithm tuning<br>
+                        Continuous updates: new SDK versions and lab cases
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-border p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4"><i class="fas fa-handshake text-pink-500 mr-2"></i>Three Delivery Plans</h3>
+                <div class="space-y-4">
+                    <div class="p-4 border-l-4 border-blue-400 bg-blue-50/50 rounded-r-lg">
+                        <span class="inline-block px-2 py-0.5 bg-blue-500 text-white text-xs font-semibold rounded-full mb-2">Plan A</span>
+                        <h4 class="font-semibold text-gray-800">Single-course training pack</h4>
+                        <p class="text-xs text-muted mt-1">For new electives — L6/L10 hands + full SDK source + tiered lab guides + wwntAI software + 1 faculty training</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-purple-400 bg-purple-50/50 rounded-r-lg">
+                        <span class="inline-block px-2 py-0.5 bg-purple-500 text-white text-xs font-semibold rounded-full mb-2">Plan B</span>
+                        <h4 class="font-semibold text-gray-800">Embodied Intelligence Lab</h4>
+                        <p class="text-xs text-muted mt-1">For new-engineering programs — 32-hand cluster + sim server + three-tier curriculum + lab construction + 2 years on-site service</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-pink-400 bg-pink-50/50 rounded-r-lg">
+                        <span class="inline-block px-2 py-0.5 bg-pink-500 text-white text-xs font-semibold rounded-full mb-2">Plan C</span>
+                        <h4 class="font-semibold text-gray-800">Innovation Studio</h4>
+                        <p class="text-xs text-muted mt-1">For graduate/competition — L20 flagship + deep learning workstation + full imitation/grasping source + joint research + full competition support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SDK Case Mapping -->
+        <div class="mt-10 bg-white rounded-2xl shadow-sm border border-border overflow-hidden">
+            <h3 class="text-lg font-bold text-gray-800 p-6 pb-4"><i class="fas fa-table text-purple-500 mr-2"></i>Course-to-SDK Mapping</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gradient-to-r from-purple-50 to-pink-50">
+                            <th class="px-4 py-3 text-left font-semibold text-gray-700">SDK case ID</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Teaching module</th>
+                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Core knowledge point</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0000-PyBullet simulation</td><td class="px-4 py-3">Undergraduate sim module</td><td class="px-4 py-3 text-gray-600">Offline simulation, sim-real code interop</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0001 - Get hand state</td><td class="px-4 py-3">Undergraduate ROS dev</td><td class="px-4 py-3 text-gray-600">ROS topics, joint data parsing</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0002-gui_control GUI</td><td class="px-4 py-3">Vocational basics</td><td class="px-4 py-3 text-gray-600">Visual control, waypoint recording/replay</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0003~0005 force/speed/current</td><td class="px-4 py-3">Vocational grasping, undergraduate fusion</td><td class="px-4 py-3 text-gray-600">Multi-sensor acquisition, adaptive grip force</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0101-lipcontroller tactile pinch</td><td class="px-4 py-3">Vocational integrated</td><td class="px-4 py-3 text-gray-600">Tactile-triggered closed-loop grasping</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0102~0106 Python gestures</td><td class="px-4 py-3">Vocational Python</td><td class="px-4 py-3 text-gray-600">Python ROS nodes, continuous motion control</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0201~0203 L25 teleoperation</td><td class="px-4 py-3">Undergraduate teleoperation</td><td class="px-4 py-3 text-gray-600">Remote control, multi-mode switching</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">0009-finger_guessing rock-paper-scissors</td><td class="px-4 py-3">Undergraduate hand-eye</td><td class="px-4 py-3 text-gray-600">Vision recognition + hand interaction loop</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">1001-human-dex imitation learning</td><td class="px-4 py-3">Graduate research</td><td class="px-4 py-3 text-gray-600">Teaching data acquisition, RL training</td></tr>
+                        <tr class="hover:bg-gray-50"><td class="px-4 py-3 font-mono text-purple-600 text-xs">1002-linker_unidexgrasp grasping</td><td class="px-4 py-3">Graduate research</td><td class="px-4 py-3 text-gray-600">General grasping network, cross-model pose mapping</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== V. OpenDuck Mini Bipedal Robot Curriculum ====== -->
+<section id="openduck-courses" class="relative z-10 py-20 border-t border-border overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-20"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6">
+        <div class="flex items-center gap-3 mb-2">
+            <span class="text-cyan-600 font-bold text-sm tracking-wider uppercase">05</span>
+            <h2 class="text-3xl font-bold">OpenDuck Mini <span class="text-gradient" style="background:linear-gradient(135deg,#06b6d4,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Bipedal Robot Curriculum</span></h2>
+        </div>
+        <p class="text-muted mb-2 max-w-3xl leading-relaxed">
+            WWNT Robotics · OpenDuck Mini companion courses, covering<strong class="text-cyan-600">embodied intelligence → bipedal motion control → MuJoCo simulation</strong>— a full chain using the ~42 cm, 14+2-DOF open bipedal robot, from theory to real robot, simulation to RL, with zero barrier.
+        </p>
+        <p class="text-sm text-gray-400 mb-6">
+            <i class="fas fa-link mr-1"></i>Related product:<a href="products/openduck-mini.html" class="text-cyan-600 hover:underline"><i class="fas fa-external-link-alt mr-1"></i>View OpenDuck Mini details</a>
+            <span class="mx-2">|</span>
+            <a href="https://github.com/apirrone/Open_Duck_Mini" target="_blank" class="text-cyan-600 hover:underline"><i class="fab fa-github mr-1"></i>Open-source repository</a>
+        </p>
+
+        <!-- 16 lessons, 4 modules -->
+        <div class="grid lg:grid-cols-2 gap-6">
+            <!-- Module 1: Course Introduction -->
+            <div class="bg-white rounded-2xl p-7 border border-cyan-100 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-600 flex items-center justify-center"><i class="fas fa-book-open"></i></div>
+                    <h3 class="text-lg font-bold">Module 1: Course Introduction</h3>
+                    <span class="ml-auto text-xs px-2 py-0.5 bg-cyan-50 text-cyan-700 rounded-full">2 lessons</span>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-cyan-600 bg-cyan-50 px-2 py-1 rounded h-fit">01</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Course overview and schedule</h4>
+                            <p class="text-xs text-muted mt-0.5">Course objectives, knowledge map, learning path, and assessment overview.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-cyan-600 bg-cyan-50 px-2 py-1 rounded h-fit">02</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Synchronization software</h4>
+                            <p class="text-xs text-muted mt-0.5">Configure the dev environment, SSH, and file sync toolchain.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Module 2: Embodied Intelligence Fundamentals -->
+            <div class="bg-white rounded-2xl p-7 border border-indigo-100 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-600 flex items-center justify-center"><i class="fas fa-brain"></i></div>
+                    <h3 class="text-lg font-bold">Module 2: Embodied Intelligence Fundamentals</h3>
+                    <span class="ml-auto text-xs px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-full">3 lessons</span>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">03</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Defining embodied intelligence</h4>
+                            <p class="text-xs text-muted mt-0.5">From traditional AI to embodied intelligence: the perception-decision-action loop.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">04</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Control systems</h4>
+                            <p class="text-xs text-muted mt-0.5">Layered control: high-level planning, mid-level motion, low-level servo.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-indigo-600 bg-indigo-50 px-2 py-1 rounded h-fit">05</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Two motion-control approaches</h4>
+                            <p class="text-xs text-muted mt-0.5">Model-based vs. learning-based control — comparison, use cases, and evolution.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Module 3: Bipedal Motion Control -->
+            <div class="bg-white rounded-2xl p-7 border border-emerald-100 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 flex items-center justify-center"><i class="fas fa-running"></i></div>
+                    <h3 class="text-lg font-bold">Module 3: Bipedal Motion Control</h3>
+                    <span class="ml-auto text-xs px-2 py-0.5 bg-emerald-50 text-emerald-700 rounded-full">8 lessons</span>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">06</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Center-of-mass projection</h4>
+                            <p class="text-xs text-muted mt-0.5">COM, support polygon, and static stability geometry.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">07</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Capture Point introduction</h4>
+                            <p class="text-xs text-muted mt-0.5">Linear inverted pendulum model and capture point computation.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">08</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Weight transfer</h4>
+                            <p class="text-xs text-muted mt-0.5">Single/double support transitions, COM trajectory planning, stability criteria.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">09</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Forward and inverse kinematics</h4>
+                            <p class="text-xs text-muted mt-0.5">DH modeling, forward kinematics, numerical inverse kinematics.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">10</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Swing-foot motion control</h4>
+                            <p class="text-xs text-muted mt-0.5">Foot trajectory planning: lift-off, swing, and touch-down constraints.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">11</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Computing the swing-foot Capture Point</h4>
+                            <p class="text-xs text-muted mt-0.5">Predicting swing-foot touch-down using COM velocity and position.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">12</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Bipedal walking analysis</h4>
+                            <p class="text-xs text-muted mt-0.5">From state machine to gait cycle: decomposing bipedal walking.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-emerald-600 bg-emerald-50 px-2 py-1 rounded h-fit">13</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Bipedal gait walkthrough</h4>
+                            <p class="text-xs text-muted mt-0.5">Parameter tuning, online debugging, and real-robot gait validation.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- Module 4: MuJoCo Simulation -->
+            <div class="bg-white rounded-2xl p-7 border border-purple-100 shadow-sm card-hover">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center"><i class="fas fa-cube"></i></div>
+                    <h3 class="text-lg font-bold">Module 4: MuJoCo Simulation</h3>
+                    <span class="ml-auto text-xs px-2 py-0.5 bg-purple-50 text-purple-700 rounded-full">3 lessons</span>
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">14</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Introduction to MuJoCo</h4>
+                            <p class="text-xs text-muted mt-0.5">MuJoCo physics, URDF/MJCF models, and contact models.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">15</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">Command-line installation</h4>
+                            <p class="text-xs text-muted mt-0.5">Install MuJoCo on Linux/Raspberry Pi and bind Python.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-xs font-mono text-purple-600 bg-purple-50 px-2 py-1 rounded h-fit">16</span>
+                        <div>
+                            <h4 class="font-semibold text-sm">MuJoCo Hello World</h4>
+                            <p class="text-xs text-muted mt-0.5">Load the OpenDuck Mini model, run the first step, and visualize.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Course highlights -->
+        <div class="mt-8 grid md:grid-cols-3 gap-5">
+            <div class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-6 border border-cyan-100">
+                <div class="flex items-center mb-3"><i class="fas fa-cubes text-cyan-600 text-xl mr-2"></i><h4 class="font-bold text-gray-800">Open hardware base</h4></div>
+                <p class="text-sm text-gray-600 leading-relaxed">A ~42 cm bipedal robot with 14+2 DOF and 35+ fully open 3D-printed parts, ready out of the box.</p>
+            </div>
+            <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-2xl p-6 border border-indigo-100">
+                <div class="flex items-center mb-3"><i class="fas fa-flask text-indigo-600 text-xl mr-2"></i><h4 class="font-bold text-gray-800">Simulation to real robot</h4></div>
+                <p class="text-sm text-gray-600 leading-relaxed">MuJoCo simulation + pre-trained RL walking policies, full Sim2Real for research and teaching.</p>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6 border border-purple-100">
+                <div class="flex items-center mb-3"><i class="fas fa-palette text-purple-600 text-xl mr-2"></i><h4 class="font-bold text-gray-800">Campus IP customization</h4></div>
+                <p class="text-sm text-gray-600 leading-relaxed">Custom colors, badges, and mascots to create a campus-exclusive AI ambassador.</p>
+            </div>
+        </div>
+
+        <div class="mt-10 text-center">
+            <a href="products/openduck-mini.html" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-500/20">
+                <i class="fas fa-robot mr-2"></i>Learn about OpenDuck Mini
+            </a>
+            <a href="contact.html" class="inline-flex items-center px-6 py-3 ml-3 bg-white hover:bg-gray-50 text-dark font-semibold rounded-xl border border-border transition-colors">
+                <i class="fas fa-file-alt mr-2"></i>Get the Full Syllabus
+            </a>
+        </div>
+    </div>
+</section>
+<section class="relative z-10 py-20 border-t border-border">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Training Objectives</h2>
+            <p class="text-muted max-w-2xl mx-auto">Cultivating well-rounded embodied-intelligence talent with solid theory, strong engineering practice, and cutting-edge innovation.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-layer-group text-accent text-lg"></i>
+                </div>
+                <h4 class="font-bold mb-2">System design</h4>
+                <p class="text-sm text-muted">Full-stack development from hardware selection and drivers to software architecture and integration</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                <div class="w-12 h-12 bg-accent2/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-sitemap text-accent2 text-lg"></i>
+                </div>
+                <h4 class="font-bold mb-2">Algorithm application</h4>
+                <p class="text-sm text-muted">Master deep learning and RL, applying them to perception, decision, and control tasks</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-tools text-green-600 text-lg"></i>
+                </div>
+                <h4 class="font-bold mb-2">Engineering practice</h4>
+                <p class="text-sm text-muted">Turn theory into practice — debug hardware, optimize code, and solve real-world problems</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border text-center card-hover">
+                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-amber-600 text-lg"></i>
+                </div>
+                <h4 class="font-bold mb-2">Teamwork</h4>
+                <p class="text-sm text-muted">Agile collaboration and cross-functional communication to achieve R&D goals</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CTA ====== -->
+<section class="relative z-10 py-20 bg-secondary">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <div class="bg-white rounded-3xl p-12 shadow-sm border border-border">
+            <div class="text-5xl mb-4">🎓</div>
+            <h2 class="text-3xl font-bold mb-4">Start a New Chapter in Teaching</h2>
+            <p class="text-muted mb-8 max-w-xl mx-auto leading-relaxed">
+                The WWNT curriculum provides complete solutions from hardware to content for new-engineering programs. Contact us for the full syllabus and implementation plan.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="contact.html" class="px-8 py-3.5 text-white font-semibold rounded-xl shadow-xl hover:shadow-2xl ring-2 ring-blue-500/30" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'">
+                    <i class="fas fa-paper-plane mr-2"></i>Book a Curriculum Demo
+                </a>
+                <a href="products/robots.html" class="px-8 py-3.5 bg-white hover:bg-gray-50 text-dark font-semibold rounded-xl border border-border transition-colors">
+                    <i class="fas fa-robot mr-2"></i>Learn about Robot Hardware
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== Footer ====== -->
+
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="mb-4"><a href="index.html"><img src="../assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="text-sm leading-relaxed">Headquarters: Zengcheng District, Guangzhou</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Six Product Lines</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="products/robots.html" class="block hover:text-white transition-colors">Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block hover:text-white transition-colors">OpenArm Robotic Arm</a>
+                    <a href="products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block hover:text-white transition-colors">Training Platform</a>
+                    <a href="products/yanshi-ai.html" class="block hover:text-white transition-colors">Yanshu AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Five Partnership Models</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="solutions/education.html#model0" class="block hover:text-white transition-colors">Model 0: Brand Co-building</a>
+                    <a href="solutions/education.html#model1" class="block hover:text-white transition-colors">Model 1: Industry-Education Lab</a>
+                    <a href="solutions/education.html#model2" class="block hover:text-white transition-colors">Model 2: Joint Research Institute</a>
+                    <a href="solutions/education.html#model3" class="block hover:text-white transition-colors">Model 3: On-campus Factory</a>
+                    <a href="solutions/education.html#model4" class="block hover:text-white transition-colors">Model 4: Commercialization</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contact Us</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="contact.html" class="block hover:text-white transition-colors">Request a Demo</a>
+                    <a href="opensource.html" class="block hover:text-white transition-colors">Open Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 py-6 border-t border-gray-700 flex flex-wrap justify-between text-xs text-gray-500">
+        <span>&copy; Guangdong WWNT Robotics Co., Ltd. All rights reserved. <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="hover:text-gray-400">ICP: 粤ICP备2025486997号-1</a></span>
+        <div class="flex space-x-4">
+            <a href="privacy.html" class="hover:text-gray-400">Privacy Policy</a>
+            <a href="disclaimer.html" class="hover:text-gray-400">Disclaimer</a>
+        </div>
+    </div>
+</footer>
+
+<script src="particles.min.js"></script>
+<script>
+    particlesJS("particles-js", {
+        particles: {
+            number: { value: 30 },
+            color: { value: "#2563EB" },
+            opacity: { value: .06, random: true },
+            size: { value: 2, random: true },
+            line_linked: { enable: false },
+            move: { enable: true, speed: .5 }
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  var css='.slogan-snow-wrap{position:relative;display:inline-block}.slogan-snow-particle{position:absolute;border-radius:50%;pointer-events:none;animation:snowDrift var(--dur,3s) ease-in-out infinite;animation-delay:var(--delay,0s);opacity:0}@keyframes snowDrift{0%{transform:translateY(6px) translateX(0) scale(.35);opacity:0}12%{opacity:var(--op,.65)}45%{transform:translateY(-5px) translateX(var(--dx,8px)) scale(var(--sc,1));opacity:var(--op,.65)}80%{opacity:var(--op,.65)}100%{transform:translateY(-20px) translateX(var(--dx2,-6px)) scale(.18);opacity:0}}';
+  if(!document.getElementById('snow-particle-style')){
+    var s=document.createElement('style');s.id='snow-particle-style';s.textContent=css;document.head.appendChild(s);
+  }
+  setTimeout(function(){
+    document.querySelectorAll('.slogan-snow-wrap').forEach(function(c){
+      if(c.querySelector('.slogan-snow-particle'))return;
+      var r=c.getBoundingClientRect(),w=r.width||280,h=r.height||32;
+      for(var i=0;i<18;i++){
+        var p=document.createElement('span');p.className='slogan-snow-particle';
+        var sz=2+Math.random()*3;
+        p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*w)+'px;bottom:'+(Math.random()*h*.5)+'px;--dur:'+(2.2+Math.random()*3)+'s;--delay:'+(Math.random()*3.5)+'s;--dx:'+(-10+Math.random()*20)+'px;--dx2:'+(-8+Math.random()*16)+'px;--sc:'+(.45+Math.random()*.75)+';--op:'+(.35+Math.random()*.5)+';background:rgba(255,255,255,'+(.4+Math.random()*.45)+')';
+        c.appendChild(p);
+      }
+    });
+  },400);
+})();
+</script>
+</body>
+</html>
