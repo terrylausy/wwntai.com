@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Industry-Education-Research - wwntAI.com</title>
+
+    <meta name="description" content="wwntAI与高校开展产教研赛用全链条合作，提供具身智能机器人硬件、全栈课程体系、赛事赋能与成果转化支持。">
+
+    <script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',accent:'#2563eb',card:'#ffffff',border:'#e2e8f0',warm:'#f59e0b',scholar:'#8b5cf6',
+                        secondary: '#f1f5f9',
+                        light: '#3b82f6',
+                        accent2: '#7c3aed',
+                        dark: '#0F172A',
+                        muted: '#64748B'},
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+                        display: ['JetBrains Mono', 'monospace'],
+                    ,
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+                        display: ['JetBrains Mono', 'monospace'],
+                    }
+                }}}}</script>
+
+    <style>
+
+        :root{--scholar:#8b5cf6;--scholar-light:#a78bfa}
+
+        .bg-grid{background-image:linear-gradient(rgba(139,92,246,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.04) 1px,transparent 1px);background-size:40px 40px}
+
+        .glass{background:rgba(17,24,39,.85);backdrop-filter:blur(16px);border:1px solid rgba(124,58,237,.08)}
+
+        .card-hover{transition:all .35s cubic-bezier(.4,0,.2,1)}
+
+        .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(124,58,237,.08)}
+
+        .text-gradient{background:linear-gradient(135deg,#a78bfa,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+        .text-gradient-warm{background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+        .hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.12) 0%,transparent 70%)}
+
+        .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+
+        .tag-scholar{background:rgba(124,58,237,.08);color:#7c3aed;border:1px solid rgba(139,92,246,.25)}
+
+        .tag-warm{background:rgba(217,119,6,.08);color:#d97706;border:1px solid rgba(245,158,11,.25)}
+
+        .top-nav{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(11,17,32,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(59,130,246,.1)}
+
+        .top-nav .nav-container{max-width:1280px;margin:0 auto;padding:0 32px 0 124px;display:flex;align-items:center;height:72px}
+
+        .top-nav .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+
+        .top-nav .nav-links{display:none;align-items:center;gap:2px;margin-left:12px;flex:1}
+
+        @media(min-width:1024px){.top-nav .nav-links{display:flex}}
+
+        .nav-item{position:relative}
+
+        .nav-item>a{display:flex;align-items:center;gap:6px;padding:8px 16px;color:#cbd5e1;font-size:.9rem;font-weight:500;text-decoration:none;border-radius:8px;transition:all .2s;white-space:nowrap}
+
+        .nav-item>a:hover{color:#fff;background:rgba(59,130,246,.12)}
+
+        .nav-item>a i.chevron{font-size:.65rem;transition:transform .2s;color:#64748b}
+
+        .nav-item:hover>a i.chevron{transform:rotate(180deg);color:#2563eb}
+
+        .nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:10px;opacity:0;visibility:hidden;transition:all .25s;pointer-events:none}
+
+        .nav-item:hover .nav-dropdown{opacity:1;visibility:visible;pointer-events:auto}
+
+        .nav-dropdown-inner{background:rgba(17,24,39,.98);backdrop-filter:blur(20px);border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:24px;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+
+        .nav-dropdown-inner.mega{display:grid;gap:20px;min-width:680px}
+
+        .nav-dropdown-inner.compact{min-width:320px;display:flex;flex-direction:column;gap:6px}
+
+        .dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;transition:all .2s}
+
+        .dd-item:hover{background:rgba(59,130,246,.1)}
+
+        .dd-item .dd-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+
+        .dd-item .dd-icon.blue{background:rgba(37,99,235,.08);color:#2563eb}
+
+        .dd-item .dd-icon.purple{background:rgba(124,58,237,.08);color:#7c3aed}
+
+        .dd-item .dd-icon.emerald{background:rgba(16,185,129,.15);color:#34d399}
+
+        .dd-item .dd-text .dd-title{color:#f1f5f9;font-weight:600;font-size:.9rem}
+
+        .dd-item .dd-text .dd-sub{color:#64748b;font-size:.75rem;margin-top:1px}
+
+        .dd-compact-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;color:#cbd5e1;text-decoration:none;font-size:.85rem;transition:all .2s}
+
+        .dd-compact-item:hover{background:rgba(59,130,246,.1);color:#fff}
+
+        .dd-compact-item .sub{font-size:.75rem;color:#64748b}
+
+        .nav-right{display:flex;align-items:center;gap:12px;margin-left:auto;flex-shrink:0}
+
+        .nav-right .btn-contact{color:#94a3b8;font-size:.85rem;text-decoration:none;padding:8px 14px;border-radius:8px;transition:all .2s}
+
+        .nav-right .btn-contact:hover{color:#fff;background:rgba(255,255,255,.05)}
+
+        .nav-right .btn-demo{background:#3b82f6;color:#fff;font-size:.85rem;font-weight:600;padding:8px 18px;border-radius:8px;text-decoration:none;transition:all .2s}
+
+        .nav-right .btn-demo:hover{background:#2563eb;box-shadow:0 4px 16px rgba(59,130,246,.3)}
+
+
+
+        /* Sidebar */
+
+        #sidebar{position:fixed;top:0;left:-320px;width:280px;height:100vh;z-index:100;transition:left .35s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+
+        #sidebar.open{left:0}
+
+        #sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;opacity:0;visibility:hidden;transition:all .35s}
+
+        #sidebar-overlay.show{opacity:1;visibility:visible}
+
+        .menu-btn{position:fixed;top:16px;left:16px;z-index:98;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s}
+
+        .menu-btn:hover{background:rgba(124,58,237,.08)}
+
+        .menu-btn.open{left:296px}
+
+        .nav-link{display:flex;align-items:center;gap:10px;padding:12px 20px;color:#94a3b8;font-size:.9rem;font-weight:500;transition:all .2s;border-radius:8px;margin:2px 12px}
+
+        .nav-link:hover,.nav-link.active{color:#fff;background:rgba(139,92,246,.12)}
+
+        .nav-link i{width:20px;text-align:center;font-size:.85rem}
+
+        .nav-section{color:#64748b;font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;padding:16px 20px 6px 20px}
+
+
+
+        /* Page-specific */
+
+        .pain-table td,.pain-table th{padding:14px 18px;text-align:left;border-bottom:1px solid rgba(139,92,246,.1)}
+
+        .pain-table th{color:#7c3aed;font-size:.8rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+
+        .pain-table td{color:#cbd5e1;font-size:.9rem;line-height:1.6}
+
+        .pain-table tr:hover td{background:rgba(139,92,246,.04)}
+
+        .mode-card{border-left:3px solid transparent;transition:all .3s}
+
+        .mode-card:hover{border-left-color:var(--scholar);background:rgba(139,92,246,.04)}
+
+        .badge-mode{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:600;letter-spacing:.03em}
+
+    
+
+/* === Language Toggle === */
+
+.lang-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;flex-shrink:0;margin-left:8px}
+
+.lang-toggle:hover{border-color:#3b82f6;color:#3b82f6;background:rgba(59,130,246,.1)}
+
+.lang-toggle-en{font-family:'Inter',system-ui,sans-serif;letter-spacing:.02em}
+
+.lang-toggle-zh{font-family:'Noto Sans SC',system-ui,sans-serif}
+
+
+
+</style>
+
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<div id="particles-js" class="fixed inset-0 z-0"></div>
+<div class="fixed inset-0 bg-grid z-0 opacity-40"></div>
+
+<!-- Navigation -->
+
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">WWNT Robotics | Empowering Universities &amp; Vocational Schools to Embrace <strong>AI + Robotics</strong></span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="index.html" class="px-4 py-2 text-accent text-sm font-medium">Home</a>
+            <div class="group relative">
+                <a href="#" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Products <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="products/robots.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm</a>
+                    <a href="products/unitree-robot-dog.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+                    <a href="products/dexterous-hand.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald text-xs"></i>Training Platform</a>
+                    <a href="products/smart-manufacturing-training.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+                    <a href="products/ai-souvenir.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="courses.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Courses <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="courses.html#robot-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+                    <a href="courses.html#openduck-courses" class="block px-4 py-2.5 rounded-lg text-sm text-cyan-600 font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+                    <a href="courses.html#openarm-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+                    <a href="courses.html#dexterous-hand-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+                    <a href="courses.html#ai-courses" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+                    <a href="products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-accent font-semibold hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Partnerships <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-56 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                    <a href="solutions/education.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+                    <a href="solutions/education.html#chanjiao" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+                </div>
+            </div>
+            <a href="news.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">News</a>
+            <a href="opensource.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Open Source</a><a href="../index.html" class="px-3 py-1.5 ml-1 border border-gray-300 hover:border-accent hover:text-accent text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        </div>
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="inline-flex flex-col items-center justify-center text-center px-7 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-sm font-semibold rounded-lg transition-all">
+                <span class="leading-tight">Yanshu AI</span>
+                <span class="text-[10px] font-normal opacity-90 leading-tight">Course Builder</span>
+            </a>
+            <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors">Request a Demo</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="index.html" class="block py-3 text-accent font-medium">Home</a>
+        <a href="products/robots.html" class="block py-3 text-gray-700">Embodied AI Robots</a>
+        <a href="products/openduck-mini.html" class="block py-3 text-cyan-600 font-medium"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini</a>
+        <a href="products/openarm.html" class="block py-3 text-gray-700">OpenArm</a>
+        <a href="products/unitree-robot-dog.html" class="block py-3 text-gray-700"><i class="fas fa-paw mr-2 text-amber-500 text-xs"></i>Unitree Robot Dog</a>
+        <a href="products/dexterous-hand.html" class="block py-3 text-gray-700">Dexterous Hand</a>
+        <a href="products/embedded-platform.html" class="block py-3 text-gray-700">Training Platform</a>
+        <a href="products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>Smart Manufacturing</a>
+        <a href="products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI Souvenir</a>
+        <a href="courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>Courses</a>
+        <a href="courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>Embodied AI Robot Courses</a>
+        <a href="courses.html#openduck-courses" class="block py-3 text-cyan-600 font-medium pl-4"><i class="fas fa-robot mr-2 text-cyan-500 text-xs"></i>OpenDuck Mini Courses</a>
+        <a href="courses.html#openarm-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-industry mr-2 text-orange-500 text-xs"></i>OpenArm Robotic Arm Courses</a>
+        <a href="courses.html#dexterous-hand-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-hand-sparkles mr-2 text-purple-500 text-xs"></i>Dexterous Hand Courses</a>
+        <a href="courses.html#ai-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-microchip mr-2 text-emerald-500 text-xs"></i>AI Training Kit Courses</a>
+        <a href="products/yanshi-ai.html" class="block py-3 text-accent font-medium pl-4"><i class="fas fa-graduation-cap mr-2 text-purple-400 text-xs"></i>Yanshu AI</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-university mr-2 text-accent text-xs"></i>Partnerships</a>
+        <a href="solutions/education.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-flask mr-2 text-accent text-xs"></i>Education Solutions</a>
+        <a href="solutions/education.html#chanjiao" class="block py-3 text-gray-700 pl-4"><i class="fas fa-handshake mr-2 text-warm text-xs"></i>Industry-Education-Research</a>
+        <a href="news.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-newspaper mr-2 text-accent text-xs"></i>News</a>
+        <a href="opensource.html" class="block py-3 text-gray-700">Open Source</a><a href="../index.html" class="inline-block mt-2 px-4 py-2 border border-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        <a href="https://teacher.suiguangming.com/app/teacher-creation" target="_blank" class="block py-3 text-amber-600 font-medium"><i class="fas fa-magic mr-2 text-xs"></i>Yanshu AI · Course Builder</a>
+        <a href="contact.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="block mt-3 text-center py-3 rounded-lg font-semibold text-white">Request a Demo</a>
+    </div>
+</nav>
+
+
+
+        <div class="nav-right"><a href="../en/partnerships/university-cooperation.html" class="lang-toggle lang-toggle-en" title="English">EN</a>
+
+            <a href="../contact.html" class="btn-contact hidden lg:inline-flex"><i class="fas fa-phone-alt mr-1.5 text-xs text-gray-500"></i>Contact Us</a>
+
+            <a href="../contact.html" class="btn-demo">Request a Demo</a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- Sidebar -->
+
+<button class="menu-btn glass" onclick="toggleSidebar()"><i class="fas fa-bars text-white text-lg"></i></button>
+
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<nav id="sidebar" class="glass">
+
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+
+        <a href="../index.html" class="flex items-center space-x-2.5" onclick="toggleSidebar()">
+
+            <img src="../../assets/logos/WwRobot-Logo.png" class="h-8 w-auto" onerror="this.style.display='none'">
+
+            <span class="text-base font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-xs font-normal">.com</span></span>
+
+        </a>
+
+        <button onclick="toggleSidebar()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100/70 transition-colors"><i class="fas fa-times text-gray-600 text-lg"></i></button>
+
+    </div>
+
+    <div class="py-3">
+
+        <a href="../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
+
+        <div class="nav-section">Products</div>
+
+        <a href="../robots/index.html" class="nav-link"><i class="fas fa-robot text-accent"></i>Embodied AI Robots</a>
+
+        <a href="../components/index.html" class="nav-link"><i class="fas fa-cogs text-warm"></i>Core components</a>
+
+        <a href="../courses/index.html" class="nav-link"><i class="fas fa-book"></i>Robot courses</a>
+
+        <div class="nav-section">Partnership</div>
+
+        <a href="../partnerships/university-cooperation.html" class="nav-link active"><i class="fas fa-graduation-cap text-purple-400"></i>Partnerships</a>
+
+        <a href="../solutions/education.html" class="nav-link"><i class="fas fa-university"></i>Education solutions</a>
+
+        <a href="../download/index.html" class="nav-link"><i class="fas fa-download"></i>Downloads</a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ====== HERO ====== -->
+
+<section class="relative z-10 hero-glow pt-32 pb-20">
+
+    <div class="max-w-7xl mx-auto px-6 text-center">
+
+        <span class="tag tag-scholar mb-4 inline-block">UNIVERSITY COOPERATION</span>
+
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+
+            <span class="text-gradient">Industry · Education · Research · Competition · Application</span><br>
+
+            <span class="text-white">Full-chain University Partnership</span>
+
+        </h1>
+
+        <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+
+            Built on embodied robot hardware, combining self-developed curricula, motion tools, competition support, and industrial resources to build differentiated academic strengths.
+
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4 mt-10">
+
+            <div class="glass rounded-xl px-5 py-3 text-center min-w-[120px]"><div class="text-2xl font-bold text-purple-400">5</div><div class="text-xs text-gray-500 mt-1">Cooperation Path</div></div>
+
+            <div class="glass rounded-xl px-5 py-3 text-center min-w-[120px]"><div class="text-2xl font-bold text-purple-400">4</div><div class="text-xs text-gray-500 mt-1">Cooperation Models</div></div>
+
+            <div class="glass rounded-xl px-5 py-3 text-center min-w-[120px]"><div class="text-2xl font-bold text-purple-400">4</div><div class="text-xs text-gray-500 mt-1">Pain Point Solutions</div></div>
+
+            <div class="glass rounded-xl px-5 py-3 text-center min-w-[120px]"><div class="text-2xl font-bold text-purple-400">∞</div><div class="text-xs text-gray-500 mt-1">Flexible Customization</div></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ====== 合作价值定位 ====== -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-5xl mx-auto px-6">
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 md:p-12">
+
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3"><i class="fas fa-bullseye text-purple-400 text-xl"></i>Core Value Proposition</h2>
+
+            <p class="text-gray-700 text-lg leading-relaxed">
+
+                WWNT Robotics (wwntAI.com), built on embodied robot hardware, combines self-developed curricula, motion tools, competition support, and industrial resources to partner with universities on<span class="text-purple-400 font-semibold">"Industry · Education · Research · Competition · Application"</span>full-chain cooperation, precisely solving pain points in teaching, faculty, research commercialization, competitions, talent, and outcomes.
+
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-8">
+
+                <div class="text-center p-4 rounded-xl bg-purple-500/5 border border-purple-500/10"><i class="fas fa-industry text-2xl text-purple-400 mb-2"></i><div class="text-sm font-semibold">Industry</div><div class="text-xs text-gray-500 mt-1">Industry integration</div></div>
+
+                <div class="text-center p-4 rounded-xl bg-purple-500/5 border border-purple-500/10"><i class="fas fa-chalkboard-teacher text-2xl text-purple-400 mb-2"></i><div class="text-sm font-semibold">Education</div><div class="text-xs text-gray-500 mt-1">Teaching deployment</div></div>
+
+                <div class="text-center p-4 rounded-xl bg-purple-500/5 border border-purple-500/10"><i class="fas fa-flask text-2xl text-purple-400 mb-2"></i><div class="text-sm font-semibold">Research</div><div class="text-xs text-gray-500 mt-1">Research innovation</div></div>
+
+                <div class="text-center p-4 rounded-xl bg-purple-500/5 border border-purple-500/10"><i class="fas fa-trophy text-2xl text-purple-400 mb-2"></i><div class="text-sm font-semibold">Competition</div><div class="text-xs text-gray-500 mt-1">Competition breakthroughs</div></div>
+
+                <div class="text-center p-4 rounded-xl bg-purple-500/5 border border-purple-500/10"><i class="fas fa-user-graduate text-2xl text-purple-400 mb-2"></i><div class="text-sm font-semibold">Application</div><div class="text-xs text-gray-500 mt-1">Outcome commercialization</div></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ====== 四大痛点 ====== -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+
+            <span class="tag tag-scholar mb-3">PAIN POINTS</span>
+
+            <h2 class="text-3xl font-bold">Three Pain Points · Precisely Addressed</h2>
+
+            <p class="text-gray-600 mt-3">WWNT Robotics provides targeted solutions to core university challenges</p>
+
+        </div>
+
+        <div class="overflow-x-auto glass rounded-2xl">
+
+            <table class="pain-table w-full">
+
+                <thead><tr><th style="width:20%">Pain point</th><th style="width:30%">Symptom</th><th style="width:50%">Our solution</th></tr></thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td class="font-semibold text-purple-300"><i class="fas fa-link mr-2"></i>Teaching-industry disconnect</td>
+
+                        <td>No standard embodied AI curriculum, idle equipment, faculty lacking hands-on experience</td>
+
+                        <td><span class="text-emerald-400 font-semibold">Full-stack curriculum + tiered faculty training</span>, enabling ready-to-teach deployment</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="font-semibold text-purple-300"><i class="fas fa-flask mr-2"></i>Hard research commercialization</td>
+
+                        <td>Algorithms/prototypes hard to mass-produce, no market channel</td>
+
+                        <td><span class="text-emerald-400 font-semibold">Hardware + engineering + sales channels</span>, accelerating commercialization</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="font-semibold text-purple-300"><i class="fas fa-trophy mr-2"></i>Weak competition strength</td>
+
+                        <td>No targeted Class-A guidance, no motion/algorithm support</td>
+
+                        <td><span class="text-emerald-400 font-semibold">Full competition support</span>, with plans, debugging, and winning cases</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="font-semibold text-purple-300"><i class="fas fa-star mr-2"></i>Unclear program distinction</td>
+
+                        <td>Generic equipment lacks differentiation and showcase projects</td>
+
+                        <td><span class="text-emerald-400 font-semibold">Customized labs + featured projects</span>, building model teaching platforms</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="font-semibold text-purple-300"><i class="fas fa-briefcase mr-2"></i>Training-employment disconnect</td>
+
+                        <td>Students lack hands-on skills and real project experience</td>
+
+                        <td><span class="text-emerald-400 font-semibold">Project-based training + joint cultivation</span>, producing well-rounded talent</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ====== 五大合作模式 ====== -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-14">
+
+            <span class="tag tag-scholar mb-3">COOPERATION MODELS</span>
+
+            <h2 class="text-3xl font-bold">Three Cooperation Models</h2>
+
+            <p class="text-gray-600 mt-3">Flexible and negotiable, from basic labs to deep research, in stages</p>
+
+        </div>
+
+
+
+        <!-- Model 1 -->
+
+        <div class="mode-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 md:p-10 mb-8" id="mode1">
+
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+
+                <span class="badge-mode bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Model 1</span>
+
+                <span class="badge-mode bg-purple-500/10 text-purple-400 border border-purple-500/20">Basic · Fast deployment</span>
+
+            </div>
+
+            <h3 class="text-2xl font-bold mb-2">Industry-education lab co-building</h3>
+
+            <p class="text-gray-600 mb-8">Focused on teaching and training, quickly filling AI/robotics lab gaps to build a model lab.</p>
+
+
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4"><i class="fas fa-box-open text-purple-400"></i></div>
+
+                    <h4 class="font-semibold mb-3">Integrated hardware + curriculum delivery</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Provides Mini Pi / Pi+ / Mini Hi robots</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Standard course packs (basics, motion, ROS, embodied AI)</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Lab guides, teaching PPTs, and case code libraries — no from-scratch prep</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4"><i class="fas fa-users text-purple-400"></i></div>
+
+                    <h4 class="font-semibold mb-3">Tiered faculty and student training</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Faculty training: operations, teaching, SDK, competition prep</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Student project training: motion, algorithms, secondary development</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4"><i class="fas fa-medal text-purple-400"></i></div>
+
+                    <h4 class="font-semibold mb-3">Basic competition support</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Class-A competition resource pack</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Past winning cases</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-emerald-400 mt-1 text-xs"></i>Motion and algorithm optimization</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="mt-8 p-6 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+
+                <h4 class="font-semibold text-emerald-400 mb-3"><i class="fas fa-gem mr-2"></i>University benefits</h4>
+
+                <div class="grid sm:grid-cols-3 gap-3 text-sm text-gray-700">
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-emerald-400 text-[6px] mt-2"></i>Quickly build a standard embodied AI training lab</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-emerald-400 text-[6px] mt-2"></i>Improve teaching quality and hands-on skills</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-emerald-400 text-[6px] mt-2"></i>Boost competition strength at low cost and accumulate achievements</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Model 2 -->
+
+        <div class="mode-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 md:p-10 mb-8" id="mode2">
+
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+
+                <span class="badge-mode bg-blue-500/10 text-blue-400 border border-blue-500/20">Model 2</span>
+
+                <span class="badge-mode bg-purple-500/10 text-purple-400 border border-purple-500/20">Advanced · Research + talent</span>
+
+            </div>
+
+            <h3 class="text-2xl font-bold mb-2">Joint research institute</h3>
+
+            <p class="text-gray-600 mb-8">Centered on research and talent, co-build an embodied intelligence research institute focused on R&D and commercialization.</p>
+
+
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4"><i class="fas fa-microchip text-blue-400"></i></div>
+
+                    <h4 class="font-semibold mb-3">Joint R&D platform</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>University provides space and R&D teams</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>WWNT provides hardware, engineering, SDK toolchain</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>Joint provincial/national research grants</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4"><i class="fas fa-code-branch text-blue-400"></i></div>
+
+                    <h4 class="font-semibold mb-3">Faculty and student deep involvement</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>Product iteration and scenario adaptation</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>Market research and user feedback</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>Top projects enter the product roadmap</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4"><i class="fas fa-cogs text-blue-400"></i></div>
+
+                    <h4 class="font-semibold mb-3">Customized teaching and research</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>Custom teaching cases and lab projects</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs"></i>Ongoing support, firmware and SDK updates</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="mt-8 p-6 rounded-xl bg-blue-500/5 border border-blue-500/10">
+
+                <h4 class="font-semibold text-blue-400 mb-3"><i class="fas fa-gem mr-2"></i>University benefits</h4>
+
+                <div class="grid sm:grid-cols-3 gap-3 text-sm text-gray-700">
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-blue-400 text-[6px] mt-2"></i>Build a high-level research platform for grants and papers</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-blue-400 text-[6px] mt-2"></i>Deep participation in real R&D boosts engineering skills</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-blue-400 text-[6px] mt-2"></i>Accumulate differentiated outcomes into a program calling card</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 模式三：校中厂 -->
+
+        <div class="mode-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 md:p-10 mb-8" id="mode3">
+
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+
+                <span class="badge-mode bg-teal-500/10 text-teal-500 border border-teal-500/20">Model 3</span>
+
+                <span class="badge-mode bg-purple-500/10 text-purple-400 border border-purple-500/20">On-campus factory · industry-education</span>
+
+            </div>
+
+            <h3 class="text-2xl font-bold mb-2">On-campus factory co-building</h3>
+
+            <p class="text-gray-600 mb-8">Bring a real robot production line to campus, driven by real orders, integrating teaching, training, and production.</p>
+
+
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center mb-4"><i class="fas fa-industry text-teal-500"></i></div>
+
+                    <h4 class="font-semibold mb-3">Real production line on campus</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>Standard layout: raw materials, assembly, debugging, testing, packaging</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>Enterprise imports real orders and standard process documents</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>University provides space, infrastructure, and production teams</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center mb-4"><i class="fas fa-user-cog text-teal-500"></i></div>
+
+                    <h4 class="font-semibold mb-3">Students in real production</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>Full involvement in assembly, wiring, calibration, and software deployment</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>Full performance testing with standardized acceptance reports</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>On-site enterprise engineers train and assess to real standards</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center mb-4"><i class="fas fa-handshake text-teal-500"></i></div>
+
+                    <h4 class="font-semibold mb-3">Two-way value loop</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>Enterprise gains stable capacity and standardized delivery</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>University gains real engineering practice and benchmark cases</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-teal-500 mt-1 text-xs"></i>Students gain real project experience and employability</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="mt-8 p-6 rounded-xl bg-teal-500/5 border border-teal-500/10">
+
+                <h4 class="font-semibold text-teal-500 mb-3"><i class="fas fa-gem mr-2"></i>University benefits</h4>
+
+                <div class="grid sm:grid-cols-3 gap-3 text-sm text-gray-700">
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-teal-500 text-[6px] mt-2"></i>Build an integrated teaching-training-production platform</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-teal-500 text-[6px] mt-2"></i>Deep participation in real production significantly boosts engineering skills</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-teal-500 text-[6px] mt-2"></i>Build an industry-education benchmark supporting "Double High" and vocational upgrades</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Model 4 -->
+
+        <div class="mode-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 md:p-10" id="mode4">
+
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+
+                <span class="badge-mode bg-warm/10 text-warm border border-warm/20">Model 4</span>
+
+                <span class="badge-mode bg-purple-500/10 text-purple-400 border border-purple-500/20">Deep · research-production integration</span>
+
+            </div>
+
+            <h3 class="text-2xl font-bold mb-2">Outcome commercialization</h3>
+
+            <p class="text-gray-600 mb-8">Centered on research commercialization, jointly advancing faculty/student outcomes through engineering, productization, and marketization.</p>
+
+
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-warm/10 flex items-center justify-center mb-4"><i class="fas fa-rocket text-warm"></i></div>
+
+                    <h4 class="font-semibold mb-3">Joint company / project incubation</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Co-found project companies or incubate projects</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>University invests technology/team/space</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Clear IP ownership and revenue sharing</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-warm/10 flex items-center justify-center mb-4"><i class="fas fa-ship text-warm"></i></div>
+
+                    <h4 class="font-semibold mb-3">Product engineering and deployment</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Engineering optimization of prototypes</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Hardware adaptation and stability testing</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Mass production and market sales</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="bg-card rounded-xl p-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-warm/10 flex items-center justify-center mb-4"><i class="fas fa-handshake text-warm"></i></div>
+
+                    <h4 class="font-semibold mb-3">Talent pipeline and employment</h4>
+
+                    <ul class="space-y-2 text-sm text-gray-600">
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Order-based talent training</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Internship and employment matching for top students</li>
+
+                        <li class="flex items-start gap-2"><i class="fas fa-check text-warm mt-1 text-xs"></i>Industry-oriented course offerings</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <div class="mt-8 p-6 rounded-xl bg-warm/5 border border-warm/10">
+
+                <h4 class="font-semibold text-warm mb-3"><i class="fas fa-gem mr-2"></i>University benefits</h4>
+
+                <div class="grid sm:grid-cols-3 gap-3 text-sm text-gray-700">
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-warm text-[6px] mt-2"></i>Closed-loop commercialization from lab to market</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-warm text-[6px] mt-2"></i>Build an industry-education-research benchmark and boost influence</div>
+
+                    <div class="flex items-start gap-2"><i class="fas fa-circle text-warm text-[6px] mt-2"></i>Broaden student employment channels and quality</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ====== 合作保障 ====== -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+
+            <span class="tag tag-scholar mb-3">GUARANTEE</span>
+
+            <h2 class="text-3xl font-bold">Cooperation Support & Services</h2>
+
+            <p class="text-gray-600 mt-3">Beyond equipment procurement — full-chain continuous empowerment</p>
+
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-6">
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-headset text-2xl text-purple-400"></i></div>
+
+                <h4 class="font-semibold mb-2">Dedicated technical team</h4>
+
+                <p class="text-sm text-gray-600">Senior engineers plus university experts, 7×12 support and long-term maintenance</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-sync-alt text-2xl text-purple-400"></i></div>
+
+                <h4 class="font-semibold mb-2">Continuous iteration</h4>
+
+                <p class="text-sm text-gray-600">Modular hardware for upgrades, regular firmware, SDK, case, and course updates</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-award text-2xl text-purple-400"></i></div>
+
+                <h4 class="font-semibold mb-2">Co-built outcomes · brand empowerment</h4>
+
+                <p class="text-sm text-gray-600">Support teaching and research awards with brand endorsement and joint publicity</p>
+
+            </div>
+
+            <div class="glass rounded-2xl p-6 text-center card-hover">
+
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mx-auto mb-4"><i class="fas fa-sliders-h text-2xl text-purple-400"></i></div>
+
+                <h4 class="font-semibold mb-2">Flexible cooperation</h4>
+
+                <p class="text-sm text-gray-600">Flexibly adjusted to university needs, from basic labs to deep research, in stages</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ====== 价值总结 ====== -->
+
+<section class="relative z-10 py-16 border-t border-gray-200">
+
+    <div class="max-w-4xl mx-auto px-6">
+
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 md:p-12 text-center">
+
+            <i class="fas fa-quote-left text-4xl text-purple-400/30 mb-6"></i>
+
+            <p class="text-xl md:text-2xl text-gray-200 leading-relaxed mb-6">
+
+                Our partnership is more than hardware procurement — it is<span class="text-purple-400 font-semibold">teaching deployment, research innovation, talent cultivation, and outcome commercialization</span>full-chain empowerment.
+
+            </p>
+
+            <p class="text-gray-600 leading-relaxed">
+
+                Through four tiered models, we precisely match university needs, upgrading AI/robotics programs from "having equipment" to "teaching, researching, producing outcomes, and commercializing" — building an embodied intelligence benchmark.
+
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4 mt-10">
+
+                <a href="../contact.html" class="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-purple-600/25">
+
+                    <i class="fas fa-handshake"></i> Discuss Partnership
+
+                </a>
+
+                <a href="../solutions/education.html" class="inline-flex items-center gap-2 px-8 py-4 bg-card hover:bg-border text-white font-semibold rounded-xl transition-all border border-gray-200">
+
+                    <i class="fas fa-university"></i> View Education Solutions
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- Footer -->
+
+
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="mb-4"><a href="index.html"><img src="../../assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="text-sm leading-relaxed">Headquarters: Zengcheng District, Guangzhou</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Six Product Lines</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="products/robots.html" class="block hover:text-white transition-colors">Embodied AI Robots</a>
+                    <a href="products/openduck-mini.html" class="block hover:text-cyan-400 transition-colors">OpenDuck Mini</a>
+                    <a href="products/openarm.html" class="block hover:text-white transition-colors">OpenArm Robotic Arm</a>
+                    <a href="products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">Dexterous Hand</a>
+                    <a href="products/embedded-platform.html" class="block hover:text-white transition-colors">Training Platform</a>
+                    <a href="products/yanshi-ai.html" class="block hover:text-white transition-colors">Yanshu AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Five Partnership Models</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="solutions/education.html#model0" class="block hover:text-white transition-colors">Model 0: Brand Co-building</a>
+                    <a href="solutions/education.html#model1" class="block hover:text-white transition-colors">Model 1: Industry-Education Lab</a>
+                    <a href="solutions/education.html#model2" class="block hover:text-white transition-colors">Model 2: Joint Research Institute</a>
+                    <a href="solutions/education.html#model3" class="block hover:text-white transition-colors">Model 3: On-campus Factory</a>
+                    <a href="solutions/education.html#model4" class="block hover:text-white transition-colors">Model 4: Commercialization</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contact Us</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="contact.html" class="block hover:text-white transition-colors">Request a Demo</a>
+                    <a href="opensource.html" class="block hover:text-white transition-colors">Open Source</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 py-6 border-t border-gray-700 flex flex-wrap justify-between text-xs text-gray-500">
+        <span>&copy; Guangdong WWNT Robotics Co., Ltd. All rights reserved. <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener" class="hover:text-gray-400">ICP: 粤ICP备2025486997号-1</a></span>
+        <div class="flex space-x-4">
+            <a href="privacy.html" class="hover:text-gray-400">Privacy Policy</a>
+            <a href="disclaimer.html" class="hover:text-gray-400">Disclaimer</a>
+        </div>
+    </div>
+</footer>
+
+
+
+<script>function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebar-overlay').classList.toggle('show');document.querySelector('.menu-btn').classList.toggle('open')}</script>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>particlesJS('particles-js',{particles:{number:{value:50},color:{value:'#8b5cf6'},shape:{type:'circle'},opacity:{value:.4},size:{value:2},line_linked:{enable:true,distance:180,color:'#8b5cf6',opacity:.15},move:{speed:.8}},interactivity:{events:{onhover:{enable:true,mode:'grab'}}}})</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  var css='.slogan-snow-wrap{position:relative;display:inline-block}.slogan-snow-particle{position:absolute;border-radius:50%;pointer-events:none;animation:snowDrift var(--dur,3s) ease-in-out infinite;animation-delay:var(--delay,0s);opacity:0}@keyframes snowDrift{0%{transform:translateY(6px) translateX(0) scale(.35);opacity:0}12%{opacity:var(--op,.65)}45%{transform:translateY(-5px) translateX(var(--dx,8px)) scale(var(--sc,1));opacity:var(--op,.65)}80%{opacity:var(--op,.65)}100%{transform:translateY(-20px) translateX(var(--dx2,-6px)) scale(.18);opacity:0}}';
+  if(!document.getElementById('snow-particle-style')){
+    var s=document.createElement('style');s.id='snow-particle-style';s.textContent=css;document.head.appendChild(s);
+  }
+  setTimeout(function(){
+    document.querySelectorAll('.slogan-snow-wrap').forEach(function(c){
+      if(c.querySelector('.slogan-snow-particle'))return;
+      var r=c.getBoundingClientRect(),w=r.width||280,h=r.height||32;
+      for(var i=0;i<18;i++){
+        var p=document.createElement('span');p.className='slogan-snow-particle';
+        var sz=2+Math.random()*3;
+        p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*w)+'px;bottom:'+(Math.random()*h*.5)+'px;--dur:'+(2.2+Math.random()*3)+'s;--delay:'+(Math.random()*3.5)+'s;--dx:'+(-10+Math.random()*20)+'px;--dx2:'+(-8+Math.random()*16)+'px;--sc:'+(.45+Math.random()*.75)+';--op:'+(.35+Math.random()*.5)+';background:rgba(255,255,255,'+(.4+Math.random()*.45)+')';
+        c.appendChild(p);
+      }
+    });
+  },400);
+})();
+</script>
+</body>
+
+</html>
+
