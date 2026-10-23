@@ -513,12 +513,28 @@ function toast(m){
     e.textContent=m; e.style.opacity='1';
     clearTimeout(e._t); e._t=setTimeout(function(){e.style.opacity='0';},2500);
 }
+function nativeShare(title, text, url){
+    if (navigator.share) {
+        navigator.share({ title: title, text: text, url: url }).catch(function(){});
+        return true;
+    }
+    return false;
+}
 function shareItem(btn){
     var link=btn.getAttribute('data-link');
     var url=new URL(link, location.href).href;
-    copyText(url); toast('商品链接已复制，去微信粘贴分享给好友');
+    var card=btn.closest('.card-hover') || btn.closest('.bg-white');
+    var name='';
+    if(card){ var h=card.querySelector('h4') || card.querySelector('h3'); if(h) name=h.textContent.trim(); }
+    var title=name || 'wwntAI 配件商城';
+    var text=name ? ('推荐你这款机器人配件：'+name) : 'wwntAI 机器人配件商城，散件·舵机·传感器一站式选购';
+    if(nativeShare(title, text, url)) return;
+    copyText(url); toast('已复制链接，去微信粘贴分享给好友');
 }
 function sharePage(){
+    var title='wwntAI 机器人配件商城';
+    var text='机器人散件·舵机·传感器·紧固件，一站式选购，可下单 7 天内发货';
+    if(nativeShare(title, text, location.href)) return;
     copyText(location.href); toast('页面链接已复制，去微信粘贴分享');
 }
 </script>
