@@ -6,6 +6,13 @@
     <title>配件商城 - MicroDuck 散件与配件 - wwntAI.com</title>
     <meta name="description" content="MicroDuck 开源双足机器鸭国产版配件商城：整机散件包、主控板、舵机、结构件、传感器等，图文陈列，点击即购。">
     <meta name="keywords" content="MicroDuck配件,机器鸭散件,机器人配件,开源机器人,wwntAI">
+    <script>
+        // 强制从页面顶部打开：清除锚点 + 禁用滚动恢复 + 处理 bfcache 返回
+        if (history.scrollRestoration) history.scrollRestoration = 'manual';
+        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+        window.scrollTo(0, 0);
+        window.addEventListener('pageshow', function (e) { window.scrollTo(0, 0); });
+    </script>
     <script src="assets/js/tailwindcdn.js"></script>
     <link rel="stylesheet" href="Assets/css/fontawesome-all.min.css">
     <script>
@@ -65,7 +72,7 @@
             <div class="group relative">
                 <a href="parts.html" tabindex="0" class="px-4 py-2 text-warm hover:text-gray-900 text-sm font-semibold transition-colors">配件 <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
                 <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all">
-                    <a href="parts.html#microduck" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-kiwi-bird mr-2 text-amber-500 text-xs"></i>MicroDuck 配件</a>
+                    <a href="parts.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-kiwi-bird mr-2 text-amber-500 text-xs"></i>MicroDuck 配件</a>
                 </div>
             </div>
             <div class="group relative">
@@ -109,7 +116,7 @@
         <a href="products/smart-manufacturing-training.html" class="block py-3 text-gray-700"><i class="fas fa-cubes mr-2 text-emerald-500 text-xs"></i>智能制造实训系统</a>
         <a href="products/ai-souvenir.html" class="block py-3 text-gray-700"><i class="fas fa-gift mr-2 text-pink-500 text-xs"></i>AI纪念品</a>
         <a href="parts.html" class="block py-3 text-warm font-semibold"><i class="fas fa-cart-plus mr-2 text-amber-500 text-xs"></i>配件</a>
-        <a href="parts.html#microduck" class="block py-3 text-gray-700 pl-4"><i class="fas fa-kiwi-bird mr-2 text-amber-500 text-xs"></i>MicroDuck 配件</a>
+        <a href="parts.html" class="block py-3 text-gray-700 pl-4"><i class="fas fa-kiwi-bird mr-2 text-amber-500 text-xs"></i>MicroDuck 配件</a>
         <a href="orders.html" class="block py-3 text-gray-700"><i class="fas fa-receipt mr-2 text-amber-500 text-xs"></i>我的订单</a>
         <a href="courses.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-book-open mr-2 text-accent2 text-xs"></i>课程</a>
         <a href="courses.html#robot-courses" class="block py-3 text-gray-700 pl-4"><i class="fas fa-robot mr-2 text-accent text-xs"></i>具身智能机器人课程</a>
@@ -364,7 +371,7 @@
                 <div class="p-5">
                     <h4 class="font-bold text-gray-900">整机散件包</h4>
                     <p class="text-sm text-gray-600 mt-2 leading-relaxed">MicroDuck 全部零件一次配齐：3D 打印结构件、电子件、15 颗 HD-1910-C001 舵机、RK3566 主控、NP-F550 电池组。附中英双语组装教程，从零件到会走路的机器鸭，开箱即装。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥2580</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html#microduck" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥2580</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
                 </div>
             </div>
             <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
@@ -372,7 +379,7 @@
                 <div class="p-5">
                     <h4 class="font-bold text-gray-900">3D 打印结构件套装</h4>
                     <p class="text-sm text-gray-600 mt-2 leading-relaxed">全套外壳 + 骨架结构件，FDM / 光固化工艺可选，图纸全量开源。公差与干涉问题清单公开，打印即装，复现成功率高。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥128</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html#microduck" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥128</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
                 </div>
             </div>
         </div>
@@ -385,7 +392,7 @@
                 <div class="p-5">
                     <h4 class="font-bold text-gray-900">轮滑套件</h4>
                     <p class="text-sm text-gray-600 mt-2 leading-relaxed">轮滑套件，让机器鸭从「走」进化到「滑」，解锁轮滑行为，移动更快更流畅。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥49</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html#microduck" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥49</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
                 </div>
             </div>
             <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
@@ -393,7 +400,7 @@
                 <div class="p-5">
                     <h4 class="font-bold text-gray-900">游戏手柄</h4>
                     <p class="text-sm text-gray-600 mt-2 leading-relaxed">蓝牙手柄，零代码直接玩。连上即可遥控机器鸭行走、踢球，秒变遥控玩具。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥79</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html#microduck" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥79</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
                 </div>
             </div>
         </div>
@@ -406,7 +413,7 @@
                 <div class="p-5">
                     <h4 class="font-bold text-gray-900">imu_to_dxl 电路板</h4>
                     <p class="text-sm text-gray-600 mt-2 leading-relaxed">IMU 转 Dynamixel 协议桥接板，microduck-replica 开源方案的姿态数据转换。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="text-gray-400 font-semibold">待定</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html#microduck" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+                    <div class="flex items-center justify-between mt-4"><span class="text-gray-400 font-semibold">待定</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
                 </div>
             </div>
             <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
@@ -414,7 +421,7 @@
                 <div class="p-5">
                     <h4 class="font-bold text-gray-900">Banana PCB + 香蕉插头 PCB（铜镀金）</h4>
                     <p class="text-sm text-gray-600 mt-2 leading-relaxed">2.5mm 香蕉插头 PCB（铜镀金）× 2<br>banana PCB（嘉立创）× 1</p>
-                    <div class="flex items-center justify-between mt-4"><span class="text-gray-400 font-semibold">待定</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html#microduck" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+                    <div class="flex items-center justify-between mt-4"><span class="text-gray-400 font-semibold">待定</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
                 </div>
             </div>
         </div>
@@ -480,7 +487,7 @@
             <div>
                 <h4 class="text-white font-semibold mb-4">配件商城</h4>
                 <div class="space-y-2 text-sm">
-                    <a href="parts.html#microduck" class="block hover:text-amber-400 transition-colors">MicroDuck 配件</a>
+                    <a href="parts.html" class="block hover:text-amber-400 transition-colors">MicroDuck 配件</a>
                     <a href="microduck-shop.html" class="block hover:text-white transition-colors">下单页面</a>
                 </div>
             </div>
