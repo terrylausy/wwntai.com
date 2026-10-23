@@ -272,6 +272,15 @@ function mailOrder(){
     var body = encodeURIComponent(lastOrderText);
     window.location.href = 'mailto:Support@wwntai.com?subject=' + subject + '&body=' + body;
 }
+// URL 参数预填：从配件页「立即购买」跳转带入所选配件与价格
+(function(){
+    var params = new URLSearchParams(location.search);
+    var item = params.get('item');
+    var price = params.get('price');
+    if (item) $('items').value = item + ' ×1';
+    if (price) $('amount').value = price;
+    if (item || price) $('order').scrollIntoView();
+})();
 </script>
 </body>
 </html>
