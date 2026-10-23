@@ -14,9 +14,8 @@
     .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.72rem;font-weight:600;letter-spacing:.05em}
     .tag-robot{background:rgba(37,99,235,.10);color:#60a5fa;border:1px solid rgba(37,99,235,.30)}
     .tag-warm{background:rgba(217,119,6,.12);color:#fbbf24;border:1px solid rgba(217,119,6,.30)}
-    .qty-btn{width:34px;height:34px;border-radius:10px;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:18px;color:#334155;background:#fff;user-select:none}
-    .qty-btn:active{background:#f1f5f9}
-    .qty-btn.disabled{opacity:.35;pointer-events:none}
+    .qty-btn{width:36px;height:36px;border-radius:10px;border:1.5px solid #d97706;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;line-height:1;color:#d97706;background:#fff;user-select:none;cursor:pointer}
+    .qty-btn:active{background:#fef3c7}
     .price{color:#d97706;font-weight:800}
 </style>
 </head>
@@ -146,21 +145,21 @@
 // ---------- 配件数据 ----------
 var groups = [
     { title:'核心散件包', items:[
-        {name:'整机散件包', price:1999, desc:'全套结构件+电子件+15舵机+主控+电池，附中英组装教程'},
-        {name:'RK3566 主控板', price:399, desc:'四核 Cortex-A55 / 1GB+32GB / 0.8 TOPS NPU'},
-        {name:'舵机套装 ×15', price:299, desc:'国产平替（Feetech 同款）'},
-        {name:'3D 打印结构件套装', price:199, desc:'全套外壳+骨架（FDM/光固化）'},
-        {name:'18650 电池组', price:59, desc:'可拆卸，续航约 1 小时'},
+        {name:'整机散件包', price:1999, desc:'全部零件一次配齐：结构件、电子件、15 颗舵机、RK3566 主控、18650 电池组，附中英组装教程，开箱即装。'},
+        {name:'RK3566 主控板', price:399, desc:'瑞芯微 RK3566，四核 Cortex-A55，0.8 TOPS NPU，1GB+32GB，机器鸭的「大脑」。'},
+        {name:'舵机套装 ×15', price:299, desc:'15 颗国产总线舵机（Feetech 同款），组成 15 自由度全身关节，扭矩足、回中精度高。'},
+        {name:'3D 打印结构件套装', price:199, desc:'全套外壳 + 骨架结构件，FDM/光固化可选，图纸全量开源，打印即装。'},
+        {name:'18650 电池组', price:59, desc:'可拆卸 18650 电池组，续航约 1 小时，支持快速换电。'},
     ]},
     { title:'可选配件', items:[
-        {name:'轮滑配件', price:79, desc:'加装后实现轮滑行为'},
-        {name:'游戏手柄', price:49, desc:'零代码直接玩'},
-        {name:'广角摄像头模组', price:99, desc:'视觉感知'},
-        {name:'8×8 ToF 深度传感器', price:129, desc:'深度感知'},
-        {name:'麦克风/扬声器模组', price:69, desc:'语音交互'},
+        {name:'轮滑配件', price:79, desc:'加装轮滑模块，机器鸭从「走」进化到「滑」，解锁轮滑行为。'},
+        {name:'游戏手柄', price:49, desc:'蓝牙手柄，零代码直接玩，遥控机器鸭行走、踢球。'},
+        {name:'广角摄像头模组', price:99, desc:'广角视觉模组，用于视觉感知、目标识别与强化学习视觉输入。'},
+        {name:'8×8 ToF 深度传感器', price:129, desc:'8×8 飞行时间（ToF）深度传感器，实现避障、地形感知等深度交互。'},
+        {name:'麦克风/扬声器模组', price:69, desc:'麦克风 + 扬声器组合模组，让机器鸭能「听」能「说」，支持语音交互。'},
     ]},
     { title:'增值服务', items:[
-        {name:'代装整机服务', price:299, desc:'散件代装 + 首跑调试'},
+        {name:'代装整机服务', price:299, desc:'散件代装 + 首跑调试一站式服务，到手即用，适合想省心的用户。'},
     ]},
 ];
 var qty = {};
@@ -182,9 +181,9 @@ function renderCatalog(){
                 +   '<div class="price mt-1">¥' + it.price + '</div>'
                 + '</div>'
                 + '<div class="flex items-center gap-2 shrink-0">'
-                +   '<button class="qty-btn" onclick="chg(\'' + it.name + '\',-1)"><i class="fas fa-minus text-xs"></i></button>'
-                +   '<span class="w-7 text-center font-bold" id="q_' + it.name + '">' + qty[it.name] + '</span>'
-                +   '<button class="qty-btn" onclick="chg(\'' + it.name + '\',1)"><i class="fas fa-plus text-xs"></i></button>'
+                +   '<button type="button" class="qty-btn" onclick="chg(\'' + it.name + '\',-1)">−</button>'
+                +   '<span class="w-9 text-center font-bold text-lg" id="q_' + it.name + '">' + qty[it.name] + '</span>'
+                +   '<button type="button" class="qty-btn" onclick="chg(\'' + it.name + '\',1)">+</button>'
                 + '</div>'
                 + '</div>';
         });
