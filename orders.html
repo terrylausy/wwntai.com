@@ -53,12 +53,13 @@
     </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const supabase = window.supabase.createClient(
-  'https://xawygmaszyzcnzwdkvgw.supabase.co',
-  'sb_publishable_Oa4JIT4DZS0CYnqPxISLDQ_V1gkh89M'
-);
+// ---------- CloudBase REST API（腾讯云开发，国内直连可达） ----------
+var API_BASE = 'https://wwntai-shop-d6gnt6n6qd274a22c.api.tcloudbasegateway.com/v1/rdb/rest';
+var API_KEY = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImI5MTE4ZDkxLTlmYjAtNGQ5Mi05NzE1LWRhOGYyZWFmMzZhMiJ9.eyJpc3MiOiJodHRwczovL3d3bnRhaS1zaG9wLWQ2Z250Nm42cWQyNzRhMjJjLmFwLXNoYW5naGFpLnRjYi1hcGkudGVuY2VudGNsb3VkYXBpLmNvbSIsInN1YiI6ImFub24iLCJhdWQiOiJ3d250YWktc2hvcC1kNmdudDZuNnFkMjc0YTIyYyIsImV4cCI6NDA5NjQ3OTE0MywiaWF0IjoxNzkyNzk1OTQzLCJub25jZSI6IkRMQXE2UFpGUWpXR21UTXBwbWZwLWciLCJhdF9oYXNoIjoiRExBcTZQWkZRaldHbVRNcHBtZnAtZyIsIm5hbWUiOiJBbm9ueW1vdXMiLCJzY29wZSI6ImFub255bW91cyIsInByb2plY3RfaWQiOiJ3d250YWktc2hvcC1kNmdudDZuNnFkMjc0YTIyYyIsIm1ldGEiOnsicGxhdGZvcm0iOiJQdWJsaXNoYWJsZUtleSJ9LCJyb2xlIjoiYW5vbiIsImlzX2Fub255bW91cyI6dHJ1ZSwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiYW5vbnltb3VzIiwicHJvdmlkZXJzIjpbImFub255bW91cyJdfSwidXNlcl9tZXRhZGF0YSI6eyJuYW1lIjoiQW5vbnltb3VzIn0sInVzZXJfdHlwZSI6IiIsImNsaWVudF90eXBlIjoiY2xpZW50X3VzZXIiLCJpc19zeXN0ZW1fYWRtaW4iOmZhbHNlfQ.2XJTGxhztURj-4ogAvJhrSgxoscbbVKfgLqgcehhfrKVJ-3EY1RTiYhUpLQhsueorwnlaxB6VycLw8SvfTeghxLfjTOrAbKmaEN2zy8AFUhZCMQilzkzXz8i8IZ11hXgPRjfxnzcltLPU5P8GkDNLCdR7hPIcmnueyTJg8xlzOCN0dPK9L1FO7b33VFuRCgimshwWutKFkOkqZ2WQr-5ooKFJq6qTKD0rAZT2i3vD2oYwl5VgcLxEgMe-RyI7EG6haRgDJHIPEB-qzjIiRi95AymklKyc0gZwjCIAshPUDnNgKu98r0Nj7w-7JZrJMZagD5or1Qnsp5nmk1iea3BdQ';
+function apiHeaders(){
+    return { 'Authorization': 'Bearer ' + API_KEY, 'Content-Type': 'application/json' };
+}
 
 const statusMap = { pending: ['待付款', 'status-pending'], paid: ['已付款', 'status-paid'], shipped: ['已发货', 'status-shipped'], done: ['已完成', 'status-done'] };
 
@@ -78,11 +79,9 @@ async function queryOrders() {
   document.getElementById('empty').classList.add('hidden');
   const btn = document.getElementById('queryBtn');
   btn.disabled = true;
-  const { data, error } = await supabase
-    .from('orders')
-    .select('*')
-    .eq('buyer_phone', phone)
-    .order('created_at', { ascending: false });
+  const res = await fetch(API_BASE + '/orders?select=*&buyer_phone=eq.' + encodeURIComponent(phone) + '&order=created_at.desc', { headers: apiHeaders() });
+  const data = res.ok ? await res.json().catch(function(){ return []; }) : [];
+  const error = res.ok ? null : { message: 'HTTP ' + res.status };
   btn.disabled = false;
   document.getElementById('loading').classList.add('hidden');
   const list = document.getElementById('orderList');
