@@ -496,6 +496,9 @@
 
 
 <script>
+// 打开时强制回到顶部，避免浏览器恢复上次滚动位置
+if (history.scrollRestoration) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
 function copyText(t){
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(t).catch(function(){ fbCopy(t); });
