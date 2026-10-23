@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>MicroDuck 国产版 · 散件与配件购买 - wwntAI.com</title>
+<meta name="description" content="MicroDuck 开源双足机器鸭国产版：散件 DIY 套件与可选配件，扫码付款下单，个人开发者友好。">
+<script src="assets/js/tailwindcdn.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>tailwind.config={theme:{extend:{colors:{accent:'#2563eb'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}}</script>
+<style>
+    .bg-grid-dark{background-image:linear-gradient(rgba(148,163,184,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.07) 1px,transparent 1px);background-size:42px 42px}
+    .hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(34,211,238,.18) 0%,transparent 65%)}
+    .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.72rem;font-weight:600;letter-spacing:.05em}
+    .tag-robot{background:rgba(37,99,235,.10);color:#60a5fa;border:1px solid rgba(37,99,235,.30)}
+    .tag-warm{background:rgba(217,119,6,.12);color:#fbbf24;border:1px solid rgba(217,119,6,.30)}
+    .card-hover{transition:all .3s ease}
+    .card-hover:active{transform:scale(.98)}
+    .price{color:#d97706;font-weight:700}
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans min-h-screen antialiased">
+
+<!-- 顶部小导航 -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/92 backdrop-blur border-b border-gray-200">
+    <div class="max-w-3xl mx-auto px-4 py-2.5 flex items-center justify-between">
+        <a href="index.html" class="flex items-center space-x-2">
+            <img src="assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-8 w-auto" onerror="this.style.display='none'">
+            <span class="text-base font-bold">wwnt<span class="text-accent">AI</span>.com</span>
+        </a>
+        <a href="products/microduck.html" class="text-xs text-gray-500 hover:text-accent">MicroDuck 详情 →</a>
+    </div>
+</nav>
+
+<!-- Hero：产品介绍 -->
+<header class="relative overflow-hidden bg-[#0B1120] text-white pt-16">
+    <div class="absolute inset-0 bg-grid-dark opacity-60"></div>
+    <div class="absolute inset-0 hero-glow"></div>
+    <div class="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-5 pt-8 pb-10">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span class="tag tag-robot">开源双足机器鸭</span>
+            <span class="tag tag-warm">散件 DIY</span>
+            <span class="px-2.5 py-1 bg-white/5 text-amber-200 text-xs rounded-full border border-white/10">Apache-2.0 开源</span>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-bold leading-tight">MicroDuck <span class="text-amber-400">国产版</span></h1>
+        <p class="mt-2 text-amber-300/80 text-sm font-medium">面向个人开发者的开源双足机器鸭 · 散件组装 · 强化学习原生</p>
+        <img src="Assets/images/microduck/microduck-color-1.jpg" alt="MicroDuck 国产版 开源机器鸭" class="mt-6 w-full rounded-2xl border border-white/10 shadow-2xl">
+        <p class="mt-6 text-[15px] text-slate-300 leading-relaxed">25cm 高的可爱机器鸭，15 自由度全身关节，RK3566 主控 50Hz 策略环驱动。结构图纸、BOM、固件、强化学习训练栈<span class="text-amber-300 font-semibold">全量开源</span>——散件到手自己组装，<span class="text-emerald-300 font-semibold">从仿真到真机，训练属于你自己的具身智能</span>。</p>
+    </div>
+</header>
+
+<!-- 核心卖点 -->
+<section class="py-10">
+    <div class="max-w-3xl mx-auto px-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="bg-white rounded-2xl p-5 border border-gray-200 card-hover">
+                <div class="flex items-center gap-3 mb-2"><i class="fas fa-kiwi-bird text-amber-500 text-xl"></i><h3 class="font-bold">开源双足机器鸭</h3></div>
+                <p class="text-sm text-gray-500 leading-relaxed">15 自由度（腿 5×2 + 头颈 4 + 鸭嘴 1），预置行走、踢球、喙部抓取等 7 套行为，摔倒自主起身。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-200 card-hover">
+                <div class="flex items-center gap-3 mb-2"><i class="fas fa-cubes text-emerald-500 text-xl"></i><h3 class="font-bold">散件 DIY 套件</h3></div>
+                <p class="text-sm text-gray-500 leading-relaxed">结构件 + 电子件 + 舵机 + 主控 + 电池全配齐，中英双语组装教程，自己动手造一只。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-200 card-hover">
+                <div class="flex items-center gap-3 mb-2"><i class="fas fa-brain text-accent text-xl"></i><h3 class="font-bold">强化学习训练栈</h3></div>
+                <p class="text-sm text-gray-500 leading-relaxed">MuJoCo 仿真 + PPO 训练，导出 ONNX 部署真机，动作策略可重训。</p>
+            </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-200 card-hover">
+                <div class="flex items-center gap-3 mb-2"><i class="fas fa-code text-purple-500 text-xl"></i><h3 class="font-bold">个人开发者友好</h3></div>
+                <p class="text-sm text-gray-500 leading-relaxed">Python / JavaScript 编程自定义行为，国产舵机平替 + 低成本。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 产品规格 -->
+<section class="py-10 bg-white">
+    <div class="max-w-3xl mx-auto px-5">
+        <h2 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-clipboard-list text-accent mr-2"></i>产品规格</h2>
+        <div class="rounded-2xl border border-gray-200 overflow-hidden text-sm">
+            <table class="w-full">
+                <tbody class="divide-y divide-gray-100">
+                    <tr><td class="px-4 py-3 font-semibold text-gray-600 w-28 bg-gray-50">整机尺寸</td><td class="px-4 py-3 text-gray-600">高 25cm · 重约 800g</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold text-gray-600 bg-gray-50">自由度</td><td class="px-4 py-3 text-gray-600">15 DOF（腿 5×2 + 头颈 4 + 鸭嘴 1）</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold text-gray-600 bg-gray-50">主控</td><td class="px-4 py-3 text-gray-600">RK3566（四核 Cortex-A55 · 0.8 TOPS NPU）</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold text-gray-600 bg-gray-50">内存/存储</td><td class="px-4 py-3 text-gray-600">1GB RAM + 32GB eMMC</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold text-gray-600 bg-gray-50">感知</td><td class="px-4 py-3 text-gray-600">广角摄像头 · 8×8 ToF · 双 IMU · 麦克风 · 扬声器</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold text-gray-600 bg-gray-50">电池</td><td class="px-4 py-3 text-gray-600">18650 可拆卸电池组，续航约 1 小时</td></tr>
+                    <tr><td class="px-4 py-3 font-semibold text-gray-600 bg-gray-50">预置行为</td><td class="px-4 py-3 text-gray-600">行走 · 坐立 · 踢球 · 喙部抓取 · 轮滑 · 摔倒起身</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 配件清单 -->
+<section class="py-10">
+    <div class="max-w-3xl mx-auto px-5">
+        <h2 class="text-xl font-bold mb-3 flex items-center"><i class="fas fa-box-open text-amber-500 mr-2"></i>配件清单</h2>
+        <p class="text-sm text-gray-500 mb-5">选好配件、记下金额，付款后在下方填写订单信息。</p>
+
+        <h3 class="font-bold text-gray-900 mb-3 text-[15px]">核心散件包</h3>
+        <div class="space-y-2.5 mb-7">
+            <div class="bg-white rounded-2xl p-4 border border-amber-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">整机散件包</h4><p class="text-xs text-gray-500 mt-1">全套结构件+电子件+15舵机+主控+电池，附中英组装教程</p></div><span class="price whitespace-nowrap">¥1999</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">RK3566 主控板</h4><p class="text-xs text-gray-500 mt-1">四核 Cortex-A55 / 1GB+32GB / 0.8 TOPS NPU</p></div><span class="price whitespace-nowrap">¥399</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">舵机套装 ×15</h4><p class="text-xs text-gray-500 mt-1">国产平替（Feetech 同款）</p></div><span class="price whitespace-nowrap">¥299</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">3D 打印结构件套装</h4><p class="text-xs text-gray-500 mt-1">全套外壳+骨架（FDM/光固化）</p></div><span class="price whitespace-nowrap">¥199</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">18650 电池组</h4><p class="text-xs text-gray-500 mt-1">可拆卸，续航约 1 小时</p></div><span class="price whitespace-nowrap">¥59</span></div>
+        </div>
+
+        <h3 class="font-bold text-gray-900 mb-3 text-[15px]">可选配件</h3>
+        <div class="space-y-2.5 mb-7">
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">轮滑配件</h4><p class="text-xs text-gray-500 mt-1">加装后实现轮滑行为</p></div><span class="price whitespace-nowrap">¥79</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">游戏手柄</h4><p class="text-xs text-gray-500 mt-1">零代码直接玩</p></div><span class="price whitespace-nowrap">¥49</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">广角摄像头模组</h4><p class="text-xs text-gray-500 mt-1">视觉感知</p></div><span class="price whitespace-nowrap">¥99</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">8×8 ToF 深度传感器</h4><p class="text-xs text-gray-500 mt-1">深度感知</p></div><span class="price whitespace-nowrap">¥129</span></div>
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">麦克风/扬声器模组</h4><p class="text-xs text-gray-500 mt-1">语音交互</p></div><span class="price whitespace-nowrap">¥69</span></div>
+        </div>
+
+        <h3 class="font-bold text-gray-900 mb-3 text-[15px]">增值服务</h3>
+        <div class="space-y-2.5">
+            <div class="bg-white rounded-2xl p-4 border border-gray-200 flex justify-between items-start gap-3"><div><h4 class="font-bold text-[15px]">代装整机服务</h4><p class="text-xs text-gray-500 mt-1">散件代装 + 首跑调试</p></div><span class="price whitespace-nowrap">¥299</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- 购买流程 -->
+<section class="py-10 bg-white">
+    <div class="max-w-3xl mx-auto px-5">
+        <h2 class="text-xl font-bold mb-6 text-center">购买流程</h2>
+        <div class="space-y-3">
+            <div class="flex items-start gap-4 bg-gray-50 rounded-2xl p-4"><div class="w-9 h-9 shrink-0 rounded-full bg-amber-500/10 flex items-center justify-center font-bold text-amber-600">1</div><div><h3 class="font-bold text-[15px]">选配件</h3><p class="text-sm text-gray-500">在上方清单选好配件，记下总金额</p></div></div>
+            <div class="flex items-start gap-4 bg-gray-50 rounded-2xl p-4"><div class="w-9 h-9 shrink-0 rounded-full bg-amber-500/10 flex items-center justify-center font-bold text-amber-600">2</div><div><h3 class="font-bold text-[15px]">扫码付款</h3><p class="text-sm text-gray-500">用支付宝扫下方收款码付款，记下转账单号</p></div></div>
+            <div class="flex items-start gap-4 bg-gray-50 rounded-2xl p-4"><div class="w-9 h-9 shrink-0 rounded-full bg-amber-500/10 flex items-center justify-center font-bold text-amber-600">3</div><div><h3 class="font-bold text-[15px]">填单提交</h3><p class="text-sm text-gray-500">填写配件、收货信息与转账单号，复制订单发给客服即完成</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- 收款码 -->
+<section id="pay" class="py-10">
+    <div class="max-w-3xl mx-auto px-5">
+        <div class="text-center mb-6">
+            <h2 class="text-xl font-bold">扫码付款</h2>
+            <p class="mt-1 text-sm text-gray-500">请核对金额后扫码付款，付款后记下转账单号</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-md mx-auto">
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+                <h3 class="font-bold mb-4 text-[15px]"><i class="fab fa-alipay text-blue-500 mr-1"></i>支付宝</h3>
+                <img src="Assets/images/microduck/qr-alipay.jpg" alt="支付宝收款码" class="w-48 h-48 mx-auto rounded-xl object-contain bg-white border border-gray-100">
+                <p class="text-xs text-gray-400 mt-3">长按识别或支付宝扫码</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-200 text-center">
+                <h3 class="font-bold mb-4 text-[15px]"><i class="fab fa-weixin text-emerald-500 mr-1"></i>微信支付</h3>
+                <div class="w-48 h-48 mx-auto rounded-xl bg-gray-100 flex items-center justify-center text-gray-400 text-sm border border-dashed border-gray-300">微信收款码待添加</div>
+                <p class="text-xs text-gray-400 mt-3">微信收款码待添加</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 下单表单 -->
+<section id="order" class="py-10 bg-white">
+    <div class="max-w-xl mx-auto px-5">
+        <div class="text-center mb-6">
+            <h2 class="text-xl font-bold">填写订单信息</h2>
+            <p class="mt-1 text-sm text-gray-500">带 * 为必填项</p>
+        </div>
+        <form id="orderForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">购买配件 *</label>
+                <textarea id="items" rows="2" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500" placeholder="例如：整机散件包 ×1、轮滑配件 ×1"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">合计金额 *</label>
+                <input id="amount" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500" placeholder="例如：2078">
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">姓名 *</label>
+                    <input id="buyer_name" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500" placeholder="收货人姓名">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">电话 *</label>
+                    <input id="buyer_phone" type="tel" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500" placeholder="手机号">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">收货地址 *</label>
+                <input id="buyer_address" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500" placeholder="省市区 + 详细地址">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">转账单号 *</label>
+                <input id="wx_tx" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500" placeholder="支付宝/微信付款凭证里的转账单号">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1.5">备注</label>
+                <input id="note" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500" placeholder="选填">
+            </div>
+            <button type="submit" class="w-full py-3.5 bg-amber-500 active:bg-amber-600 text-white font-semibold rounded-xl transition-colors">生成订单信息</button>
+        </form>
+
+        <!-- 订单结果 -->
+        <div id="orderResult" class="hidden mt-5">
+            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4">
+                <p class="text-sm font-semibold text-gray-700 mb-2">请把以下订单信息发给客服（微信：<span class="text-accent">待添加</span>），或点下方按钮复制</p>
+                <pre id="orderText" class="text-[13px] leading-relaxed whitespace-pre-wrap bg-white rounded-xl border border-gray-200 p-3 text-gray-700"></pre>
+            </div>
+            <div class="grid grid-cols-1 gap-2.5 mt-3">
+                <button onclick="copyOrder()" class="py-3 bg-accent active:bg-blue-700 text-white font-semibold rounded-xl"><i class="fas fa-copy mr-1"></i>复制订单信息</button>
+                <button onclick="mailOrder()" class="py-3 border border-gray-300 text-gray-700 font-semibold rounded-xl active:bg-gray-50"><i class="fas fa-envelope mr-1"></i>发送邮件下单</button>
+            </div>
+            <p id="copyMsg" class="hidden mt-2 text-center text-sm font-semibold text-emerald-600">已复制，去微信粘贴发给客服即可</p>
+        </div>
+    </div>
+</section>
+
+<!-- footer -->
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-3xl mx-auto px-5 py-8 text-center">
+        <p class="text-sm text-gray-400">MicroDuck 国产版 · 万物拟态（WWNT Robotics）</p>
+        <p class="text-sm text-gray-400 mt-1">客服邮箱：<a href="mailto:Support@wwntai.com" class="text-gray-200 underline">Support@wwntai.com</a></p>
+        <p class="text-xs text-gray-500 mt-3">© 2026 wwntAI.com · 万物拟态 | 开源双足机器人</p>
+    </div>
+</footer>
+
+<script>
+var lastOrderText = '';
+function $(id){ return document.getElementById(id); }
+document.getElementById('orderForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var items = $('items').value.trim();
+    var amount = $('amount').value.trim();
+    var name = $('buyer_name').value.trim();
+    var phone = $('buyer_phone').value.trim();
+    var address = $('buyer_address').value.trim();
+    var tx = $('wx_tx').value.trim();
+    var note = $('note').value.trim();
+    if (!items || !name || !phone || !address || !tx || !amount) {
+        alert('请填写所有必填项（配件 / 金额 / 姓名 / 电话 / 地址 / 转账单号）');
+        return;
+    }
+    lastOrderText = '【MicroDuck 配件订单】\n'
+        + '配件：' + items + '\n'
+        + '金额：' + amount + '\n'
+        + '姓名：' + name + '\n'
+        + '电话：' + phone + '\n'
+        + '地址：' + address + '\n'
+        + '转账单号：' + tx + '\n'
+        + (note ? '备注：' + note + '\n' : '');
+    $('orderText').textContent = lastOrderText;
+    $('orderResult').classList.remove('hidden');
+    $('orderResult').scrollIntoView({ behavior:'smooth', block:'center' });
+});
+
+function copyOrder(){
+    var text = lastOrderText;
+    var msg = $('copyMsg');
+    function done(){ msg.classList.remove('hidden'); setTimeout(function(){ msg.classList.add('hidden'); }, 3000); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); done(); });
+    } else {
+        fallbackCopy(text); done();
+    }
+}
+function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+}
+function mailOrder(){
+    var subject = encodeURIComponent('MicroDuck 配件订单 - ' + $('buyer_name').value.trim());
+    var body = encodeURIComponent(lastOrderText);
+    window.location.href = 'mailto:Support@wwntai.com?subject=' + subject + '&body=' + body;
+}
+</script>
+</body>
+</html>
