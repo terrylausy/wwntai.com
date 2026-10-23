@@ -28,7 +28,10 @@
             <img src="assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-8 w-auto" onerror="this.style.display='none'">
             <span class="text-base font-bold text-gray-900">wwnt<span class="text-accent">AI</span>.com</span>
         </a>
-        <a href="parts.html" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"><i class="fas fa-arrow-left"></i>返回配件商城</a>
+        <div class="flex items-center gap-2">
+            <a href="orders.html" class="px-3.5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5"><i class="fas fa-user"></i>我的订单</a>
+            <a href="parts.html" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"><i class="fas fa-arrow-left"></i>返回配件商城</a>
+        </div>
     </div>
 </nav>
 
@@ -140,7 +143,13 @@
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
 <script>
+const cloud = WorkBuddyCloud.createWorkBuddyCloud({
+  endpoint: 'https://microduck-shop.app.workbuddy.host',
+  oauthRelayBaseUrl: 'https://www.workbuddy.cn/v2/as/genie-baas/oauth',
+  publishableKey: 'wbpk_i8mTuyYCDN2UTz9mDvjx0E_gQmBKGcwbLiSUfYltMr2Vu5Qsw9fQz47',
+});
 // ---------- 配件数据 ----------
 var groups = [
     { title:'可下单（7天内发货）', items:[
@@ -223,7 +232,7 @@ function goCheckout(){
 }
 
 // ---------- 生成订单 ----------
-document.getElementById('orderForm').addEventListener('submit', function(e){
+document.getElementById('orderForm').addEventListener('submit', async function(e){
     e.preventDefault();
     var name = $('buyer_name').value.trim();
     var phone = $('buyer_phone').value.trim();
@@ -235,6 +244,46 @@ document.getElementById('orderForm').addEventListener('submit', function(e){
     var r = updateTotal();
     if(r.count === 0){
         alert('请先选择要购买的配件');
+        return;
+    }
+    // 检查登录
+    var session = null;
+    try {
+        var sr = await cloud.auth.getSession();
+        session = sr.data;
+    } catch(err) {}
+    if(!session){
+        localStorage.setItem('pendingOrder', JSON.stringify({ name:name, phone:phone, address:address }));
+        location.href = 'login.html?redirect=' + encodeURIComponent('microduck-shop.html');
+        return;
+    }
+    // 生成订单文本
+    var t = '【MicroDuck 配件订单】\n';
+    var itemsStr = '';
+    groups.forEach(function(g){ g.items.forEach(function(it){
+        if(qty[it.name] > 0){
+            t += it.name + ' ×' + qty[it.name] + ' = ¥' + (it.price*qty[it.name]) + '\n';
+            itemsStr += (itemsStr ? '；' : '') + it.name + ' ×' + qty[it.name];
+        }
+    });});
+    t += '合计：¥' + r.total + '\n';
+    t += '收货人：' + name + '\n电话：' + phone + '\n地址：' + address + '\n';
+    lastOrderText = t;
+    // 提交订单到云端
+    var btn = document.getElementById('genBtn');
+    btn.disabled = true; btn.textContent = '提交中...';
+    var ins = await cloud.database.from('orders').insert({
+        items: itemsStr,
+        total_amount: '¥' + r.total,
+        buyer_name: name,
+        buyer_phone: phone,
+        buyer_address: address,
+        note: null,
+        owner_name: (session.user && session.user.name) ? session.user.name : null
+    });
+    btn.disabled = false; btn.textContent = '生成订单';
+    if(ins.error){
+        alert('订单提交失败：' + (ins.error.message || '请稍后重试'));
         return;
     }
     // 订单明细
@@ -251,14 +300,6 @@ document.getElementById('orderForm').addEventListener('submit', function(e){
     $('orderTotal').textContent = '¥' + r.total;
     $('payAmount').textContent = '¥' + r.total;
     $('orderContact').innerHTML = '<b>' + name + '</b>　' + phone + '<br>' + address;
-    // 生成订单文本（用于复制/邮件）
-    var t = '【MicroDuck 配件订单】\n';
-    groups.forEach(function(g){ g.items.forEach(function(it){
-        if(qty[it.name] > 0) t += it.name + ' ×' + qty[it.name] + ' = ¥' + (it.price*qty[it.name]) + '\n';
-    });});
-    t += '合计：¥' + r.total + '\n';
-    t += '收货人：' + name + '\n电话：' + phone + '\n地址：' + address + '\n';
-    lastOrderText = t;
     // 显示确认区
     $('confirm').classList.remove('hidden');
     $('confirm').scrollIntoView({ behavior:'smooth', block:'start' });
@@ -297,6 +338,21 @@ function mailOrder(){
     }
     renderCatalog();
     updateTotal();
+})();
+
+// ---------- 恢复登录后返回的待提交订单 ----------
+(function(){
+    var po = localStorage.getItem('pendingOrder');
+    if(po){
+        try {
+            var d = JSON.parse(po);
+            if(d.name) $('buyer_name').value = d.name;
+            if(d.phone) $('buyer_phone').value = d.phone;
+            if(d.address) $('buyer_address').value = d.address;
+            localStorage.removeItem('pendingOrder');
+            $('checkout').scrollIntoView();
+        } catch(e){}
+    }
 })();
 </script>
 </body>
