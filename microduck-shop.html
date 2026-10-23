@@ -40,12 +40,12 @@
     <div class="relative z-10 max-w-3xl mx-auto px-5 pt-8 pb-10">
         <div class="flex flex-wrap items-center gap-2 mb-4">
             <span class="tag tag-robot">配件商城</span>
-            <span class="tag tag-warm">有货 · 7天内发货</span>
+            <span class="tag tag-warm">可下单 · 7天内发货</span>
             <span class="px-2.5 py-1 bg-white/5 text-emerald-200 text-xs rounded-full border border-white/10">支付宝付款</span>
         </div>
         <h1 class="text-3xl md:text-5xl font-bold leading-tight">配件<span class="text-amber-400">下单</span></h1>
         <p class="mt-2 text-amber-200 text-sm font-medium">机器人散件 · 舵机 · 传感器 · 紧固件，一站式选购</p>
-        <p class="mt-6 text-[15px] text-slate-300 leading-relaxed">选购 MicroDuck 与 Radxa 机器人配件，点「+ / −」选数量自动算总额，填写收货信息生成订单，<span class="text-emerald-300 font-semibold">支付宝扫码付款，有货 7 天内发货</span>。</p>
+        <p class="mt-6 text-[15px] text-slate-300 leading-relaxed">选购 MicroDuck 与 Radxa 机器人配件，点「+ / −」选数量自动算总额，填写收货信息生成订单，<span class="text-emerald-300 font-semibold">支付宝扫码付款，可下单 7 天内发货</span>。</p>
     </div>
 </header>
 
@@ -143,7 +143,7 @@
 <script>
 // ---------- 配件数据 ----------
 var groups = [
-    { title:'有货（7天内发货）', items:[
+    { title:'可下单（7天内发货）', items:[
         {name:'Radxa ZERO 3W 主板', price:385, available:true, desc:'超小型 RK3566 单板计算机，2GB LPDDR4，WiFi 6 + USB 3.0 + MIPI CSI。'},
         {name:'Radxa Camera 8M 219 摄像头', price:180, available:true, desc:'Sony IMX219 800万像素摄像头，默认 FPC 排线适配 ZERO 3W/3E。'},
         {name:'Radxa ZERO 3E PoE HAT', price:118, available:true, desc:'IEEE 802.3af/at PoE 以太网供电扩展板，单网线供电 + 联网。'},
@@ -176,7 +176,7 @@ function renderCatalog(){
     groups.forEach(function(g){
         var groupAvail = g.items.length > 0 && g.items[0].available !== false;
         html += '<h3 class="font-bold text-gray-900 mb-3 text-[15px]">' + g.title
-            + (groupAvail ? ' <span class="ml-2 px-2 py-0.5 bg-emerald-50 text-emerald-600 text-xs font-semibold rounded-full">有货</span>' : ' <span class="ml-2 px-2 py-0.5 bg-gray-100 text-gray-400 text-xs font-semibold rounded-full">即将上线</span>')
+            + (groupAvail ? ' <span class="ml-2 px-2 py-0.5 bg-emerald-50 text-emerald-600 text-xs font-semibold rounded-full">可下单</span>' : ' <span class="ml-2 px-2 py-0.5 bg-gray-100 text-gray-400 text-xs font-semibold rounded-full">即将上线</span>')
             + '</h3>';
         html += '<div class="bg-white rounded-2xl border border-gray-200 overflow-hidden mb-6 divide-y divide-gray-100">';
         g.items.forEach(function(it){
