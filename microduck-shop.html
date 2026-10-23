@@ -116,8 +116,14 @@
         <!-- 订单号 + 录入交易订单号 -->
         <div class="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
             <p id="orderNo" class="text-sm font-bold text-amber-600 mb-3"></p>
-            <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5"><i class="fas fa-key text-amber-500"></i>录入交易订单号</div>
-            <p class="text-xs text-gray-500 mb-3">支付宝付款后，请填写交易订单号，便于核对发货</p>
+            <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5"><i class="fas fa-key text-amber-500"></i>录入交易订单号<button type="button" class="ml-1 w-5 h-5 rounded-full bg-gray-200 hover:bg-amber-200 text-gray-500 hover:text-amber-700 text-xs font-bold flex items-center justify-center transition-colors" onclick="toggleTxHelp()" title="如何查看交易订单号？">?</button></div>
+            <p class="text-xs text-gray-500 mb-3">支付宝付款后，请填写 28 位交易订单号，便于核对发货</p>
+            <div id="txHelp" class="hidden mb-3 rounded-xl border border-amber-200 bg-amber-50 p-3 relative">
+                <button type="button" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 leading-none px-1" onclick="toggleTxHelp()">✕</button>
+                <p class="text-xs text-gray-700 font-semibold mb-2 pr-6">支付宝 → 账单 → 订单详情，找到「交易订单号」：</p>
+                <img src="Assets/images/microduck/alipay-order-sample.jpg" alt="交易订单号示例" class="w-full rounded-lg border border-gray-200">
+                <p class="text-[11px] text-gray-500 mt-2">交易订单号为 <span class="text-amber-600 font-semibold">28 位数字</span>（示例中红框标注处）</p>
+            </div>
             <input id="payTx" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-amber-500 mb-3" placeholder="请输入正确的交易订单号">
             <button id="paidBtn" onclick="confirmPaid()" class="w-full py-3 bg-emerald-500 active:bg-emerald-600 text-white font-semibold rounded-xl transition-colors">确认已付款</button>
             <p id="payMsg" class="hidden mt-3 text-center text-sm font-semibold"></p>
@@ -318,9 +324,14 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
 });
 
 // ---------- 确认已付款（录入交易订单号） ----------
+function toggleTxHelp(){
+    var el = document.getElementById('txHelp');
+    if(el) el.classList.toggle('hidden');
+}
 async function confirmPaid(){
     var tx = $('payTx').value.trim();
     if(!tx){ alert('请输入正确的交易订单号'); return; }
+    if(!/^\d{28}$/.test(tx)){ alert('交易订单号应为 28 位数字，请核对后重新输入'); return; }
     if(!lastOrderId){ alert('请先生成订单'); return; }
     var btn = document.getElementById('paidBtn');
     btn.disabled = true; btn.textContent = '提交中...';
