@@ -182,7 +182,7 @@
         </a>
     </li>
 </ul>
-<button onclick="sharePage()" class="mt-5 w-full py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-share-nodes"></i>分享本页到微信</button>
+<button onclick="sharePage()" class="mt-5 w-full py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-share-nodes"></i>分享本页到微信</button><button onclick="openService()" class="mt-2.5 w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-headset"></i>联系客服</button>
     </div>
 </aside>
 
@@ -476,6 +476,22 @@ function shareItem(btn){
 function sharePage(){
     copyText(location.href); toast('页面链接已复制，去微信粘贴分享');
 }
+</script>
+
+
+<div id="serviceModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50" onclick="closeService()"></div>
+    <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full text-center shadow-xl">
+        <button onclick="closeService()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-lg"></i></button>
+        <h3 class="font-bold text-lg mb-1">联系客服</h3>
+        <p class="text-sm text-gray-500 mb-4">扫码添加企业微信客服</p>
+        <div class="w-48 h-48 mx-auto rounded-xl bg-gray-100 border border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-sm">客服二维码待上传</div>
+        <p class="text-sm font-semibold text-gray-700 mt-3">企业微信扫码，获取咨询与售后</p>
+    </div>
+</div>
+<script>
+function openService(){ document.getElementById('serviceModal').classList.remove('hidden'); }
+function closeService(){ document.getElementById('serviceModal').classList.add('hidden'); }
 </script>
 
 </body>
