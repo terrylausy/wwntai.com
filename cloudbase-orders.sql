@@ -26,3 +26,9 @@ create policy orders_update_public on public.orders
 
 -- 3. 表级 GRANT（第一层权限，缺了会被拦）
 grant select, insert, update on public.orders to anon;
+
+-- ============================================================
+-- 发货功能：新增快递单号 / 快递公司字段（在 SQL 编辑器单独执行一次即可）
+-- ============================================================
+alter table public.orders add column if not exists tracking_no text;
+alter table public.orders add column if not exists tracking_company text;
