@@ -143,33 +143,27 @@
 <script>
 // ---------- 配件数据 ----------
 var groups = [
-    { title:'Radxa ZERO 3 系列', items:[
+    { title:'有货（7天内发货）', items:[
         {name:'Radxa ZERO 3W 主板', price:385, available:true, desc:'超小型 RK3566 单板计算机，2GB LPDDR4，WiFi 6 + USB 3.0 + MIPI CSI。'},
         {name:'Radxa Camera 8M 219 摄像头', price:180, available:true, desc:'Sony IMX219 800万像素摄像头，默认 FPC 排线适配 ZERO 3W/3E。'},
         {name:'Radxa ZERO 3E PoE HAT', price:118, available:true, desc:'IEEE 802.3af/at PoE 以太网供电扩展板，单网线供电 + 联网。'},
+        {name:'HD-1910-C001 串口总线舵机 15 个套装', price:1380, available:true, desc:'FEETECH 空芯杯串口总线舵机，AI 开源专用，6V 12kg·cm、磁编码 360° 反馈、TTL 总线，适配 MicroDuck 关节。'},
+        {name:'FE-URT2-C001 调试板 + 线材', price:49.5, available:true, desc:'飞特 USB 转 TTL/485 调试板 + AMP2.0 舵机转接线，ID 配置与总线调试。'},
+        {name:'VL53L8CX ToF 模块', price:54.9, available:true, desc:'ST 8×8 多区域 ToF 测距传感器，64 分区探测、65° 视角、最远 400cm，避障与手势识别。'},
+        {name:'唯卓仕NP-F550 电池组', price:49, available:true, desc:'唯卓仕 VILTROX NP-F550 锂电池，2200mAh/7.4V，USB-C 直充约 2 小时，LED 电量显示。'},
+        {name:'扬声器模组', price:5.9, available:true, desc:'扬声器模组，让机器鸭能「说」，支持语音反馈与提示音。'},
+        {name:'萤石 64G 监控专用高速 TF 卡', price:60, available:true, desc:'萤石 64G 内存卡，监控专用高速卡，视频录像 TF 存储卡。'},
+        {name:'代装整机服务', price:699, available:true, desc:'散件代装 + 首跑调试一站式服务，到手即用，适合想省心的用户。'},
     ]},
-    { title:'核心散件包', items:[
+    { title:'即将上线', items:[
         {name:'整机散件包', price:2580, available:false, desc:'全部零件一次配齐：结构件、电子件、15 颗 HD-1910-C001 舵机、RK3566 主控、NP-F550 电池组，附中英组装教程，开箱即装。'},
         {name:'RK3566 主控板', price:328, available:false, desc:'瑞芯微 RK3566，四核 Cortex-A55，0.8 TOPS NPU，1GB+32GB，机器鸭的「大脑」。'},
-        {name:'HD-1910-C001 串口总线舵机 15 个套装', price:1380, available:true, desc:'FEETECH 空芯杯串口总线舵机，AI 开源专用，6V 12kg·cm、磁编码 360° 反馈、TTL 总线，适配 MicroDuck 关节。'},
         {name:'3D 打印结构件套装', price:128, available:false, desc:'全套外壳 + 骨架结构件，FDM/光固化可选，图纸全量开源，打印即装。'},
-        {name:'唯卓仕NP-F550 电池组', price:49, available:true, desc:'唯卓仕 VILTROX NP-F550 锂电池，2200mAh/7.4V，USB-C 直充约 2 小时，LED 电量显示。'},
-    ]},
-    { title:'外购件 · 电子件', items:[
-        {name:'FE-URT2-C001 调试板 + 线材', price:49.5, available:true, desc:'飞特 USB 转 TTL/485 调试板 + AMP2.0 舵机转接线，ID 配置与总线调试。'},
-        {name:'萤石 64G 监控专用高速 TF 卡', price:60, available:true, desc:'萤石 64G 内存卡，监控专用高速卡，视频录像 TF 存储卡。'},
+        {name:'轮滑配件', price:79, available:false, desc:'加装轮滑模块，机器鸭从「走」进化到「滑」，解锁轮滑行为。'},
+        {name:'游戏手柄', price:79, available:false, desc:'蓝牙手柄，零代码直接玩，遥控机器鸭行走、踢球。'},
         {name:'imu_to_dxl 电路板', price:0, available:false, desc:'IMU 转 Dynamixel 协议桥接板，姿态数据转换。'},
         {name:'Banana PCB + 香蕉插头 PCB（铜镀金）', price:0, available:false, desc:'2.5mm 香蕉插头 PCB（铜镀金）×2；banana PCB（嘉立创）×1。'},
         {name:'标准件套装', price:0, available:false, desc:'轴承×3种 + 自攻螺丝×5种 + 乐泰螺纹胶243 + 鞋底防滑垫，MicroDuck 复刻紧固件。'},
-    ]},
-    { title:'可选配件', items:[
-        {name:'轮滑配件', price:79, available:false, desc:'加装轮滑模块，机器鸭从「走」进化到「滑」，解锁轮滑行为。'},
-        {name:'游戏手柄', price:79, available:false, desc:'蓝牙手柄，零代码直接玩，遥控机器鸭行走、踢球。'},
-        {name:'VL53L8CX ToF 模块', price:54.9, available:true, desc:'ST 8×8 多区域 ToF 测距传感器，64 分区探测、65° 视角、最远 400cm，避障与手势识别。'},
-        {name:'扬声器模组', price:5.9, available:true, desc:'扬声器模组，让机器鸭能「说」，支持语音反馈与提示音。'},
-    ]},
-    { title:'增值服务', items:[
-        {name:'代装整机服务', price:699, available:true, desc:'散件代装 + 首跑调试一站式服务，到手即用，适合想省心的用户。'},
     ]},
 ];
 var qty = {};
@@ -183,7 +177,7 @@ function renderCatalog(){
     groups.forEach(function(g){
         var groupAvail = g.items.length > 0 && g.items[0].available !== false;
         html += '<h3 class="font-bold text-gray-900 mb-3 text-[15px]">' + g.title
-            + (groupAvail ? '' : ' <span class="ml-2 px-2 py-0.5 bg-gray-100 text-gray-400 text-xs font-semibold rounded-full">即将上线</span>')
+            + (groupAvail ? ' <span class="ml-2 px-2 py-0.5 bg-emerald-50 text-emerald-600 text-xs font-semibold rounded-full">有货</span>' : ' <span class="ml-2 px-2 py-0.5 bg-gray-100 text-gray-400 text-xs font-semibold rounded-full">即将上线</span>')
             + '</h3>';
         html += '<div class="bg-white rounded-2xl border border-gray-200 overflow-hidden mb-6 divide-y divide-gray-100">';
         g.items.forEach(function(it){
