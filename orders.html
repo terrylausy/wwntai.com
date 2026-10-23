@@ -53,13 +53,12 @@
     </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const cloud = WorkBuddyCloud.createWorkBuddyCloud({
-  endpoint: 'https://microduck-shop.app.workbuddy.host',
-  oauthRelayBaseUrl: 'https://www.workbuddy.cn/v2/as/genie-baas/oauth',
-  publishableKey: 'wbpk_i8mTuyYCDN2UTz9mDvjx0E_gQmBKGcwbLiSUfYltMr2Vu5Qsw9fQz47',
-});
+const supabase = window.supabase.createClient(
+  'https://xawygmaszyzcnzwdkvgw.supabase.co',
+  'sb_publishable_Oa4JIT4DZS0CYnqPxISLDQ_V1gkh89M'
+);
 
 const statusMap = { pending: ['待付款', 'status-pending'], paid: ['已付款', 'status-paid'], shipped: ['已发货', 'status-shipped'], done: ['已完成', 'status-done'] };
 
@@ -79,7 +78,7 @@ async function queryOrders() {
   document.getElementById('empty').classList.add('hidden');
   const btn = document.getElementById('queryBtn');
   btn.disabled = true;
-  const { data, error } = await cloud.database
+  const { data, error } = await supabase
     .from('orders')
     .select('*')
     .eq('buyer_phone', phone)

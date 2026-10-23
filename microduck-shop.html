@@ -153,13 +153,12 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const cloud = WorkBuddyCloud.createWorkBuddyCloud({
-  endpoint: 'https://microduck-shop.app.workbuddy.host',
-  oauthRelayBaseUrl: 'https://www.workbuddy.cn/v2/as/genie-baas/oauth',
-  publishableKey: 'wbpk_i8mTuyYCDN2UTz9mDvjx0E_gQmBKGcwbLiSUfYltMr2Vu5Qsw9fQz47',
-});
+const supabase = window.supabase.createClient(
+  'https://xawygmaszyzcnzwdkvgw.supabase.co',
+  'sb_publishable_Oa4JIT4DZS0CYnqPxISLDQ_V1gkh89M'
+);
 // ---------- 配件数据 ----------
 var groups = [
     { title:'可下单（7天内发货）', items:[
@@ -272,7 +271,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
     // 提交订单到云端
     var btn = document.getElementById('genBtn');
     btn.disabled = true; btn.textContent = '提交中...';
-    var ins = await cloud.database.from('orders').insert({
+    var ins = await supabase.from('orders').insert({
         items: itemsStr,
         total_amount: '¥' + r.total,
         buyer_name: name,
@@ -313,7 +312,7 @@ async function confirmPaid(){
     if(!lastOrderId){ alert('请先生成订单'); return; }
     var btn = document.getElementById('paidBtn');
     btn.disabled = true; btn.textContent = '提交中...';
-    var { error } = await cloud.database.from('orders').update({ wx_transaction_id: tx, status: 'paid' }).eq('id', lastOrderId);
+    var { error } = await supabase.from('orders').update({ wx_transaction_id: tx, status: 'paid' }).eq('id', lastOrderId);
     btn.disabled = false; btn.textContent = '确认已付款';
     if(error){ alert('提交失败：' + (error.message || '请稍后重试')); return; }
     var m = $('payMsg');
