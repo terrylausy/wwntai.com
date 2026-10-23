@@ -1,0 +1,3 @@
+server/*.sh text eol=lf
+server/*.service text eol=lf
+server/*.js text eol=lf

@@ -1,0 +1,15 @@
+[Unit]
+Description=wwntAI order server (MicroDuck parts)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/www/wwwroot/wwntai-server
+ExecStart=/usr/bin/env node /www/wwwroot/wwntai-server/order-server.js
+Environment=PORT=3789
+Environment=ADMIN_KEY=wwnt-admin-2026-Xk7pQ9
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

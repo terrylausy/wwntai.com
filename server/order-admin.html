@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>订单管理 - wwntAI.com</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; background: #f1f5f9; color: #1e293b; padding: 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 22px; margin-bottom: 16px; }
+  .bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  input, select, button { padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; }
+  button { background: #2563eb; color: #fff; border: none; cursor: pointer; }
+  button:hover { background: #1d4ed8; }
+  button.gray { background: #64748b; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  th, td { padding: 10px 12px; text-align: left; font-size: 13px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  th { background: #f8fafc; font-weight: 600; white-space: nowrap; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pending { background: #fef3c7; color: #b45309; }
+  .shipped { background: #d1fae5; color: #047857; }
+  .done { background: #e0e7ff; color: #4338ca; }
+  .muted { color: #64748b; }
+  .empty { text-align: center; color: #94a3b8; padding: 40px !important; }
+  #msg { margin: 10px 0; font-size: 14px; }
+  .err { color: #dc2626; } .ok { color: #059669; }
+  @media (max-width: 720px) { th, td { font-size: 12px; padding: 8px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>MicroDuck 配件订单管理</h1>
+  <div class="bar">
+    <input id="key" type="password" placeholder="管理密钥" style="width:220px">
+    <select id="statusFilter">
+      <option value="">全部状态</option>
+      <option value="pending">待处理</option>
+      <option value="shipped">已发货</option>
+      <option value="done">已完成</option>
+    </select>
+    <button onclick="load()">查询</button>
+    <button class="gray" onclick="exportCsv()">导出 CSV</button>
+  </div>
+  <div id="msg"></div>
+  <table>
+    <thead>
+      <tr>
+        <th>订单号</th><th>配件</th><th>金额</th><th>姓名</th><th>电话</th>
+        <th>地址</th><th>转账单号</th><th>备注</th><th>状态</th><th>时间</th><th>操作</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"><tr><td colspan="11" class="empty">输入密钥后点击"查询"</td></tr></tbody>
+  </table>
+</div>
+<script>
+let current = [];
+const $ = id => document.getElementById(id);
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function load(){
+  const key = $('key').value.trim();
+  if(!key){ $('msg').innerHTML = '<span class="err">请先输入密钥</span>'; return; }
+  const st = $('statusFilter').value;
+  $('msg').innerHTML = '<span class="muted">查询中...</span>';
+  try {
+    const r = await fetch('/admin/api/orders?key=' + encodeURIComponent(key) + (st ? '&status=' + st : ''));
+    const d = await r.json();
+    if(!d.ok){ $('msg').innerHTML = '<span class="err">' + esc(d.error || '查询失败') + '</span>'; return; }
+    current = d.orders;
+    $('msg').innerHTML = '<span class="ok">共 ' + d.count + ' 条订单</span>';
+    render();
+  } catch(e) {
+    $('msg').innerHTML = '<span class="err">网络错误：' + esc(e.message) + '</span>';
+  }
+}
+
+async function setStatus(id, status){
+  const key = $('key').value.trim();
+  await fetch('/admin/api/orders/status?key=' + encodeURIComponent(key), {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ id, status })
+  });
+  load();
+}
+
+function render(){
+  const tb = $('tbody');
+  if(!current.length){ tb.innerHTML = '<tr><td colspan="11" class="empty">暂无订单</td></tr>'; return; }
+  tb.innerHTML = current.map(o => {
+    const cls = o.status === 'shipped' ? 'shipped' : o.status === 'done' ? 'done' : 'pending';
+    const label = o.status === 'shipped' ? '已发货' : o.status === 'done' ? '已完成' : '待处理';
+    return '<tr>'
+      + '<td><b>' + esc(o.id) + '</b></td>'
+      + '<td>' + esc(o.items) + '</td>'
+      + '<td>' + esc(o.total_amount || '-') + '</td>'
+      + '<td>' + esc(o.buyer_name) + '</td>'
+      + '<td>' + esc(o.buyer_phone) + '</td>'
+      + '<td style="max-width:200px">' + esc(o.buyer_address) + '</td>'
+      + '<td style="max-width:160px;word-break:break-all">' + esc(o.wx_transaction_id) + '</td>'
+      + '<td>' + esc(o.note || '-') + '</td>'
+      + '<td><span class="pill ' + cls + '">' + label + '</span></td>'
+      + '<td class="muted">' + esc((o.created_at || '').replace('T',' ').slice(0,19)) + '</td>'
+      + '<td>' + (o.status !== 'shipped' ? '<button onclick="setStatus(\'' + esc(o.id) + '\',\'shipped\')">发货</button> ' : '')
+        + (o.status !== 'done' ? '<button class="gray" onclick="setStatus(\'' + esc(o.id) + '\',\'done\')">完成</button>' : '')
+      + '</td></tr>';
+  }).join('');
+}
+
+function exportCsv(){
+  if(!current.length){ alert('没有可导出的订单'); return; }
+  const head = ['订单号','配件','金额','姓名','电话','地址','转账单号','备注','状态','时间'];
+  const rows = current.map(o => [o.id, o.items, o.total_amount, o.buyer_name, o.buyer_phone, o.buyer_address, o.wx_transaction_id, o.note, o.status, o.created_at]);
+  const csv = '\ufeff' + [head, ...rows].map(r => r.map(c => '"' + String(c==null?'':c).replace(/"/g,'""') + '"').join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
+  a.download = 'microduck-orders-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+</script>
+</body>
+</html>

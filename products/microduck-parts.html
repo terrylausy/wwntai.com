@@ -239,13 +239,7 @@
     </div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
 <script>
-const cloud = WorkBuddyCloud.createWorkBuddyCloud({
-  endpoint: 'https://microduck-shop.app.workbuddy.host',
-  oauthRelayBaseUrl: 'https://www.workbuddy.cn/v2/as/genie-baas/oauth',
-  publishableKey: 'wbpk_i8mTuyYCDN2UTz9mDvjx0E_gQmBKGcwbLiSUfYltMr2Vu5Qsw9fQz47',
-});
 async function submitOrder(e) {
   e.preventDefault();
   const name = document.getElementById('buyer_name').value.trim();
@@ -263,20 +257,25 @@ async function submitOrder(e) {
   }
   const btn = document.querySelector('#orderForm button[type=submit]');
   btn.disabled = true; btn.textContent = '提交中...';
-  const { error } = await cloud.database.from('orders').insert({
-    items, total_amount: amount, buyer_name: name, buyer_phone: phone,
-    buyer_address: address, wx_transaction_id: tx, note: note || null
-  });
-  if (error) {
+  try {
+    const r = await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items, total_amount: amount, buyer_name: name, buyer_phone: phone,
+        buyer_address: address, wx_transaction_id: tx, note: note || null
+      })
+    });
+    const d = await r.json();
+    if (!r.ok || !d.ok) throw new Error(d.error || ('HTTP ' + r.status));
+    msg.className = 'mt-4 p-4 rounded-xl text-center text-sm font-semibold bg-emerald-50 text-emerald-600';
+    msg.textContent = '订单提交成功！订单号 ' + (d.order_id || '') + '，我们会尽快核对并发货。';
+    document.getElementById('orderForm').reset();
+  } catch (err) {
     msg.className = 'mt-4 p-4 rounded-xl text-center text-sm font-semibold bg-red-50 text-red-600';
-    msg.textContent = '提交失败：' + (error.message || '请稍后重试');
-    btn.disabled = false; btn.textContent = '提交订单';
-    return false;
+    msg.textContent = '提交失败：' + err.message + '（可直接联系 Support@wwntai.com）';
   }
-  msg.className = 'mt-4 p-4 rounded-xl text-center text-sm font-semibold bg-emerald-50 text-emerald-600';
-  msg.textContent = '订单提交成功！我们会尽快核对并发货。';
   btn.disabled = false; btn.textContent = '提交订单';
-  document.getElementById('orderForm').reset();
   return false;
 }
 </script>
