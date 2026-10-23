@@ -137,12 +137,12 @@
     </div>
 </header>
 
-<!-- 导航树 -->
-<section class="relative z-10 pt-10 pb-2">
-    <div class="max-w-3xl mx-auto px-6">
-        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-            <h2 class="text-base font-bold text-gray-900 mb-5 flex items-center"><i class="fas fa-sitemap mr-2 text-accent"></i>配件商城导航</h2>
-            <ul class="text-sm space-y-3">
+<div class="max-w-7xl mx-auto px-6 lg:flex lg:gap-8 lg:items-start">
+
+<aside class="lg:w-64 lg:shrink-0 lg:sticky lg:top-24 mb-8 lg:mb-0">
+    <div class="bg-blue-50 rounded-2xl border border-blue-100 shadow-sm p-5">
+        <h2 class="text-base font-bold text-gray-900 mb-5 flex items-center"><i class="fas fa-sitemap mr-2 text-accent"></i>配件商城导航</h2>
+<ul class="text-sm space-y-3">
                 <li>
                     <a href="#radxa" class="flex items-center gap-2.5 font-semibold text-gray-800 hover:text-accent transition-colors">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shrink-0"></span>
@@ -169,13 +169,13 @@
                     </a>
                 </li>
             </ul>
-        </div>
     </div>
-</section>
+</aside>
 
+  <div class="flex-1 min-w-0">
 <!-- Radxa ZERO 3 系列 -->
 <section id="radxa" class="relative z-10 py-20 bg-gray-50/60">
-    <div class="max-w-7xl mx-auto px-6">
+    <div>
         <div class="text-center mb-12">
             <span class="tag tag-robot mb-4">Radxa ZERO 3</span>
             <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style="background:rgba(5,150,105,.10);color:#059669;border:1px solid rgba(5,150,105,.25)">现货可购</span>
@@ -251,7 +251,7 @@
 
 <!-- MicroDuck 配件陈列 -->
 <section id="microduck" class="relative z-10 py-20">
-    <div class="max-w-7xl mx-auto px-6">
+    <div>
         <div class="text-center mb-12">
             <span class="tag tag-robot mb-4">MicroDuck</span>
             <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style="background:rgba(100,116,139,.10);color:#64748b;border:1px solid rgba(100,116,139,.25)">即将上线</span>
@@ -366,7 +366,7 @@
 
 <!-- 待上线 -->
 <section id="coming-soon" class="relative z-10 py-20">
-    <div class="max-w-7xl mx-auto px-6">
+    <div>
         <div class="text-center mb-10">
             <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wide" style="background:rgba(100,116,139,.10);color:#64748b;border:1px solid rgba(100,116,139,.25)">COMING SOON</span>
             <h2 class="text-3xl md:text-4xl font-bold text-gray-500 mt-4">待上线</h2>
@@ -383,7 +383,7 @@
 
 <!-- 购买说明 -->
 <section id="buy-guide" class="relative z-10 py-16 bg-gray-50/60">
-    <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="text-center">
         <h2 class="text-2xl md:text-3xl font-bold mb-6">如何购买</h2>
         <div class="grid md:grid-cols-3 gap-5 text-left">
             <div class="bg-white rounded-2xl p-6 border border-border"><div class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center mb-3 font-bold text-amber-600">1</div><h3 class="font-bold mb-1">点击购买</h3><p class="text-sm text-gray-500">在卡片上点「立即购买」，自动带入所选配件</p></div>
@@ -392,6 +392,10 @@
         </div>
     </div>
 </section>
+
+  </div>
+
+</div>
 
 <!-- Footer -->
 <footer class="bg-gray-900 text-white">
