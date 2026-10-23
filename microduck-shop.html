@@ -113,13 +113,23 @@
             <p class="text-xs text-gray-400 mt-3">长按识别或支付宝扫码付款</p>
         </div>
 
+        <!-- 订单号 + 录入付款号 -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
+            <p id="orderNo" class="text-sm font-bold text-amber-600 mb-3"></p>
+            <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5"><i class="fas fa-key text-amber-500"></i>录入付款号</div>
+            <p class="text-xs text-gray-500 mb-3">支付宝付款后，请填写转账单号，便于核对发货</p>
+            <input id="payTx" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-amber-500 mb-3" placeholder="支付宝转账单号">
+            <button id="paidBtn" onclick="confirmPaid()" class="w-full py-3 bg-emerald-500 active:bg-emerald-600 text-white font-semibold rounded-xl transition-colors">确认已付款</button>
+            <p id="payMsg" class="hidden mt-3 text-center text-sm font-semibold"></p>
+        </div>
+
         <!-- 提交 -->
         <div class="grid grid-cols-1 gap-2.5">
             <button onclick="copyOrder()" class="py-3.5 bg-accent active:bg-blue-700 text-white font-semibold rounded-xl"><i class="fas fa-copy mr-1"></i>复制订单信息发客服</button>
             <button onclick="mailOrder()" class="py-3.5 border border-gray-300 text-gray-700 font-semibold rounded-xl active:bg-gray-50"><i class="fas fa-envelope mr-1"></i>发送邮件下单</button>
         </div>
         <p id="copyMsg" class="hidden mt-3 text-center text-sm font-semibold text-emerald-600">已复制，粘贴发给客服即可</p>
-        <p class="mt-3 text-xs text-gray-400 text-center">付款后请将转账单号一并告知客服，便于核对发货</p>
+        <p class="mt-3 text-xs text-gray-400 text-center">付款后录入转账单号，可凭下单手机号在「我的订单」查询记录</p>
     </div>
 </section>
 
@@ -232,6 +242,7 @@ function goCheckout(){
 }
 
 // ---------- 生成订单 ----------
+var lastOrderId = null;
 document.getElementById('orderForm').addEventListener('submit', async function(e){
     e.preventDefault();
     var name = $('buyer_name').value.trim();
@@ -244,17 +255,6 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
     var r = updateTotal();
     if(r.count === 0){
         alert('请先选择要购买的配件');
-        return;
-    }
-    // 检查登录
-    var session = null;
-    try {
-        var sr = await cloud.auth.getSession();
-        session = sr.data;
-    } catch(err) {}
-    if(!session){
-        localStorage.setItem('pendingOrder', JSON.stringify({ name:name, phone:phone, address:address }));
-        location.href = 'login.html?redirect=' + encodeURIComponent('microduck-shop.html');
         return;
     }
     // 生成订单文本
@@ -278,14 +278,14 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
         buyer_name: name,
         buyer_phone: phone,
         buyer_address: address,
-        note: null,
-        owner_name: (session.user && session.user.name) ? session.user.name : null
-    });
+        note: null
+    }).select();
     btn.disabled = false; btn.textContent = '生成订单';
     if(ins.error){
         alert('订单提交失败：' + (ins.error.message || '请稍后重试'));
         return;
     }
+    lastOrderId = ins.data && ins.data[0] ? ins.data[0].id : null;
     // 订单明细
     var linesHtml = '';
     groups.forEach(function(g){ g.items.forEach(function(it){
@@ -300,10 +300,26 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
     $('orderTotal').textContent = '¥' + r.total;
     $('payAmount').textContent = '¥' + r.total;
     $('orderContact').innerHTML = '<b>' + name + '</b>　' + phone + '<br>' + address;
+    $('orderNo').textContent = lastOrderId ? '订单号 ' + lastOrderId + '（凭下单手机号可查询订单）' : '';
     // 显示确认区
     $('confirm').classList.remove('hidden');
     $('confirm').scrollIntoView({ behavior:'smooth', block:'start' });
 });
+
+// ---------- 确认已付款（录入转账单号） ----------
+async function confirmPaid(){
+    var tx = $('payTx').value.trim();
+    if(!tx){ alert('请填写支付宝转账单号'); return; }
+    if(!lastOrderId){ alert('请先生成订单'); return; }
+    var btn = document.getElementById('paidBtn');
+    btn.disabled = true; btn.textContent = '提交中...';
+    var { error } = await cloud.database.from('orders').update({ wx_transaction_id: tx, status: 'paid' }).eq('id', lastOrderId);
+    btn.disabled = false; btn.textContent = '确认已付款';
+    if(error){ alert('提交失败：' + (error.message || '请稍后重试')); return; }
+    var m = $('payMsg');
+    m.textContent = '付款号已登记，我们会尽快核对发货';
+    m.className = 'mt-3 text-center text-sm font-semibold text-emerald-600';
+}
 
 // ---------- 复制 / 邮件 ----------
 var lastOrderText = '';
@@ -338,21 +354,6 @@ function mailOrder(){
     }
     renderCatalog();
     updateTotal();
-})();
-
-// ---------- 恢复登录后返回的待提交订单 ----------
-(function(){
-    var po = localStorage.getItem('pendingOrder');
-    if(po){
-        try {
-            var d = JSON.parse(po);
-            if(d.name) $('buyer_name').value = d.name;
-            if(d.phone) $('buyer_phone').value = d.phone;
-            if(d.address) $('buyer_address').value = d.address;
-            localStorage.removeItem('pendingOrder');
-            $('checkout').scrollIntoView();
-        } catch(e){}
-    }
 })();
 </script>
 </body>
