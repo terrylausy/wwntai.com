@@ -4,3 +4,4 @@ automations/
 .vscode/
 UPLOAD_LIST.txt
 .git-corrupted/
+.playwright-cli/
