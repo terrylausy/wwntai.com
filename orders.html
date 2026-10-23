@@ -110,7 +110,7 @@ async function queryOrders() {
       +   '<div>合计：<span class="text-amber-600 font-bold">' + esc(o.total_amount || '-') + '</span></div>'
       +   '<div>收货人：' + esc(o.buyer_name) + '　' + esc(o.buyer_phone) + '</div>'
       +   '<div>地址：' + esc(o.buyer_address) + '</div>'
-      +   (o.wx_transaction_id ? '<div>转账单号：' + esc(o.wx_transaction_id) + '</div>' : '')
+      +   (o.wx_transaction_id ? '<div>交易订单号：' + esc(o.wx_transaction_id) + '</div>' : '')
       +   (o.note ? '<div>备注：' + esc(o.note) + '</div>' : '')
       + '</div>'
       + '<div class="mt-3 text-xs text-gray-400">下单时间：' + esc(t) + '</div>'
