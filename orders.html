@@ -123,6 +123,15 @@ async function queryOrders() {
 document.getElementById('queryPhone').addEventListener('keydown', function(e){
   if (e.key === 'Enter') queryOrders();
 });
+
+// 从下单页「确认付款」跳转过来时，自动预填手机号并查询
+(function(){
+  var p = new URLSearchParams(location.search).get('phone');
+  if (p) {
+    document.getElementById('queryPhone').value = p;
+    queryOrders();
+  }
+})();
 </script>
 </body>
 </html>

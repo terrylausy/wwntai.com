@@ -343,8 +343,10 @@ async function confirmPaid(){
     btn.disabled = false; btn.textContent = '确认已付款';
     if(!res.ok){ alert('提交失败：HTTP ' + res.status + '，请稍后重试'); return; }
     var m = $('payMsg');
-    m.textContent = '交易订单号已登记，我们会尽快核对发货';
+    m.textContent = '交易订单号已登记，正在跳转到「我的订单」...';
     m.className = 'mt-3 text-center text-sm font-semibold text-emerald-600';
+    var phone = $('buyer_phone').value.trim();
+    setTimeout(function(){ window.location.href = 'orders.html?phone=' + encodeURIComponent(phone); }, 1200);
 }
 
 // ---------- 复制 / 邮件 ----------
