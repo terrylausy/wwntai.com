@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>配件下单 - 生成订单 · 扫码付款 - wwntAI.com</title>
-<meta name="description" content="选购 MicroDuck 与 Radxa 机器人配件、舵机、传感器，选数量自动算总额，填写收货信息生成订单，支付宝或微信扫码付款。">
+<meta name="description" content="选购 MicroDuck 与 Radxa 机器人配件、舵机、传感器，选数量自动算总额，填写收货信息生成订单，微信扫码付款。">
 <script src="assets/js/tailwindcdn.js"></script>
 <link rel="stylesheet" href="Assets/css/fontawesome-all.min.css">
 <script>tailwind.config={theme:{extend:{colors:{accent:'#2563eb'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}}</script>
@@ -44,11 +44,11 @@
         <div class="flex flex-wrap items-center gap-2 mb-4">
             <span class="tag tag-robot">配件商城</span>
             <span class="tag tag-warm">预售 · 正常7天内发货</span>
-            <span class="px-2.5 py-1 bg-white/5 text-emerald-200 text-xs rounded-full border border-white/10">支付宝付款</span>
+            <span class="px-2.5 py-1 bg-white/5 text-emerald-200 text-xs rounded-full border border-white/10">微信付款</span>
         </div>
         <h1 class="text-3xl md:text-5xl font-bold leading-tight">配件<span class="text-amber-400">下单</span></h1>
         <p class="mt-2 text-amber-200 text-sm font-medium">机器人散件 · 舵机 · 传感器 · 紧固件，一站式选购</p>
-        <p class="mt-6 text-[15px] text-slate-300 leading-relaxed">选购 MicroDuck 与 Radxa 机器人配件，点「+ / −」选数量自动算总额，填写收货信息生成订单，<span class="text-emerald-300 font-semibold">支付宝扫码付款，可下单 7 天内发货</span>。</p>
+        <p class="mt-6 text-[15px] text-slate-300 leading-relaxed">选购 MicroDuck 与 Radxa 机器人配件，点「+ / −」选数量自动算总额，填写收货信息生成订单，<span class="text-emerald-300 font-semibold">微信扫码付款，可下单 7 天内发货</span>。</p>
     </div>
 </header>
 
@@ -107,7 +107,8 @@
 
         <!-- 微信支付 -->
         <div class="bg-white rounded-2xl border border-green-200 p-6 text-center mb-4">
-            <div class="font-bold mb-3 flex items-center justify-center gap-1.5"><i class="fab fa-weixin text-green-500 text-xl"></i>微信扫码付款</div>
+            <div class="font-bold mb-1 flex items-center justify-center gap-1.5"><i class="fab fa-weixin text-green-500 text-xl"></i>微信扫码付款</div>
+            <p class="text-sm text-gray-500 mb-4">请核对上方金额，扫码支付<span id="payAmount" class="price"></span></p>
             <img id="wxPayQr" src="Assets/images/microduck/qr-wechat.png" alt="微信收款码" class="w-52 h-52 mx-auto rounded-xl object-contain bg-white border border-gray-100">
             <p class="text-xs text-gray-400 mt-3">长按识别或微信扫码付款</p>
             <div id="wxPayFallback" class="hidden">
@@ -116,20 +117,12 @@
             </div>
         </div>
 
-        <!-- 付款 -->
-        <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center mb-4">
-            <div class="font-bold mb-1 flex items-center justify-center gap-1.5"><i class="fab fa-alipay text-blue-500 text-xl"></i>支付宝扫码付款</div>
-            <p class="text-sm text-gray-500 mb-4">请核对上方金额，扫码支付<span id="payAmount" class="price"></span></p>
-            <img src="Assets/images/microduck/qr-alipay.jpg" alt="支付宝收款码" class="w-52 h-52 mx-auto rounded-xl object-contain bg-white border border-gray-100">
-            <p class="text-xs text-gray-400 mt-3">长按识别或支付宝扫码付款</p>
-        </div>
-
         <!-- 订单号 + 录入交易订单号 -->
         <div class="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
             <p id="orderNo" class="text-sm font-bold text-amber-600 mb-3"></p>
             <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5"><i class="fas fa-key text-amber-500"></i>录入交易单号</div>
-            <p class="text-xs text-gray-500 mb-3">支付宝或微信付款后，请填写支付凭证里的交易单号（支付宝 28 位数字；微信支付单号在「微信支付凭证」可查），便于核对发货</p>
-            <input id="payTx" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-amber-500 mb-3" placeholder="粘贴支付宝/微信交易单号">
+            <p class="text-xs text-gray-500 mb-3">微信付款后，请填写「微信支付凭证」里的交易单号，便于核对发货</p>
+            <input id="payTx" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-amber-500 mb-3" placeholder="粘贴微信支付交易单号">
             <button id="paidBtn" onclick="confirmPaid()" class="w-full py-3 bg-emerald-500 active:bg-emerald-600 text-white font-semibold rounded-xl transition-colors">确认已付款</button>
             <p id="payMsg" class="hidden mt-3 text-center text-sm font-semibold"></p>
         </div>
@@ -140,7 +133,7 @@
             <button onclick="mailOrder()" class="py-3.5 border border-gray-300 text-gray-700 font-semibold rounded-xl active:bg-gray-50"><i class="fas fa-envelope mr-1"></i>发送邮件下单</button>
         </div>
         <p id="copyMsg" class="hidden mt-3 text-center text-sm font-semibold text-emerald-600">已复制，粘贴发给客服即可</p>
-        <p class="mt-3 text-xs text-gray-400 text-center">付款后录入交易订单号，可凭下单手机号在「我的订单」查询记录</p>
+        <p class="mt-3 text-xs text-gray-400 text-center">付款后录入交易单号，可凭下单手机号在「我的订单」查询记录</p>
     </div>
 </section>
 
@@ -330,7 +323,7 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
 // ---------- 确认已付款（录入交易订单号） ----------
 async function confirmPaid(){
     var tx = $('payTx').value.trim();
-    if(!tx){ alert('请填写支付宝或微信的交易单号'); return; }
+    if(!tx){ alert('请填写微信支付交易单号'); return; }
     if(!/^[A-Za-z0-9]{12,32}$/.test(tx)){ alert('交易单号格式不太对，请从支付凭证里复制完整单号（12–32 位数字或字母）'); return; }
     if(!lastOrderId){ alert('请先生成订单'); return; }
     var btn = document.getElementById('paidBtn');
