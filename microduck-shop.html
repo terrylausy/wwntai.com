@@ -6,6 +6,7 @@
 <title>配件下单 - 生成订单 · 扫码付款 - wwntAI.com</title>
 <meta name="description" content="选购 MicroDuck 与 Radxa 机器人配件、舵机、传感器，选数量自动算总额，填写收货信息生成订单，支付宝扫码付款。">
 <script src="assets/js/tailwindcdn.js"></script>
+<script src="assets/js/qrcode.min.js"></script>
 <link rel="stylesheet" href="Assets/css/fontawesome-all.min.css">
 <script>tailwind.config={theme:{extend:{colors:{accent:'#2563eb'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}}</script>
 <style>
@@ -105,6 +106,17 @@
             <div id="orderContact" class="text-gray-700 leading-relaxed"></div>
         </div>
 
+        <!-- 微信支付 -->
+        <div class="bg-white rounded-2xl border border-green-200 p-6 text-center mb-4">
+            <div class="font-bold mb-3 flex items-center justify-center gap-1.5"><i class="fab fa-weixin text-green-500 text-xl"></i>微信支付（推荐）</div>
+            <button id="wxpayBtn" onclick="startWxPay()" class="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors">生成微信支付二维码</button>
+            <div id="wxQrWrap" class="hidden mt-4">
+                <div id="wxQr" class="mx-auto w-52 h-52 bg-white border border-gray-100 rounded-xl flex items-center justify-center"></div>
+                <p class="text-xs text-gray-400 mt-2">用微信扫一扫完成支付，支付成功后自动跳转</p>
+            </div>
+            <p id="wxMsg" class="hidden mt-3 text-sm font-semibold"></p>
+        </div>
+
         <!-- 付款 -->
         <div class="bg-white rounded-2xl border border-gray-200 p-6 text-center mb-4">
             <div class="font-bold mb-1 flex items-center justify-center gap-1.5"><i class="fab fa-alipay text-blue-500 text-xl"></i>支付宝扫码付款</div>
@@ -116,14 +128,8 @@
         <!-- 订单号 + 录入交易订单号 -->
         <div class="bg-white rounded-2xl border border-gray-200 p-5 mb-4">
             <p id="orderNo" class="text-sm font-bold text-amber-600 mb-3"></p>
-            <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5"><i class="fas fa-key text-amber-500"></i>录入交易订单号<button type="button" class="ml-1 w-5 h-5 rounded-full bg-gray-200 hover:bg-amber-200 text-gray-500 hover:text-amber-700 text-xs font-bold flex items-center justify-center transition-colors" onclick="toggleTxHelp()" title="如何查看交易订单号？">?</button></div>
+            <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1.5"><i class="fas fa-key text-amber-500"></i>录入交易订单号</div>
             <p class="text-xs text-gray-500 mb-3">支付宝付款后，请填写 28 位交易订单号，便于核对发货</p>
-            <div id="txHelp" class="hidden mb-3 rounded-xl border border-amber-200 bg-amber-50 p-3 relative">
-                <button type="button" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 leading-none px-1" onclick="toggleTxHelp()">✕</button>
-                <p class="text-xs text-gray-700 font-semibold mb-2 pr-6">支付宝 → 账单 → 订单详情，找到「交易订单号」：</p>
-                <img src="Assets/images/microduck/alipay-order-sample.jpg" alt="交易订单号示例" class="w-full rounded-lg border border-gray-200">
-                <p class="text-[11px] text-gray-500 mt-2">交易订单号为 <span class="text-amber-600 font-semibold">28 位数字</span>（示例中红框标注处）</p>
-            </div>
             <input id="payTx" type="text" class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-amber-500 mb-3" placeholder="请输入正确的交易订单号">
             <button id="paidBtn" onclick="confirmPaid()" class="w-full py-3 bg-emerald-500 active:bg-emerald-600 text-white font-semibold rounded-xl transition-colors">确认已付款</button>
             <p id="payMsg" class="hidden mt-3 text-center text-sm font-semibold"></p>
@@ -166,6 +172,7 @@ window.scrollTo(0, 0);
 // ---------- CloudBase REST API（腾讯云开发，国内直连可达） ----------
 var API_BASE = 'https://wwntai-shop-d6gnt6n6qd274a22c.api.tcloudbasegateway.com/v1/rdb/rest';
 var API_KEY = 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImI5MTE4ZDkxLTlmYjAtNGQ5Mi05NzE1LWRhOGYyZWFmMzZhMiJ9.eyJpc3MiOiJodHRwczovL3d3bnRhaS1zaG9wLWQ2Z250Nm42cWQyNzRhMjJjLmFwLXNoYW5naGFpLnRjYi1hcGkudGVuY2VudGNsb3VkYXBpLmNvbSIsInN1YiI6ImFub24iLCJhdWQiOiJ3d250YWktc2hvcC1kNmdudDZuNnFkMjc0YTIyYyIsImV4cCI6NDA5NjQ3OTE0MywiaWF0IjoxNzkyNzk1OTQzLCJub25jZSI6IkRMQXE2UFpGUWpXR21UTXBwbWZwLWciLCJhdF9oYXNoIjoiRExBcTZQWkZRaldHbVRNcHBtZnAtZyIsIm5hbWUiOiJBbm9ueW1vdXMiLCJzY29wZSI6ImFub255bW91cyIsInByb2plY3RfaWQiOiJ3d250YWktc2hvcC1kNmdudDZuNnFkMjc0YTIyYyIsIm1ldGEiOnsicGxhdGZvcm0iOiJQdWJsaXNoYWJsZUtleSJ9LCJyb2xlIjoiYW5vbiIsImlzX2Fub255bW91cyI6dHJ1ZSwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiYW5vbnltb3VzIiwicHJvdmlkZXJzIjpbImFub255bW91cyJdfSwidXNlcl9tZXRhZGF0YSI6eyJuYW1lIjoiQW5vbnltb3VzIn0sInVzZXJfdHlwZSI6IiIsImNsaWVudF90eXBlIjoiY2xpZW50X3VzZXIiLCJpc19zeXN0ZW1fYWRtaW4iOmZhbHNlfQ.2XJTGxhztURj-4ogAvJhrSgxoscbbVKfgLqgcehhfrKVJ-3EY1RTiYhUpLQhsueorwnlaxB6VycLw8SvfTeghxLfjTOrAbKmaEN2zy8AFUhZCMQilzkzXz8i8IZ11hXgPRjfxnzcltLPU5P8GkDNLCdR7hPIcmnueyTJg8xlzOCN0dPK9L1FO7b33VFuRCgimshwWutKFkOkqZ2WQr-5ooKFJq6qTKD0rAZT2i3vD2oYwl5VgcLxEgMe-RyI7EG6haRgDJHIPEB-qzjIiRi95AymklKyc0gZwjCIAshPUDnNgKu98r0Nj7w-7JZrJMZagD5or1Qnsp5nmk1iea3BdQ';
+var WXPAY_FN_URL = '__WXPAY_FN_URL__';
 function apiHeaders(extra){
     var h = { 'Authorization': 'Bearer ' + API_KEY, 'Content-Type': 'application/json' };
     if (extra) for (var k in extra) h[k] = extra[k];
@@ -323,10 +330,6 @@ document.getElementById('orderForm').addEventListener('submit', async function(e
 });
 
 // ---------- 确认已付款（录入交易订单号） ----------
-function toggleTxHelp(){
-    var el = document.getElementById('txHelp');
-    if(el) el.classList.toggle('hidden');
-}
 async function confirmPaid(){
     var tx = $('payTx').value.trim();
     if(!tx){ alert('请输入正确的交易订单号'); return; }
@@ -346,6 +349,65 @@ async function confirmPaid(){
     m.className = 'mt-3 text-center text-sm font-semibold text-emerald-600';
     var phone = $('buyer_phone').value.trim();
     setTimeout(function(){ window.location.href = 'orders.html?phone=' + encodeURIComponent(phone); }, 1200);
+}
+
+// ---------- 微信支付 ----------
+async function startWxPay(){
+    if(!lastOrderId){ alert('请先生成订单'); return; }
+    var r = updateTotal();
+    if(!r || r.total <= 0){ alert('请先选择要购买的配件'); return; }
+    var btn = document.getElementById('wxpayBtn');
+    var msg = document.getElementById('wxMsg');
+    btn.disabled = true; btn.textContent = '正在生成二维码...';
+    msg.classList.add('hidden');
+    var res = await fetch(WXPAY_FN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            orderId: lastOrderId,
+            amount: Math.round(r.total * 100),
+            description: 'MicroDuck 配件订单'
+        })
+    });
+    var data = {};
+    try { data = await res.json(); } catch(e){}
+    btn.disabled = false; btn.textContent = '生成微信支付二维码';
+    if(!res.ok || !data.codeUrl){
+        msg.textContent = '生成失败：' + ((data && data.error) || ('HTTP ' + res.status));
+        msg.className = 'mt-3 text-center text-sm font-semibold text-red-500';
+        return;
+    }
+    document.getElementById('wxQrWrap').classList.remove('hidden');
+    document.getElementById('wxQr').innerHTML = '';
+    try {
+        new QRCode(document.getElementById('wxQr'), {
+            text: data.codeUrl,
+            width: 200,
+            height: 200,
+            correctLevel: QRCode.CorrectLevel.M
+        });
+    } catch(e){}
+    msg.textContent = '请用微信扫一扫支付，支付成功后自动跳转';
+    msg.className = 'mt-3 text-center text-sm font-semibold text-green-600';
+    pollWxPayStatus();
+}
+
+var wxPollTimer = null;
+function pollWxPayStatus(){
+    clearInterval(wxPollTimer);
+    wxPollTimer = setInterval(async function(){
+        if(!lastOrderId){ clearInterval(wxPollTimer); return; }
+        var res = await fetch(API_BASE + '/orders?select=status&id=eq.' + encodeURIComponent(lastOrderId), { headers: apiHeaders() });
+        var data = res.ok ? await res.json().catch(function(){ return []; }) : [];
+        if(data && data.length && data[0].status === 'paid'){
+            clearInterval(wxPollTimer);
+            var msg = document.getElementById('wxMsg');
+            msg.textContent = '支付成功，正在跳转到「我的订单」...';
+            msg.className = 'mt-3 text-center text-sm font-semibold text-emerald-600';
+            var phone = document.getElementById('buyer_phone').value.trim();
+            setTimeout(function(){ window.location.href = 'orders.html?phone=' + encodeURIComponent(phone); }, 1200);
+        }
+    }, 3000);
 }
 
 // ---------- 复制 / 邮件 ----------

@@ -1,0 +1,9 @@
+{
+  "name": "wxpay",
+  "version": "1.0.0",
+  "description": "配件商城微信支付（Native 扫码）：统一下单 + 回调",
+  "main": "index.js",
+  "dependencies": {
+    "pg": "^8.11.0"
+  }
+}
