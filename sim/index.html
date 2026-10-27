@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>机器鸭仿真 · 万物拟态 WWNT Robotics</title>
+<meta name="description" content="MicroDuck 国产版（XgoDuck）浏览器内 MuJoCo 物理仿真，站立/坐/折叠姿态，拖拽旋转、滚轮缩放。">
+<script src="../assets/js/tailwindcdn.js"></script>
+<style>
+  html, body { margin:0; height:100%; background:#0b0f14; overflow:hidden; }
+  #viewer { position:absolute; inset:0; }
+  #viewer canvas { display:block; }
+  .panel { position:absolute; left:16px; top:16px; z-index:10; }
+  .btn {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 14px; border-radius:10px; font-size:13px; font-weight:600;
+    color:#e6edf3; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
+    cursor:pointer; transition:background .15s, transform .05s;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  }
+  .btn:hover{ background:rgba(255,255,255,.16); }
+  .btn:active{ transform:scale(.96); }
+  .btn.active{ background:#1d9e75; border-color:#1d9e75; color:#04110c; }
+  .hint{ position:absolute; left:16px; bottom:14px; z-index:10; color:#8a97a5; font-size:12px; line-height:1.7; }
+  .badge{ position:absolute; right:16px; top:16px; z-index:10; color:#8a97a5; font-size:12px; text-align:right; }
+  .loading{ position:absolute; inset:0; z-index:20; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; color:#cbd5e1; background:#0b0f14; }
+  .spin{ width:34px; height:34px; border-radius:50%; border:3px solid rgba(255,255,255,.15); border-top-color:#1d9e75; animation:r 0.9s linear infinite; }
+  @keyframes r{ to{ transform:rotate(360deg);} }
+</style>
+</head>
+<body>
+<div id="viewer"></div>
+
+<div class="panel flex flex-wrap gap-2">
+  <button class="btn" id="btnRun" onclick="setMode('run')">▶ 物理运行</button>
+  <button class="btn active" id="btnPose" onclick="setMode('pose')">⏸ 姿态查看</button>
+  <span class="w-px h-6 bg-white/15 my-auto"></span>
+  <button class="btn" onclick="setKey('STAND')">站立</button>
+  <button class="btn" onclick="setKey('SIT')">坐下</button>
+  <button class="btn" onclick="setKey('FOLD')">折叠</button>
+  <button class="btn" onclick="reset()">↺ 复位</button>
+</div>
+
+<div class="badge">MicroDuck 国产版（XgoDuck）<br>MuJoCo WASM · 浏览器内实时仿真<br><span style="opacity:.6">MuJoCo (Apache-2.0) · three.js (MIT) · 模型来自 LuwuDynamics (Apache-2.0)</span></div>
+
+<div class="hint">
+  左键拖拽旋转 · 滚轮缩放 · 右键平移<br>
+  1 站立 &nbsp;2 坐下 &nbsp;3 折叠 &nbsp;空格 暂停/运行
+</div>
+
+<div class="loading" id="loading"><div class="spin"></div><div id="loadingText">正在加载 MuJoCo 与模型资产…</div></div>
+
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/three-addons/" } }
+</script>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
