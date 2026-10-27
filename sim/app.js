@@ -38,6 +38,8 @@ let poseOffsetX = 0;  // 连续行走累积的前向位移，避免每段动作�
 let pendingSeqId = 0; // 外部（编程器）下发的动作 id，用于完成后回执
 let minipiWave = false;  // MiniPiPlus 挥手开关
 let MP_J = null;         // MiniPiPlus 上肢关节 qposadr 映射缓存
+let mpTarget = 'idle';   // MiniPiPlus 当前目标姿态名
+let mpT0 = 0;            // 姿态切换起始时间（平滑过渡）
 const keyQpos = {};   // name -> Float64Array 关键帧位形快照
 const tmpV = new THREE.Vector3();
 const tmpQ = new THREE.Quaternion();
@@ -198,9 +200,10 @@ function snapshotKeys(){
 // ---------- 交互 ----------
 function stopSeq(){ seq = null; }
 function stopDemo(){
-  demoOn = false; stopSeq(); minipiWave = false;
+  demoOn = false; stopSeq(); minipiWave = false; mpTarget = 'idle';
   const b = document.getElementById('btnDemo'); if (b) b.classList.remove('active');
   const b2 = document.getElementById('btnDuo'); if (b2) b2.classList.remove('active');
+  const b3 = document.getElementById('btnLove'); if (b3) b3.classList.remove('active');
 }
 
 function reset(){
@@ -237,6 +240,11 @@ function holdSeg(name, dur){
     data.qpos.set(q0);
     data.qpos[0] += poseOffsetX;
   }};
+}
+
+// 切换 MiniPiPlus 姿态（爱情故事用），dur 后自然过渡到下一段
+function poseSeg(name, dur){
+  return { dur, apply: () => { setMpPose(name); } };
 }
 
 // 行走所需关节在 qpos 中的地址（按关节名查，避免硬编码）
@@ -278,6 +286,37 @@ function mpWaveCtrl(t){
     const adr = J[k];
     if (adr === undefined) continue;
     data.qpos[adr] = tgt[k];
+  }
+}
+
+// MiniPiPlus 多姿态（爱情故事用）：邀约 / 低头对视 / 环抱 / 托举 / 站立
+const MP_POSES = {
+  idle:   { r_shoulder_pitch:0, r_shoulder_roll:0, r_elbow:0, l_shoulder_pitch:0, l_shoulder_roll:0, l_elbow:0, head_yaw:0, head_pitch:0 },
+  invite: { r_shoulder_pitch:-1.6, r_shoulder_roll:0.5, r_elbow:-0.5, l_shoulder_pitch:0, l_shoulder_roll:0, l_elbow:0, head_yaw:-0.4, head_pitch:-0.5 },
+  look:   { r_shoulder_pitch:-1.6, r_shoulder_roll:0.5, r_elbow:-0.5, l_shoulder_pitch:0, l_shoulder_roll:0, l_elbow:0, head_yaw:-0.1, head_pitch:-0.95 },
+  hug:    { r_shoulder_pitch:-1.25, r_shoulder_roll:0.65, r_elbow:-1.1, l_shoulder_pitch:-1.25, l_shoulder_roll:-0.65, l_elbow:-1.1, head_yaw:0, head_pitch:-0.55 },
+  cradle: { r_shoulder_pitch:-1.55, r_shoulder_roll:0.25, r_elbow:-0.35, l_shoulder_pitch:-1.55, l_shoulder_roll:-0.25, l_elbow:-0.35, head_yaw:0, head_pitch:-0.25 },
+};
+let mpFrom = null;
+function setMpPose(name){
+  mpTarget = name;
+  mpT0 = performance.now();
+  mpFrom = {};
+  const J = mpJoints();
+  const pose = MP_POSES[name] || MP_POSES.idle;
+  for (const k in pose){ const adr = J[k]; if (adr !== undefined) mpFrom[k] = data.qpos[adr]; }
+}
+// 静态姿态平滑过渡（smoothstep，1.2 秒）
+function mpPoseCtrl(now){
+  const J = mpJoints();
+  const pose = MP_POSES[mpTarget] || MP_POSES.idle;
+  const s = Math.min(1, (now - mpT0) / 1200);
+  const ease = s * s * (3 - 2 * s);
+  for (const k in pose){
+    const adr = J[k];
+    if (adr === undefined) continue;
+    const from = (mpFrom && mpFrom[k] !== undefined) ? mpFrom[k] : 0;
+    data.qpos[adr] = from + (pose[k] - from) * ease;
   }
 }
 
@@ -392,6 +431,28 @@ window.playDuo = function(){
   const b = document.getElementById('btnDuo'); if (b) b.classList.add('active');
 };
 
+// 爱情故事动作序列：邀约 → 对视 → 相伴 → 托举 → 定格（WW-MiniPiPlus 姿态 + MicroDuck 动作）
+window.playLove = function(){
+  if (!model || !data) return;
+  if (demoOn){ stopDemo(); return; }
+  demoOn = true;
+  setMpPose('idle');
+  playSeq([
+    poseSeg('invite', 1500),     // ① 伸手邀约
+    walkSeg(4000, 0.16),          // ② MicroDuck 走向它
+    holdSeg('STAND', 1200),       //    停稳
+    poseSeg('look', 100),         // ③ 低头对视
+    holdSeg('STAND', 3800),       //    静静相望
+    poseSeg('hug', 100),          // ④ 环抱
+    holdSeg('STAND', 4400),       //    相拥相伴
+    poseSeg('cradle', 100),       // ⑤ 双手托举
+    holdSeg('STAND', 4000),       //    托举定格
+    poseSeg('idle', 100),         // ⑥ 收尾
+    holdSeg('STAND', 1600),
+  ], false);
+  const b = document.getElementById('btnLove'); if (b) b.classList.add('active');
+};
+
 function updateSeq(now){
   const s = seq; if (!s) return;
   let seg = s.segments[s.idx];
@@ -413,7 +474,8 @@ function updateSeq(now){
     t = 0;
   }
   seg.apply(t);
-  if (minipiWave) mpWaveCtrl(now / 1000);   // WW-MiniPiPlus 挥手（姿态驱动）
+  if (mpTarget === 'wave') mpWaveCtrl(now / 1000);      // 挥手
+  else if (mpTarget !== 'idle') mpPoseCtrl(now);         // 静态姿态平滑过渡
   mujoco.mj_forward(model, data);
   updateBodies();
 }
