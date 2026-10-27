@@ -1,4 +1,4 @@
-// 万物拟态 · 机器鸭浏览器仿真（MicroDuck 国产版 / XgoDuck）
+// 万物拟态 · 机器鸭浏览器仿真（MicroDuck 国产版 / wwDuck）
 // 物理：MuJoCo WASM（官方 @mujoco/mujoco，Apache-2.0）；渲染：three.js
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -71,7 +71,7 @@ function buildMeshGeometry(meshID){
 // ---------- 依据 mjModel 构建 three 场景 ----------
 function buildScene(){
   const root = new THREE.Group();
-  root.name = 'xgoduck';
+  root.name = 'wwduck';
   scene.add(root);
 
   for (let g = 0; g < model.ngeom; g++){
@@ -174,12 +174,12 @@ async function main(){
 
   setLoading('写入模型资产到虚拟文件系统…');
   const enc = new TextEncoder();
-  const sceneXml = await (await fetch('./xgoduck/scene_walk.xml')).text();
+  const sceneXml = await (await fetch('./wwduck/scene_walk.xml')).text();
   const vfs = new mujoco.MjVFS();
   vfs.addBuffer('scene_walk.xml', enc.encode(sceneXml));
-  vfs.addBuffer('robot_walk.xml', enc.encode(await (await fetch('./xgoduck/robot_walk.xml')).text()));
+  vfs.addBuffer('robot_walk.xml', enc.encode(await (await fetch('./wwduck/robot_walk.xml')).text()));
   for (const a of ASSETS){
-    const buf = await (await fetch('./xgoduck/assets/' + a)).arrayBuffer();
+    const buf = await (await fetch('./wwduck/assets/' + a)).arrayBuffer();
     vfs.addBuffer('assets/' + a, new Uint8Array(buf));
   }
 
