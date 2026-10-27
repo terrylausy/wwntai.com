@@ -22,6 +22,7 @@ let scene, camera, renderer, controls;
 let bodies = {};      // bodyID -> THREE.Group
 let running = false;
 let keyIds = {};      // name -> keyframe id
+let flipAnim = null;  // 翻跟斗动画状态
 const tmpV = new THREE.Vector3();
 const tmpQ = new THREE.Quaternion();
 
@@ -134,6 +135,7 @@ function indexKeyframes(){
 
 // ---------- 交互 ----------
 function reset(){
+  flipAnim = null;
   if (keyIds['STAND'] !== undefined) mujoco.mj_resetDataKeyframe(model, data, keyIds['STAND']);
   else mujoco.mj_resetData(model, data);
   mujoco.mj_forward(model, data);
@@ -141,6 +143,7 @@ function reset(){
 }
 
 window.setKey = function(name){
+  flipAnim = null;
   if (keyIds[name] === undefined) return;
   mujoco.mj_resetDataKeyframe(model, data, keyIds[name]);
   mujoco.mj_forward(model, data);
@@ -150,14 +153,51 @@ window.reset = reset;
 
 window.setMode = function(mode){
   running = (mode === 'run');
+  flipAnim = null;
   document.getElementById('btnRun').classList.toggle('active', running);
   document.getElementById('btnPose').classList.toggle('active', !running);
 };
 
+// ---------- 翻跟斗（姿态模式下的 360° 前空翻动画） ----------
+window.playFlip = function(){
+  if (!model || !data) return;
+  setMode('pose');                       // 关掉物理，用姿态动画
+  mujoco.mj_resetDataKeyframe(model, data, keyIds['STAND'] !== undefined ? keyIds['STAND'] : 0);
+  mujoco.mj_forward(model, data);
+  const q0 = Float64Array.from(data.qpos);   // 站立位形快照
+  flipAnim = { t0: performance.now(), dur: 1500, q0, baseZ: data.qpos[2] };
+};
+
+function updateFlip(now){
+  const a = flipAnim; if (!a) return;
+  let t = (now - a.t0) / a.dur;
+  if (t >= 1){
+    data.qpos.set(a.q0);                 // 落地回到站立
+    mujoco.mj_forward(model, data);
+    updateBodies();
+    flipAnim = null;
+    return;
+  }
+  const q = data.qpos;
+  q.set(a.q0);
+  const hop = Math.sin(Math.PI * t);            // 起跳弧线 0→1→0
+  const theta = Math.PI * 2 * t;                // 绕横向轴前翻一整圈
+  q[0] += 0.12 * Math.sin(Math.PI * t);         // 轻微前移
+  q[2] = a.baseZ + 0.22 * hop;                  // 离地高度
+  q[3] = Math.cos(theta / 2);                   // 四元数 (w,x,y,z)：绕 y 轴旋转
+  q[4] = 0;
+  q[5] = Math.sin(theta / 2);
+  q[6] = 0;
+  mujoco.mj_forward(model, data);
+  updateBodies();
+}
+
 // ---------- 主渲染循环 ----------
 function animate(){
   requestAnimationFrame(animate);
-  if (running && model && data){
+  if (flipAnim){
+    updateFlip(performance.now());
+  } else if (running && model && data){
     try { mujoco.mj_step(model, data); } catch(e){}
     updateBodies();
   }
@@ -249,6 +289,7 @@ async function main(){
     if (e.key === '1') setKey('STAND');
     else if (e.key === '2') setKey('SIT');
     else if (e.key === '3') setKey('FOLD');
+    else if (e.key === '4') playFlip();
     else if (e.code === 'Space'){ e.preventDefault(); setMode(running ? 'pose' : 'run'); }
   });
 }

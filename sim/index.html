@@ -39,6 +39,7 @@
   <button class="btn" onclick="setKey('STAND')">站立</button>
   <button class="btn" onclick="setKey('SIT')">坐下</button>
   <button class="btn" onclick="setKey('FOLD')">折叠</button>
+  <button class="btn" onclick="playFlip()">🔄 翻跟斗</button>
   <button class="btn" onclick="reset()">↺ 复位</button>
 </div>
 
@@ -49,7 +50,7 @@
 
 <div class="hint">
   左键拖拽旋转 · 滚轮缩放 · 右键平移<br>
-  1 站立 &nbsp;2 坐下 &nbsp;3 折叠 &nbsp;空格 暂停/运行
+  1 站立 &nbsp;2 坐下 &nbsp;3 折叠 &nbsp;4 翻跟斗 &nbsp;空格 暂停/运行
 </div>
 
 <div class="loading" id="loading"><div class="spin"></div><div id="loadingText">正在加载 MuJoCo 与模型资产…</div></div>
