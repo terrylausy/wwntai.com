@@ -1,6 +1,6 @@
 # wwntAI 仿真平台（sim.wwntai.com）
 
-万物拟态（WWNT Robotics）浏览器内机器人仿真平台。基于 **MuJoCo WASM** 物理引擎 + **three.js** 渲染，模型来自 LuwuDynamics（Apache-2.0）。
+万物拟态（WWNT Robotics）浏览器内机器人仿真平台。基于 **MuJoCo WASM** 物理引擎 + **three.js** 渲染，模型为 WWNT Robotics 核心模型。
 
 ## 页面
 
@@ -12,7 +12,7 @@
 - MuJoCo WASM（`@mujoco/mujoco`，Apache-2.0）
 - three.js（MIT）+ OrbitControls
 - Blockly 13.4.0（Apache-2.0）
-- 模型资产：LuwuDynamics（Apache-2.0）
+- 模型资产：WWNT Robotics 核心模型
 
 ## 本地预览
 

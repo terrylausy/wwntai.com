@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<robot name="xgoduck_v2">
+<robot name="wwduck">
   <link name="trunk_base">
     <inertial>
       <origin xyz="-0.01327575578150381 -1.265565997738796e-05 -0.02355284245744959" rpy="0 0 0" />
@@ -9,7 +9,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/trunk_base.STL" />
+        <mesh filename="package://wwduck/meshes/trunk_base.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -18,7 +18,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/trunk_base.STL" />
+        <mesh filename="package://wwduck/meshes/trunk_base.STL" />
       </geometry>
     </collision>
   </link>
@@ -31,7 +31,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_hip_yaw.STL" />
+        <mesh filename="package://wwduck/meshes/left_hip_yaw.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -40,7 +40,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_hip_yaw.STL" />
+        <mesh filename="package://wwduck/meshes/left_hip_yaw.STL" />
       </geometry>
     </collision>
   </link>
@@ -60,7 +60,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_hip_roll.STL" />
+        <mesh filename="package://wwduck/meshes/left_hip_roll.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -69,7 +69,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_hip_roll.STL" />
+        <mesh filename="package://wwduck/meshes/left_hip_roll.STL" />
       </geometry>
     </collision>
   </link>
@@ -89,7 +89,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_hip_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/left_hip_pitch.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -98,7 +98,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_hip_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/left_hip_pitch.STL" />
       </geometry>
     </collision>
   </link>
@@ -118,7 +118,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_knee.STL" />
+        <mesh filename="package://wwduck/meshes/left_knee.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -127,7 +127,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_knee.STL" />
+        <mesh filename="package://wwduck/meshes/left_knee.STL" />
       </geometry>
     </collision>
   </link>
@@ -147,7 +147,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_ankle.STL" />
+        <mesh filename="package://wwduck/meshes/left_ankle.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -156,7 +156,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/left_ankle.STL" />
+        <mesh filename="package://wwduck/meshes/left_ankle.STL" />
       </geometry>
     </collision>
   </link>
@@ -176,7 +176,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/neck_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/neck_pitch.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -185,7 +185,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/neck_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/neck_pitch.STL" />
       </geometry>
     </collision>
   </link>
@@ -205,7 +205,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/head_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/head_pitch.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -214,7 +214,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/head_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/head_pitch.STL" />
       </geometry>
     </collision>
   </link>
@@ -234,7 +234,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/head_yaw.STL" />
+        <mesh filename="package://wwduck/meshes/head_yaw.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -243,7 +243,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/head_yaw.STL" />
+        <mesh filename="package://wwduck/meshes/head_yaw.STL" />
       </geometry>
     </collision>
   </link>
@@ -263,7 +263,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/head_roll.STL" />
+        <mesh filename="package://wwduck/meshes/head_roll.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -272,7 +272,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/head_roll.STL" />
+        <mesh filename="package://wwduck/meshes/head_roll.STL" />
       </geometry>
     </collision>
   </link>
@@ -292,7 +292,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_hip_yaw.STL" />
+        <mesh filename="package://wwduck/meshes/right_hip_yaw.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -301,7 +301,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_hip_yaw.STL" />
+        <mesh filename="package://wwduck/meshes/right_hip_yaw.STL" />
       </geometry>
     </collision>
   </link>
@@ -321,7 +321,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_hip_roll.STL" />
+        <mesh filename="package://wwduck/meshes/right_hip_roll.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -330,7 +330,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_hip_roll.STL" />
+        <mesh filename="package://wwduck/meshes/right_hip_roll.STL" />
       </geometry>
     </collision>
   </link>
@@ -350,7 +350,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_hip_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/right_hip_pitch.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -359,7 +359,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_hip_pitch.STL" />
+        <mesh filename="package://wwduck/meshes/right_hip_pitch.STL" />
       </geometry>
     </collision>
   </link>
@@ -379,7 +379,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_knee.STL" />
+        <mesh filename="package://wwduck/meshes/right_knee.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -388,7 +388,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_knee.STL" />
+        <mesh filename="package://wwduck/meshes/right_knee.STL" />
       </geometry>
     </collision>
   </link>
@@ -408,7 +408,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_ankle.STL" />
+        <mesh filename="package://wwduck/meshes/right_ankle.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -417,7 +417,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://XGODUCK/meshes/right_ankle.STL" />
+        <mesh filename="package://wwduck/meshes/right_ankle.STL" />
       </geometry>
     </collision>
   </link>

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<!-- XgoDuck MJCF. Mass, CoM and inertia from SolidWorks overrides (2026-10-12). -->
-<mujoco model="xgoduck">
+<!-- wwDuck MJCF. Mass, CoM and inertia from SolidWorks overrides (2026-10-12). -->
+<mujoco model="wwduck">
   <compiler angle="radian" meshdir="assets" autolimits="true"/>
   <default>
     <default class="microduck">
