@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenArm - wwntAI.com | Open-source Humanoid Robotic Arm</title>
     <meta name="description" content="OpenArm A fully open-source domestic arm built on ROS2 and open hardware, focused on cross-disciplinary practice and university customization.">
-    <script src="../../assets/js/tailwindcdn.js"></script>
+    <script src="../../Assets/js/tailwindcdn.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',secondary:'#f8fafc',accent:'#2563eb',card:'#ffffff',border:'#e2e8f0',
                         light: '#3b82f6',
@@ -40,7 +40,7 @@
     <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <a href="../../index.html" class="flex flex-col shrink-0">
             <div class="flex items-center space-x-3">
-                <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <img src="../../Assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                 <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
                 <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
             </div>
@@ -158,9 +158,9 @@
             <p class="mt-3 text-gray-500 max-w-xl mx-auto">Watch the OpenArm Cell robotic arm in action to see its real-world performance.</p>
         </div>
         <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden bg-black shadow-2xl ring-1 ring-gray-200">
-            <video class="w-full h-auto" controls autoplay loop muted preload="auto" poster="../../assets/products/openarm/slide1.webp">
-                <source src="../../assets/videos/openarm-cell.webm" type="video/webm">
-                Your browser does not support video playback. Please  <a href="../../assets/videos/openarm-cell.webm" class="text-accent underline" download>download the video</a>  to view it.
+            <video class="w-full h-auto" controls autoplay loop muted preload="auto" poster="../../Assets/products/openarm/slide1.webp">
+                <source src="../../Assets/videos/openarm-cell.webm" type="video/webm">
+                Your browser does not support video playback. Please  <a href="../../Assets/videos/openarm-cell.webm" class="text-accent underline" download>download the video</a>  to view it.
             </video>
         </div>
     </div>
@@ -175,7 +175,7 @@
             <p class="mt-3 text-gray-500 max-w-xl mx-auto">A complete live assembly of the 7-DOF humanoid arm from scratch (~1h 28m, in English), showing every step of the open hardware build.</p>
         </div>
         <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden bg-black shadow-2xl ring-1 ring-gray-200">
-            <video class="w-full h-auto" controls preload="metadata" poster="../../assets/products/openarm/slide1.webp" src="https://github.com/terrylausy/wwntai.com/releases/download/openarm-videos/OpenArm-Full-Assembly-720p.mp4">
+            <video class="w-full h-auto" controls preload="metadata" poster="../../Assets/products/openarm/slide1.webp" src="https://github.com/terrylausy/wwntai.com/releases/download/openarm-videos/OpenArm-Full-Assembly-720p.mp4">
                 Your browser does not support video playback. Please  <a href="https://github.com/terrylausy/wwntai.com/releases/download/openarm-videos/OpenArm-Full-Assembly-720p.mp4" class="text-accent underline" download>download the video</a>  to view it.
             </video>
         </div>
@@ -187,7 +187,7 @@
 <section class="relative z-10 py-8">
     <div class="max-w-7xl mx-auto px-6">
         <div class="relative rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 max-w-4xl mx-auto" style="aspect-ratio:16/9;max-height:480px;">
-            <img id="slider-img" src="../../assets/products/openarm/slide1.webp" alt="OpenArm" class="w-full h-full object-contain" style="max-height:480px;">
+            <img id="slider-img" src="../../Assets/products/openarm/slide1.webp" alt="OpenArm" class="w-full h-full object-contain" style="max-height:480px;">
             <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2" id="slider-dots"></div>
             <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-700 shadow-sm transition-colors"><i class="fas fa-chevron-left"></i></button>
             <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-700 shadow-sm transition-colors"><i class="fas fa-chevron-right"></i></button>
@@ -197,11 +197,11 @@
 
 <script>
 const slides = [
-    '../../assets/products/openarm/slide1.webp',
-    '../../assets/products/openarm/slide2.webp',
-    '../../assets/products/openarm/product.webp',
-    '../../assets/products/openarm/openarm.webp',
-    '../../assets/products/openarm/gen1.jpg'
+    '../../Assets/products/openarm/slide1.webp',
+    '../../Assets/products/openarm/slide2.webp',
+    '../../Assets/products/openarm/product.webp',
+    '../../Assets/products/openarm/openarm.webp',
+    '../../Assets/products/openarm/gen1.jpg'
 ];
 let current = 0;
 function showSlide(n) {
@@ -394,7 +394,7 @@ function toggleAccordion(n) {
         </div>
         <div class="grid md:grid-cols-2 gap-12 items-start">
             <div class="rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 aspect-video flex items-center justify-center">
-                <img src="../../assets/products/openarm/product.webp" alt="OpenArm Customization" class="w-full h-full object-cover">
+                <img src="../../Assets/products/openarm/product.webp" alt="OpenArm Customization" class="w-full h-full object-cover">
             </div>
             <div class="space-y-6">
                 <div class="border-t border-gray-200 pt-4">
@@ -437,10 +437,10 @@ function toggleAccordion(n) {
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div>
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="../../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <img src="../../Assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
                     <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
                 </div>
-                <p class="mb-4"><a href="../../index.html"><img src="../../assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="mb-4"><a href="../../index.html"><img src="../../Assets/images/slogan-footer.png" alt="WWNT Robotics Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
                 <p class="text-sm leading-relaxed">Headquarters: Zengcheng District, Guangzhou</p>
             </div>
             <div>

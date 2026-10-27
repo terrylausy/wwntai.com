@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenArm 开源机械臂 - wwntAI.com | 高校AI+机器人教育</title>
     <meta name="description" content="OpenArm 完全开源国产机械臂，依托ROS2软件栈与开源硬件，主打跨学科工程实践，适配高校理工科核心课程，支持高校品牌定制。">
-    <script src="../assets/js/tailwindcdn.js"></script>
+    <script src="../Assets/js/tailwindcdn.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',secondary:'#f8fafc',accent:'#2563eb',card:'#ffffff',border:'#e2e8f0',
                         light: '#3b82f6',
@@ -44,7 +44,7 @@
 
             <div class="flex items-center space-x-3">
 
-                <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <img src="../Assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
 
                 <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
 
@@ -208,9 +208,9 @@
             <p class="mt-3 text-gray-500 max-w-xl mx-auto">OpenArm Cell 机械臂实际运行展示，了解产品真实表现与操作体验</p>
         </div>
         <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden bg-black shadow-2xl ring-1 ring-gray-200">
-            <video class="w-full h-auto" controls autoplay loop muted preload="auto" poster="../assets/products/openarm/slide1.webp">
-                <source src="../assets/videos/openarm-cell.webm" type="video/webm">
-                您的浏览器不支持视频播放，请 <a href="../assets/videos/openarm-cell.webm" class="text-accent underline" download>下载视频</a> 查看。
+            <video class="w-full h-auto" controls autoplay loop muted preload="auto" poster="../Assets/products/openarm/slide1.webp">
+                <source src="../Assets/videos/openarm-cell.webm" type="video/webm">
+                您的浏览器不支持视频播放，请 <a href="../Assets/videos/openarm-cell.webm" class="text-accent underline" download>下载视频</a> 查看。
             </video>
         </div>
     </div>
@@ -225,7 +225,7 @@
             <p class="mt-3 text-gray-500 max-w-xl mx-auto">7-DOF 人形机械臂从零到整机的完整直播组装过程（全英文讲解，时长约 1 小时 28 分钟），完整展现开源硬件的每一步装配细节</p>
         </div>
         <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden bg-black shadow-2xl ring-1 ring-gray-200">
-            <video class="w-full h-auto" controls preload="metadata" poster="../assets/products/openarm/slide1.webp" src="https://github.com/terrylausy/wwntai.com/releases/download/openarm-videos/OpenArm-Full-Assembly-720p.mp4">
+            <video class="w-full h-auto" controls preload="metadata" poster="../Assets/products/openarm/slide1.webp" src="https://github.com/terrylausy/wwntai.com/releases/download/openarm-videos/OpenArm-Full-Assembly-720p.mp4">
                 您的浏览器不支持视频播放，请 <a href="https://github.com/terrylausy/wwntai.com/releases/download/openarm-videos/OpenArm-Full-Assembly-720p.mp4" class="text-accent underline" download>下载视频</a> 查看。
             </video>
         </div>
@@ -237,7 +237,7 @@
 <section class="relative z-10 py-8">
     <div class="max-w-7xl mx-auto px-6">
         <div class="relative rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 max-w-4xl mx-auto" style="aspect-ratio:16/9;max-height:480px;">
-            <img id="slider-img" src="../assets/products/openarm/slide1.webp" alt="OpenArm" class="w-full h-full object-contain" style="max-height:480px;">
+            <img id="slider-img" src="../Assets/products/openarm/slide1.webp" alt="OpenArm" class="w-full h-full object-contain" style="max-height:480px;">
             <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2" id="slider-dots"></div>
             <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-700 shadow-sm transition-colors"><i class="fas fa-chevron-left"></i></button>
             <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center text-gray-700 shadow-sm transition-colors"><i class="fas fa-chevron-right"></i></button>
@@ -247,11 +247,11 @@
 
 <script>
 const slides = [
-    '../assets/products/openarm/slide1.webp',
-    '../assets/products/openarm/slide2.webp',
-    '../assets/products/openarm/product.webp',
-    '../assets/products/openarm/openarm.webp',
-    '../assets/products/openarm/gen1.jpg'
+    '../Assets/products/openarm/slide1.webp',
+    '../Assets/products/openarm/slide2.webp',
+    '../Assets/products/openarm/product.webp',
+    '../Assets/products/openarm/openarm.webp',
+    '../Assets/products/openarm/gen1.jpg'
 ];
 let current = 0;
 function showSlide(n) {
@@ -444,7 +444,7 @@ function toggleAccordion(n) {
         </div>
         <div class="grid md:grid-cols-2 gap-12 items-start">
             <div class="rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 aspect-video flex items-center justify-center">
-                <img src="../assets/products/openarm/product.webp" alt="OpenArm Customization" class="w-full h-full object-cover">
+                <img src="../Assets/products/openarm/product.webp" alt="OpenArm Customization" class="w-full h-full object-cover">
             </div>
             <div class="space-y-6">
                 <div class="border-t border-gray-200 pt-4">
@@ -485,10 +485,10 @@ function toggleAccordion(n) {
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
             <div>
                 <div class="flex items-center space-x-3 mb-4">
-                    <img src="../assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <img src="../Assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
                     <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
                 </div>
-                <p class="mb-4"><a href="../index.html"><img src="../assets/images/slogan-footer.png" alt="万物拟态 Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
+                <p class="mb-4"><a href="../index.html"><img src="../Assets/images/slogan-footer.png" alt="万物拟态 Slogan" style="width:280px;height:auto;max-width:100%;"></a></p>
                 <p class="text-sm leading-relaxed">总部：广州增城区</p>
             </div>
             <div>
