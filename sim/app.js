@@ -419,19 +419,38 @@ function animate(){
 
 // ---------- 启动 ----------
 async function main(){
-  setLoading('加载 MuJoCo WASM…');
-  mujoco = await loadMujoco({
-    locateFile: (path, prefix) => path.endsWith('.wasm') ? './vendor/mujoco.wasm' : prefix + path
+  setLoading('加载引擎与模型资产…');
+
+  // 并行下载：MuJoCo WASM + 场景 XML + 15 个 STL 网格（互不依赖，同时进行）
+  const assetJobs = ASSETS.map(async (a) => {
+    const buf = await (await fetch('./wwduck/assets/' + a)).arrayBuffer();
+    return { a, buf };
   });
+  let done = 0;
+  const total = ASSETS.length;
+  const trackedJobs = assetJobs.map(async (p) => {
+    const r = await p;
+    done++;
+    setLoading('下载模型资产 ' + done + '/' + total + '…');
+    return r;
+  });
+
+  const [mujocoModule, sceneXml, robotXml, assets] = await Promise.all([
+    loadMujoco({
+      locateFile: (path, prefix) => path.endsWith('.wasm') ? './vendor/mujoco.wasm' : prefix + path
+    }),
+    fetch('./wwduck/scene_walk.xml').then(r => r.text()),
+    fetch('./wwduck/robot_walk.xml').then(r => r.text()),
+    Promise.all(trackedJobs),
+  ]);
+  mujoco = mujocoModule;
 
   setLoading('写入模型资产到虚拟文件系统…');
   const enc = new TextEncoder();
-  const sceneXml = await (await fetch('./wwduck/scene_walk.xml')).text();
   const vfs = new mujoco.MjVFS();
   vfs.addBuffer('scene_walk.xml', enc.encode(sceneXml));
-  vfs.addBuffer('robot_walk.xml', enc.encode(await (await fetch('./wwduck/robot_walk.xml')).text()));
-  for (const a of ASSETS){
-    const buf = await (await fetch('./wwduck/assets/' + a)).arrayBuffer();
+  vfs.addBuffer('robot_walk.xml', enc.encode(robotXml));
+  for (const { a, buf } of assets){
     vfs.addBuffer('assets/' + a, new Uint8Array(buf));
   }
 
