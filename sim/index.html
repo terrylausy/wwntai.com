@@ -23,7 +23,7 @@
   .btn.active{ background:#1d9e75; border-color:#1d9e75; color:#04110c; }
   .hint{ position:absolute; left:16px; bottom:14px; z-index:10; color:#8a97a5; font-size:12px; line-height:1.7; }
   .badge{ position:absolute; right:16px; top:16px; z-index:10; color:#8a97a5; font-size:12px; text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
-  .badge .logo{ width:52px; filter:invert(1); opacity:.9; }
+  .badge .logo{ width:64px; background:#fff; border-radius:10px; padding:6px; box-shadow:0 2px 10px rgba(0,0,0,.35); }
   .loading{ position:absolute; inset:0; z-index:20; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; color:#cbd5e1; background:#0b0f14; }
   .spin{ width:34px; height:34px; border-radius:50%; border:3px solid rgba(255,255,255,.15); border-top-color:#1d9e75; animation:r 0.9s linear infinite; }
   @keyframes r{ to{ transform:rotate(360deg);} }
@@ -39,6 +39,7 @@
   <button class="btn" onclick="setKey('STAND')">站立</button>
   <button class="btn" onclick="setKey('SIT')">坐下</button>
   <button class="btn" onclick="setKey('FOLD')">折叠</button>
+  <button class="btn" onclick="playWalk()">🚶 行走</button>
   <button class="btn" onclick="playFlip()">🔄 翻跟斗</button>
   <button class="btn" id="btnDemo" onclick="playDemo()">▶ 自动演示</button>
   <button class="btn" onclick="reset()">↺ 复位</button>
@@ -46,12 +47,12 @@
 
 <div class="badge">
   <img src="../Assets/images/ww-robot-logo.png" alt="万物拟态" class="logo">
-  <div>MicroDuck 国产版（wwDuck）<br>MuJoCo WASM · 浏览器内实时仿真<br><span style="opacity:.6">MuJoCo (Apache-2.0) · three.js (MIT) · 模型来自 LuwuDynamics (Apache-2.0)</span></div>
+  <div>MicroDuck 国产版（wwDuck）<br>MuJoCo WASM · 浏览器内实时仿真</div>
 </div>
 
 <div class="hint">
   左键拖拽旋转 · 滚轮缩放 · 右键平移<br>
-  1 站立 &nbsp;2 坐下 &nbsp;3 折叠 &nbsp;4 翻跟斗 &nbsp;5 自动演示 &nbsp;空格 暂停/运行
+  1 站立 &nbsp;2 坐下 &nbsp;3 折叠 &nbsp;4 翻跟斗 &nbsp;5 自动演示 &nbsp;6 行走 &nbsp;空格 暂停/运行
 </div>
 
 <div class="loading" id="loading"><div class="spin"></div><div id="loadingText">正在加载 MuJoCo 与模型资产…</div></div>

@@ -179,6 +179,39 @@ window.setMode = function(mode){
 // ---------- 动作片段 ----------
 function holdSeg(name, dur){ return { dur, apply: () => { data.qpos.set(keyQpos[name]); } }; }
 
+// 行走所需关节在 qpos 中的地址（按关节名查，避免硬编码）
+let JIDX = null;
+function jointIdx(){
+  if (JIDX) return JIDX;
+  JIDX = {
+    lhp: Number(model.jnt('left_hip_pitch').qposadr),
+    lk : Number(model.jnt('left_knee').qposadr),
+    rhp: Number(model.jnt('right_hip_pitch').qposadr),
+    rk : Number(model.jnt('right_knee').qposadr),
+  };
+  return JIDX;
+}
+
+// 行走：双腿交替摆髋 + 摆动腿抬膝 + 身体前移与起伏
+function walkSeg(dur, speed = 0.14){
+  return { dur, apply: (t) => {
+    const J = jointIdx();
+    const q0 = keyQpos['STAND'];
+    const q = data.qpos; q.set(q0);
+    const sec = dur / 1000;
+    const steps = Math.max(2, Math.round(sec * 2.6));
+    const th = 2 * Math.PI * steps * t;
+    const hipA = 0.5, kneeA = 0.9;
+    const L = Math.sin(th), R = Math.sin(th + Math.PI);
+    q[J.lhp] = q0[J.lhp] + hipA * L;               // 左髋俯仰
+    q[J.rhp] = q0[J.rhp] + hipA * R;               // 右髋俯仰（反相）
+    q[J.lk]  = q0[J.lk]  + kneeA * Math.max(0, Math.sin(th - 1.2));           // 左膝摆动相弯曲
+    q[J.rk]  = q0[J.rk]  + kneeA * Math.max(0, Math.sin(th - 1.2 + Math.PI)); // 右膝
+    q[0] += speed * sec * t;                       // 前移
+    q[2] = q0[2] + 0.012 * (1 - Math.cos(2 * th)); // 起伏
+  }};
+}
+
 function flipSeg(dur){
   return { dur, apply: (t) => {
     const q0 = keyQpos['STAND'] || keyQpos['SIT'] || data.qpos;
@@ -198,6 +231,13 @@ function playSeq(segments, loop){
   seq = { segments, idx: 0, t0: performance.now(), loop };
 }
 
+// 单个行走
+window.playWalk = function(){
+  if (!model || !data) return;
+  stopDemo();
+  playSeq([walkSeg(3000), holdSeg('STAND', 300)], false);
+};
+
 // 单个翻跟斗
 window.playFlip = function(){
   if (!model || !data) return;
@@ -205,17 +245,20 @@ window.playFlip = function(){
   playSeq([holdSeg('STAND', 50), flipSeg(1500)], false);
 };
 
-// 自动演示：站立→坐下→折叠→站立→翻跟斗，循环
+// 自动演示（按指定顺序与时长循环）
 window.playDemo = function(){
   if (!model || !data) return;
   if (demoOn){ stopDemo(); return; }
   demoOn = true;
   playSeq([
-    holdSeg('STAND', 900),
-    holdSeg('SIT', 900),
-    holdSeg('FOLD', 900),
-    holdSeg('STAND', 600),
-    flipSeg(1500),
+    walkSeg(3000),           // 行走 3s
+    holdSeg('SIT', 1500),    // 坐下 1.5s
+    holdSeg('STAND', 500),   // 站立 0.5s
+    walkSeg(4000),           // 行走 4s
+    holdSeg('STAND', 500),   // 停下 0.5s
+    holdSeg('SIT', 1000),    // 坐下 1s
+    flipSeg(300),            // 翻跟斗 0.3s
+    holdSeg('STAND', 1000),  // 站立 1s
   ], true);
   document.getElementById('btnDemo').classList.add('active');
 };
@@ -339,6 +382,7 @@ async function main(){
     else if (e.key === '3') setKey('FOLD');
     else if (e.key === '4') playFlip();
     else if (e.key === '5') playDemo();
+    else if (e.key === '6') playWalk();
     else if (e.code === 'Space'){ e.preventDefault(); setMode(running ? 'pose' : 'run'); }
   });
 }
