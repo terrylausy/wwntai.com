@@ -482,7 +482,7 @@ async function main(){
 
   // 并行下载：WASM + 三个 XML + 50 个 STL（互不依赖，同时进行）
   const duckJobs = DUCK_ASSETS.map(async (a) => ({ a, buf: await (await fetch('./wwduck/assets/' + a)).arrayBuffer() }));
-  const minipiJobs = MINIPI_ASSETS.map(async (a) => ({ a, buf: await (await fetch('./wwminipiplus/assets/' + a)).arrayBuffer() }));
+  const minipiJobs = MINIPI_ASSETS.map(async (a) => ({ a, buf: await (await fetch('./wwduck/assets/' + a)).arrayBuffer() }));
   const total = DUCK_ASSETS.length + MINIPI_ASSETS.length;
   let done = 0;
   const track = async (p) => { const r = await p; done++; setLoading('下载模型资产 ' + done + '/' + total + '…'); return r; };
@@ -506,7 +506,7 @@ async function main(){
   vfs.addBuffer('robot_walk.xml', enc.encode(robotXml));
   vfs.addBuffer('wwminipiplus/minipi.xml', enc.encode(minipiXml));
   for (const { a, buf } of duckAssets){ vfs.addBuffer('assets/' + a, new Uint8Array(buf)); }
-  for (const { a, buf } of minipiAssets){ vfs.addBuffer('wwminipiplus/assets/' + a, new Uint8Array(buf)); }
+  for (const { a, buf } of minipiAssets){ vfs.addBuffer('assets/' + a, new Uint8Array(buf)); }
 
   setLoading('编译模型…');
   model = mujoco.from_xml_string(sceneXml, vfs);
