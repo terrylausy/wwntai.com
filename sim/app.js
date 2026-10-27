@@ -8,10 +8,19 @@ import loadMujoco from './vendor/mujoco.js';
 const mjGEOM_PLANE = 0, mjGEOM_HFIELD = 1, mjGEOM_SPHERE = 2, mjGEOM_CAPSULE = 3,
       mjGEOM_ELLIPSOID = 4, mjGEOM_CYLINDER = 5, mjGEOM_BOX = 6, mjGEOM_MESH = 7;
 
-const ASSETS = [
+const DUCK_ASSETS = [
   'trunk_base.stl','left_hip_yaw.stl','left_hip_roll.stl','left_hip_pitch.stl','left_knee.stl',
   'left_ankle.stl','right_hip_yaw.stl','right_hip_roll.stl','right_hip_pitch.stl','right_knee.stl',
   'right_ankle.stl','neck_pitch.stl','head_pitch.stl','head_yaw.stl','head_roll.stl'
+];
+const MINIPI_ASSETS = [
+  'base_link.STL','camera_link.STL','head_pitch_link.STL','head_yaw_link.STL','head_yaw_link_simplify.STL',
+  'l_ankle_pitch_link.STL','l_ankle_roll_link.STL','l_ankle_roll_link_simplify.STL','l_calf_link.STL','l_calf_link_simplify.STL',
+  'l_elbow_link.STL','l_hip_pitch_link.STL','l_hip_roll_link.STL','l_shoulder_pitch_link.STL','l_shoulder_pitch_link_simplify.STL',
+  'l_shoulder_roll_link.STL','l_thigh_link.STL','l_upper_arm_link.STL','l_wrist_link.STL',
+  'r_ankle_pitch_link.STL','r_ankle_roll_link.STL','r_ankle_roll_link_simplify.STL','r_calf_link.STL','r_calf_link_simplify.STL',
+  'r_elbow_link.STL','r_hip_pitch_link.STL','r_hip_roll_link.STL','r_shoulder_pitch_link.STL','r_shoulder_pitch_link_simplify.STL',
+  'r_shoulder_roll_link.STL','r_thigh_link.STL','r_upper_arm_link.STL','r_wrist_link.STL','torso_link.STL','torso_link_simplify.STL'
 ];
 
 const loadingEl = document.getElementById('loading');
@@ -27,6 +36,8 @@ let demoOn = false;   // 自动演示开关
 let WALK_HZ = 2.2;    // 行走步频（步/秒），可由外部指令调整
 let poseOffsetX = 0;  // 连续行走累积的前向位移，避免每段动作回到原点
 let pendingSeqId = 0; // 外部（编程器）下发的动作 id，用于完成后回执
+let minipiWave = false;  // MiniPiPlus 挥手开关
+let MP_J = null;         // MiniPiPlus 上肢关节 qposadr 映射缓存
 const keyQpos = {};   // name -> Float64Array 关键帧位形快照
 const tmpV = new THREE.Vector3();
 const tmpQ = new THREE.Quaternion();
@@ -47,6 +58,7 @@ function nameAt(adrArr, idx){
 function colorFor(name, g){
   const n = name.toLowerCase();
   if (g === mjGEOM_PLANE) return new THREE.Color(0x22303c);
+  if (n.startsWith('mp_')) return new THREE.Color(0x5a6b7d);   // WW-MiniPiPlus 深灰蓝
   if (n.includes('jaw') || n.includes('face') || n.includes('noenoeil')) return new THREE.Color(0xf59e0b);
   if (n.includes('tire') || n.includes('roller') || n.includes('sole')) return new THREE.Color(0x374151);
   return new THREE.Color(0xeef2f5);
@@ -82,9 +94,10 @@ function buildScene(){
 
   for (let g = 0; g < model.ngeom; g++){
     const grp = model.geom_group[g];
-    if (grp >= 3) continue;               // 跳过碰撞组，避免重面闪烁
-    const b = model.geom_bodyid[g];
     const type = model.geom_type[g];
+    if (grp >= 3) continue;                              // 跳过 MicroDuck 碰撞组(group3)
+    if (grp === 0 && type !== mjGEOM_PLANE) continue;    // 跳过 MiniPiPlus 碰撞网格(group0 非平面)，保留 floor
+    const b = model.geom_bodyid[g];
     if (!bodies[b]){ bodies[b] = new THREE.Group(); bodies[b].bodyID = b; bodies[b].name = nameAt(model.name_bodyadr, b); }
 
     const size = [model.geom_size[g*3+0], model.geom_size[g*3+1], model.geom_size[g*3+2]];
@@ -185,8 +198,9 @@ function snapshotKeys(){
 // ---------- 交互 ----------
 function stopSeq(){ seq = null; }
 function stopDemo(){
-  demoOn = false; stopSeq();
+  demoOn = false; stopSeq(); minipiWave = false;
   const b = document.getElementById('btnDemo'); if (b) b.classList.remove('active');
+  const b2 = document.getElementById('btnDuo'); if (b2) b2.classList.remove('active');
 }
 
 function reset(){
@@ -236,6 +250,35 @@ function jointIdx(){
     rk : Number(model.jnt('right_knee').qposadr),
   };
   return JIDX;
+}
+
+// MiniPiPlus 上肢关节 qposadr（fixed base 双足人形，取手臂+头关节）
+function mpJoints(){
+  if (MP_J) return MP_J;
+  MP_J = {};
+  const names = ['r_shoulder_pitch','r_shoulder_roll','r_upper_arm','r_elbow',
+                 'l_shoulder_pitch','l_shoulder_roll','l_upper_arm','l_elbow','head_yaw','head_pitch'];
+  for (const n of names){
+    try { MP_J[n] = Number(model.jnt('mp_' + n + '_joint').qposadr); } catch(e){}
+  }
+  return MP_J;
+}
+
+// MiniPiPlus 挥手（姿态驱动：直接设置上肢关节角，与 MicroDuck 序列播放同一机制）
+function mpWaveCtrl(t){
+  const J = mpJoints();
+  const tgt = {
+    r_shoulder_pitch: -1.8 + 0.5*Math.sin(t*5),
+    r_shoulder_roll: 0.6*Math.sin(t*5),
+    l_shoulder_pitch: -1.8 + 0.5*Math.sin(t*5 + Math.PI),
+    l_shoulder_roll: -0.6*Math.sin(t*5),
+    head_yaw: 0.8*Math.sin(t*2.5),
+  };
+  for (const k in tgt){
+    const adr = J[k];
+    if (adr === undefined) continue;
+    data.qpos[adr] = tgt[k];
+  }
 }
 
 // 行走：双腿交替摆髋 + 摆动腿抬膝 + 身体前移与起伏；dir=1 前进，-1 后退
@@ -334,6 +377,21 @@ window.playDemo = function(){
   document.getElementById('btnDemo').classList.add('active');
 };
 
+// 双模型互动演示：WW-MiniPiPlus 挥手 + MicroDuck 走向/后退（相对运动 + 接触）
+window.playDuo = function(){
+  if (!model || !data) return;
+  if (demoOn){ stopDemo(); return; }
+  demoOn = true;
+  minipiWave = true;   // MiniPiPlus 持续挥手
+  playSeq([
+    walkSeg(4500, 0.16),           // MicroDuck 走向 MiniPiPlus
+    holdSeg('STAND', 1200),        // 停在它面前（MiniPiPlus 持续挥手）
+    walkSeg(4500, 0.16, -1),       // 后退
+    holdSeg('STAND', 1200),
+  ], true);
+  const b = document.getElementById('btnDuo'); if (b) b.classList.add('active');
+};
+
 function updateSeq(now){
   const s = seq; if (!s) return;
   let seg = s.segments[s.idx];
@@ -355,6 +413,7 @@ function updateSeq(now){
     t = 0;
   }
   seg.apply(t);
+  if (minipiWave) mpWaveCtrl(now / 1000);   // WW-MiniPiPlus 挥手（姿态驱动）
   mujoco.mj_forward(model, data);
   updateBodies();
 }
@@ -421,38 +480,33 @@ function animate(){
 async function main(){
   setLoading('加载引擎与模型资产…');
 
-  // 并行下载：MuJoCo WASM + 场景 XML + 15 个 STL 网格（互不依赖，同时进行）
-  const assetJobs = ASSETS.map(async (a) => {
-    const buf = await (await fetch('./wwduck/assets/' + a)).arrayBuffer();
-    return { a, buf };
-  });
+  // 并行下载：WASM + 三个 XML + 50 个 STL（互不依赖，同时进行）
+  const duckJobs = DUCK_ASSETS.map(async (a) => ({ a, buf: await (await fetch('./wwduck/assets/' + a)).arrayBuffer() }));
+  const minipiJobs = MINIPI_ASSETS.map(async (a) => ({ a, buf: await (await fetch('./wwminipiplus/assets/' + a)).arrayBuffer() }));
+  const total = DUCK_ASSETS.length + MINIPI_ASSETS.length;
   let done = 0;
-  const total = ASSETS.length;
-  const trackedJobs = assetJobs.map(async (p) => {
-    const r = await p;
-    done++;
-    setLoading('下载模型资产 ' + done + '/' + total + '…');
-    return r;
-  });
+  const track = async (p) => { const r = await p; done++; setLoading('下载模型资产 ' + done + '/' + total + '…'); return r; };
 
-  const [mujocoModule, sceneXml, robotXml, assets] = await Promise.all([
+  const [mujocoModule, sceneXml, robotXml, minipiXml, duckAssets, minipiAssets] = await Promise.all([
     loadMujoco({
       locateFile: (path, prefix) => path.endsWith('.wasm') ? './vendor/mujoco.wasm' : prefix + path
     }),
-    fetch('./wwduck/scene_walk.xml').then(r => r.text()),
+    fetch('./wwduck/scene_duo.xml').then(r => r.text()),
     fetch('./wwduck/robot_walk.xml').then(r => r.text()),
-    Promise.all(trackedJobs),
+    fetch('./wwminipiplus/minipi.xml').then(r => r.text()),
+    Promise.all(duckJobs.map(track)),
+    Promise.all(minipiJobs.map(track)),
   ]);
   mujoco = mujocoModule;
 
   setLoading('写入模型资产到虚拟文件系统…');
   const enc = new TextEncoder();
   const vfs = new mujoco.MjVFS();
-  vfs.addBuffer('scene_walk.xml', enc.encode(sceneXml));
+  vfs.addBuffer('scene_duo.xml', enc.encode(sceneXml));
   vfs.addBuffer('robot_walk.xml', enc.encode(robotXml));
-  for (const { a, buf } of assets){
-    vfs.addBuffer('assets/' + a, new Uint8Array(buf));
-  }
+  vfs.addBuffer('wwminipiplus/minipi.xml', enc.encode(minipiXml));
+  for (const { a, buf } of duckAssets){ vfs.addBuffer('assets/' + a, new Uint8Array(buf)); }
+  for (const { a, buf } of minipiAssets){ vfs.addBuffer('wwminipiplus/assets/' + a, new Uint8Array(buf)); }
 
   setLoading('编译模型…');
   model = mujoco.from_xml_string(sceneXml, vfs);
@@ -511,6 +565,7 @@ async function main(){
 
   if (loadingEl) loadingEl.style.display = 'none';
   animate();
+  window.__sim = { model, data, bodies };   // 调试/验证用
   postParent({ type: 'ready' });   // 通知编程器：仿真引擎就绪
 
   window.addEventListener('resize', () => {
