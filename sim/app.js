@@ -147,8 +147,8 @@ function addBodyLogo(){
     new THREE.PlaneGeometry(w, h),
     new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, side: THREE.DoubleSide })
   );
-  decal.position.set(box.max.x + 0.0015, center.y, center.z);
-  decal.rotation.y = Math.PI / 2;   // 平面法线朝 +x（身体正前方）
+  decal.position.set(box.min.x - 0.0015, center.y, center.z);
+  decal.rotation.y = -Math.PI / 2;   // 平面法线朝 -x（背部）
   decal.renderOrder = 1;
   grp.add(decal);
 }
@@ -233,7 +233,7 @@ function walkSeg(dur, speed = 0.14){
     const q0 = keyQpos['STAND'];
     const q = data.qpos; q.set(q0);
     const sec = dur / 1000;
-    const steps = Math.max(2, Math.round(sec * 2.6));
+    const steps = Math.max(2, Math.round(sec * 2.2));
     const th = 2 * Math.PI * steps * t;
     const hipA = 0.5, kneeA = 0.9;
     const L = Math.sin(th), R = Math.sin(th + Math.PI);
