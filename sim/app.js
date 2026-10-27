@@ -144,7 +144,7 @@ function addBodyLogo(){
   // 尺寸控制在身体边界内
   const w = Math.min(size.z * 0.55, size.y * 0.5);
   const h = Math.min(w * (862 / 800), size.y * 0.7);
-  const tex = new THREE.TextureLoader().load('../Assets/images/ww-robot-logo.png');
+  const tex = new THREE.TextureLoader().load('Assets/images/ww-robot-logo.png');
   tex.colorSpace = THREE.SRGBColorSpace;
   const decal = new THREE.Mesh(
     new THREE.PlaneGeometry(w, h),
