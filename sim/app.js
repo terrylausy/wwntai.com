@@ -24,6 +24,9 @@ let running = false;
 let keyIds = {};      // name -> keyframe id
 let seq = null;       // 动作序列播放器 {segments, idx, t0, loop}
 let demoOn = false;   // 自动演示开关
+let WALK_HZ = 2.2;    // 行走步频（步/秒），可由外部指令调整
+let poseOffsetX = 0;  // 连续行走累积的前向位移，避免每段动作回到原点
+let pendingSeqId = 0; // 外部（编程器）下发的动作 id，用于完成后回执
 const keyQpos = {};   // name -> Float64Array 关键帧位形快照
 const tmpV = new THREE.Vector3();
 const tmpQ = new THREE.Quaternion();
@@ -188,6 +191,7 @@ function stopDemo(){
 
 function reset(){
   stopDemo();
+  poseOffsetX = 0;
   if (keyIds['STAND'] !== undefined) mujoco.mj_resetDataKeyframe(model, data, keyIds['STAND']);
   else mujoco.mj_resetData(model, data);
   mujoco.mj_forward(model, data);
@@ -211,7 +215,15 @@ window.setMode = function(mode){
 };
 
 // ---------- 动作片段 ----------
-function holdSeg(name, dur){ return { dur, apply: () => { data.qpos.set(keyQpos[name]); } }; }
+// 保持某个关键帧姿态 dur 毫秒（叠加已累积的前向位移）
+function holdSeg(name, dur){
+  return { dur, apply: () => {
+    const q0 = keyQpos[name] || keyQpos['STAND'];
+    if (!q0) return;
+    data.qpos.set(q0);
+    data.qpos[0] += poseOffsetX;
+  }};
+}
 
 // 行走所需关节在 qpos 中的地址（按关节名查，避免硬编码）
 let JIDX = null;
@@ -226,24 +238,44 @@ function jointIdx(){
   return JIDX;
 }
 
-// 行走：双腿交替摆髋 + 摆动腿抬膝 + 身体前移与起伏
-function walkSeg(dur, speed = 0.14){
-  return { dur, apply: (t) => {
-    const J = jointIdx();
-    const q0 = keyQpos['STAND'];
-    const q = data.qpos; q.set(q0);
-    const sec = dur / 1000;
-    const steps = Math.max(2, Math.round(sec * 2.2));
-    const th = 2 * Math.PI * steps * t;
-    const hipA = 0.5, kneeA = 0.9;
-    const L = Math.sin(th), R = Math.sin(th + Math.PI);
-    q[J.lhp] = q0[J.lhp] + hipA * L;               // 左髋俯仰
-    q[J.rhp] = q0[J.rhp] + hipA * R;               // 右髋俯仰（反相）
-    q[J.lk]  = q0[J.lk]  + kneeA * Math.max(0, Math.sin(th - 1.2));           // 左膝摆动相弯曲
-    q[J.rk]  = q0[J.rk]  + kneeA * Math.max(0, Math.sin(th - 1.2 + Math.PI)); // 右膝
-    q[0] += speed * sec * t;                       // 前移
-    q[2] = q0[2] + 0.012 * (1 - Math.cos(2 * th)); // 起伏
-  }};
+// 行走：双腿交替摆髋 + 摆动腿抬膝 + 身体前移与起伏；dir=1 前进，-1 后退
+function walkSeg(dur, speed = 0.14, dir = 1){
+  const x0 = poseOffsetX;
+  return {
+    dur,
+    apply: (t) => {
+      const J = jointIdx();
+      const q0 = keyQpos['STAND'];
+      if (!q0) return;
+      const q = data.qpos; q.set(q0);
+      const sec = dur / 1000;
+      const steps = Math.max(2, Math.round(sec * WALK_HZ));
+      const th = 2 * Math.PI * steps * t;
+      const hipA = 0.5, kneeA = 0.9;
+      const L = Math.sin(th), R = Math.sin(th + Math.PI);
+      q[J.lhp] = q0[J.lhp] + hipA * L;               // 左髋俯仰
+      q[J.rhp] = q0[J.rhp] + hipA * R;               // 右髋俯仰（反相）
+      q[J.lk]  = q0[J.lk]  + kneeA * Math.max(0, Math.sin(th - 1.2));           // 左膝摆动相弯曲
+      q[J.rk]  = q0[J.rk]  + kneeA * Math.max(0, Math.sin(th - 1.2 + Math.PI)); // 右膝
+      q[0] = q0[0] + x0 + dir * speed * sec * t;     // 前移
+      q[2] = q0[2] + 0.012 * (1 - Math.cos(2 * th)); // 起伏
+    },
+    onEnd: () => { poseOffsetX = x0 + dir * speed * (dur / 1000); }
+  };
+}
+
+// 转向：绕竖轴旋转 deg 度（正=左转）
+function turnSeg(dur, deg){
+  return {
+    dur,
+    apply: (t) => {
+      const q0 = keyQpos['STAND'] || data.qpos;
+      const q = data.qpos; q.set(q0);
+      const half = (deg * Math.PI / 180) * t / 2;
+      q[0] = q0[0] + poseOffsetX;
+      q[3] = Math.cos(half); q[4] = 0; q[5] = 0; q[6] = Math.sin(half);
+    }
+  };
 }
 
 function flipSeg(dur){
@@ -251,18 +283,18 @@ function flipSeg(dur){
     const q0 = keyQpos['STAND'] || keyQpos['SIT'] || data.qpos;
     const q = data.qpos; q.set(q0);
     const hop = Math.sin(Math.PI * t), th = Math.PI * 2 * t;
-    q[0] += 0.12 * Math.sin(Math.PI * t);   // 轻微前移
-    q[2] = q0[2] + 0.22 * hop;              // 离地弧线
-    q[3] = Math.cos(th / 2);                // 绕横向轴(y)前翻一圈
+    q[0] = q0[0] + poseOffsetX + 0.12 * Math.sin(Math.PI * t);   // 轻微前移
+    q[2] = q0[2] + 0.22 * hop;                                   // 离地弧线
+    q[3] = Math.cos(th / 2);                                     // 绕横向轴(y)前翻一圈
     q[4] = 0; q[5] = Math.sin(th / 2); q[6] = 0;
   }};
 }
 
-function playSeq(segments, loop){
+function playSeq(segments, loop, notifyId){
   running = false;
   document.getElementById('btnRun').classList.remove('active');
   document.getElementById('btnPose').classList.add('active');
-  seq = { segments, idx: 0, t0: performance.now(), loop };
+  seq = { segments, idx: 0, t0: performance.now(), loop, notifyId };
 }
 
 // 单个行走
@@ -279,12 +311,9 @@ window.playFlip = function(){
   playSeq([holdSeg('STAND', 50), flipSeg(1500)], false);
 };
 
-// 自动演示（按指定顺序与时长循环）
-window.playDemo = function(){
-  if (!model || !data) return;
-  if (demoOn){ stopDemo(); return; }
-  demoOn = true;
-  playSeq([
+// 自动演示片段（按指定顺序与时长）
+function demoSegments(){
+  return [
     walkSeg(3000),           // 行走 3s
     holdSeg('SIT', 1500),    // 坐下 1.5s
     holdSeg('STAND', 500),   // 站立 0.5s
@@ -293,7 +322,15 @@ window.playDemo = function(){
     holdSeg('SIT', 1000),    // 坐下 1s
     flipSeg(300),            // 翻跟斗 0.3s
     holdSeg('STAND', 1000),  // 站立 1s
-  ], true);
+  ];
+}
+
+// 自动演示（循环）
+window.playDemo = function(){
+  if (!model || !data) return;
+  if (demoOn){ stopDemo(); return; }
+  demoOn = true;
+  playSeq(demoSegments(), true);
   document.getElementById('btnDemo').classList.add('active');
 };
 
@@ -302,10 +339,16 @@ function updateSeq(now){
   let seg = s.segments[s.idx];
   let t = (now - s.t0) / seg.dur;
   if (t >= 1){
+    if (seg.onEnd) seg.onEnd();          // 结算片段（累积前向位移等）
     s.idx++;
     if (s.idx >= s.segments.length){
       if (s.loop){ s.idx = 0; }
-      else { seq = null; return; }
+      else {
+        const nid = s.notifyId;
+        seq = null;
+        if (nid) postParent({ type: 'seqdone', id: nid });   // 回执给图形化编程器
+        return;
+      }
     }
     s.t0 = now;
     seg = s.segments[s.idx];
@@ -315,6 +358,51 @@ function updateSeq(now){
   mujoco.mj_forward(model, data);
   updateBodies();
 }
+
+// ---------- 与图形化编程器（blocks.html）的消息桥 ----------
+function postParent(msg){
+  if (window.parent && window.parent !== window){
+    try { msg.source = 'wwduck-sim'; window.parent.postMessage(msg, '*'); } catch (e) {}
+  }
+}
+
+window.addEventListener('message', (e) => {
+  const d = e.data;
+  if (!d || d.source !== 'wwduck-blocks') return;
+  if (!model || !data) return;
+  const id = d.id || 0;
+  stopDemo();
+  switch (d.cmd){
+    case 'pose':
+      window.setKey(d.name || 'STAND');
+      postParent({ type: 'seqdone', id });
+      break;
+    case 'reset':
+      reset();
+      postParent({ type: 'seqdone', id });
+      break;
+    case 'walk':
+      playSeq([walkSeg(d.dur || 3000, d.speed == null ? 0.14 : d.speed, d.dir || 1), holdSeg('STAND', 200)], false, id);
+      break;
+    case 'turn':
+      playSeq([turnSeg(d.dur || 1000, d.deg == null ? 90 : d.deg), holdSeg('STAND', 150)], false, id);
+      break;
+    case 'flip':
+      playSeq([holdSeg('STAND', 40), flipSeg(d.dur || 600), holdSeg('STAND', 150)], false, id);
+      break;
+    case 'demo':
+      playSeq(demoSegments(), false, id);
+      break;
+    case 'pace':
+      WALK_HZ = Math.max(0.5, Math.min(5, Number(d.hz) || 2.2));
+      postParent({ type: 'seqdone', id });
+      break;
+    case 'stop':
+      seq = null;
+      postParent({ type: 'seqdone', id });
+      break;
+  }
+});
 
 // ---------- 主渲染循环 ----------
 function animate(){
@@ -404,6 +492,7 @@ async function main(){
 
   if (loadingEl) loadingEl.style.display = 'none';
   animate();
+  postParent({ type: 'ready' });   // 通知编程器：仿真引擎就绪
 
   window.addEventListener('resize', () => {
     camera.aspect = viewer.clientWidth / viewer.clientHeight;
