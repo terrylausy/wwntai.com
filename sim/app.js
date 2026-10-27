@@ -22,7 +22,9 @@ let scene, camera, renderer, controls;
 let bodies = {};      // bodyID -> THREE.Group
 let running = false;
 let keyIds = {};      // name -> keyframe id
-let flipAnim = null;  // 翻跟斗动画状态
+let seq = null;       // 动作序列播放器 {segments, idx, t0, loop}
+let demoOn = false;   // 自动演示开关
+const keyQpos = {};   // name -> Float64Array 关键帧位形快照
 const tmpV = new THREE.Vector3();
 const tmpQ = new THREE.Quaternion();
 
@@ -133,9 +135,25 @@ function indexKeyframes(){
   }
 }
 
+// ---------- 关键帧位形快照 ----------
+function snapshotKeys(){
+  for (const k in keyIds){
+    mujoco.mj_resetDataKeyframe(model, data, keyIds[k]);
+    keyQpos[k] = Float64Array.from(data.qpos);
+  }
+  if (keyIds['STAND'] !== undefined) mujoco.mj_resetDataKeyframe(model, data, keyIds['STAND']);
+  mujoco.mj_forward(model, data);
+}
+
 // ---------- 交互 ----------
+function stopSeq(){ seq = null; }
+function stopDemo(){
+  demoOn = false; stopSeq();
+  const b = document.getElementById('btnDemo'); if (b) b.classList.remove('active');
+}
+
 function reset(){
-  flipAnim = null;
+  stopDemo();
   if (keyIds['STAND'] !== undefined) mujoco.mj_resetDataKeyframe(model, data, keyIds['STAND']);
   else mujoco.mj_resetData(model, data);
   mujoco.mj_forward(model, data);
@@ -143,7 +161,7 @@ function reset(){
 }
 
 window.setKey = function(name){
-  flipAnim = null;
+  stopDemo();
   if (keyIds[name] === undefined) return;
   mujoco.mj_resetDataKeyframe(model, data, keyIds[name]);
   mujoco.mj_forward(model, data);
@@ -153,41 +171,70 @@ window.reset = reset;
 
 window.setMode = function(mode){
   running = (mode === 'run');
-  flipAnim = null;
+  stopDemo();
   document.getElementById('btnRun').classList.toggle('active', running);
   document.getElementById('btnPose').classList.toggle('active', !running);
 };
 
-// ---------- 翻跟斗（姿态模式下的 360° 前空翻动画） ----------
+// ---------- 动作片段 ----------
+function holdSeg(name, dur){ return { dur, apply: () => { data.qpos.set(keyQpos[name]); } }; }
+
+function flipSeg(dur){
+  return { dur, apply: (t) => {
+    const q0 = keyQpos['STAND'] || keyQpos['SIT'] || data.qpos;
+    const q = data.qpos; q.set(q0);
+    const hop = Math.sin(Math.PI * t), th = Math.PI * 2 * t;
+    q[0] += 0.12 * Math.sin(Math.PI * t);   // 轻微前移
+    q[2] = q0[2] + 0.22 * hop;              // 离地弧线
+    q[3] = Math.cos(th / 2);                // 绕横向轴(y)前翻一圈
+    q[4] = 0; q[5] = Math.sin(th / 2); q[6] = 0;
+  }};
+}
+
+function playSeq(segments, loop){
+  running = false;
+  document.getElementById('btnRun').classList.remove('active');
+  document.getElementById('btnPose').classList.add('active');
+  seq = { segments, idx: 0, t0: performance.now(), loop };
+}
+
+// 单个翻跟斗
 window.playFlip = function(){
   if (!model || !data) return;
-  setMode('pose');                       // 关掉物理，用姿态动画
-  mujoco.mj_resetDataKeyframe(model, data, keyIds['STAND'] !== undefined ? keyIds['STAND'] : 0);
-  mujoco.mj_forward(model, data);
-  const q0 = Float64Array.from(data.qpos);   // 站立位形快照
-  flipAnim = { t0: performance.now(), dur: 1500, q0, baseZ: data.qpos[2] };
+  stopDemo();
+  playSeq([holdSeg('STAND', 50), flipSeg(1500)], false);
 };
 
-function updateFlip(now){
-  const a = flipAnim; if (!a) return;
-  let t = (now - a.t0) / a.dur;
+// 自动演示：站立→坐下→折叠→站立→翻跟斗，循环
+window.playDemo = function(){
+  if (!model || !data) return;
+  if (demoOn){ stopDemo(); return; }
+  demoOn = true;
+  playSeq([
+    holdSeg('STAND', 900),
+    holdSeg('SIT', 900),
+    holdSeg('FOLD', 900),
+    holdSeg('STAND', 600),
+    flipSeg(1500),
+  ], true);
+  document.getElementById('btnDemo').classList.add('active');
+};
+
+function updateSeq(now){
+  const s = seq; if (!s) return;
+  let seg = s.segments[s.idx];
+  let t = (now - s.t0) / seg.dur;
   if (t >= 1){
-    data.qpos.set(a.q0);                 // 落地回到站立
-    mujoco.mj_forward(model, data);
-    updateBodies();
-    flipAnim = null;
-    return;
+    s.idx++;
+    if (s.idx >= s.segments.length){
+      if (s.loop){ s.idx = 0; }
+      else { seq = null; return; }
+    }
+    s.t0 = now;
+    seg = s.segments[s.idx];
+    t = 0;
   }
-  const q = data.qpos;
-  q.set(a.q0);
-  const hop = Math.sin(Math.PI * t);            // 起跳弧线 0→1→0
-  const theta = Math.PI * 2 * t;                // 绕横向轴前翻一整圈
-  q[0] += 0.12 * Math.sin(Math.PI * t);         // 轻微前移
-  q[2] = a.baseZ + 0.22 * hop;                  // 离地高度
-  q[3] = Math.cos(theta / 2);                   // 四元数 (w,x,y,z)：绕 y 轴旋转
-  q[4] = 0;
-  q[5] = Math.sin(theta / 2);
-  q[6] = 0;
+  seg.apply(t);
   mujoco.mj_forward(model, data);
   updateBodies();
 }
@@ -195,8 +242,8 @@ function updateFlip(now){
 // ---------- 主渲染循环 ----------
 function animate(){
   requestAnimationFrame(animate);
-  if (flipAnim){
-    updateFlip(performance.now());
+  if (seq){
+    updateSeq(performance.now());
   } else if (running && model && data){
     try { mujoco.mj_step(model, data); } catch(e){}
     updateBodies();
@@ -229,6 +276,7 @@ async function main(){
   data = new mujoco.MjData(model);
 
   indexKeyframes();
+  snapshotKeys();
   reset();
 
   // three 初始化
@@ -290,6 +338,7 @@ async function main(){
     else if (e.key === '2') setKey('SIT');
     else if (e.key === '3') setKey('FOLD');
     else if (e.key === '4') playFlip();
+    else if (e.key === '5') playDemo();
     else if (e.code === 'Space'){ e.preventDefault(); setMode(running ? 'pose' : 'run'); }
   });
 }
