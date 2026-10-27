@@ -1,4 +1,4 @@
-// 万物拟态 · 机器鸭浏览器仿真（MicroDuck 国产版 / wwDuck）
+// 万物拟态 · MicroDuck 双足机器鸭浏览器仿真
 // 物理：MuJoCo WASM（官方 @mujoco/mujoco，Apache-2.0）；渲染：three.js
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';

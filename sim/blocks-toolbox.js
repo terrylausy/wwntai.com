@@ -1,4 +1,4 @@
-/* wwDuck 图形化编程 · 积木定义 / 主题 / 工具箱
+/* MicroDuck 图形化编程 · 积木定义 / 主题 / 工具箱
  * 依赖：blockly.min.js + msg/zh-hans.js
  * 所有积木最终映射到 sim/index.html 暴露的动作指令（见 app.js 消息桥）
  */
@@ -60,8 +60,7 @@
           message0: '初始化 %1 并连接仿真引擎',
           args0: [{
             type: 'field_dropdown', name: 'ROBOT', options: [
-              ['wwDuck 四足', 'wwduck'],
-              ['MicroDuck 双足（预留）', 'microduck']
+              ['MicroDuck 双足', 'microduck']
             ]
           }],
           previousStatement: null,
@@ -224,7 +223,7 @@
     '    <block type="logic_boolean"></block>',
     '    <block type="variables_set"><value name="VALUE">' + shadowNum(0) + '</value></block>',
     '    <block type="variables_get"></block>',
-    '    <block type="text"><field name="TEXT">你好 wwDuck</field></block>',
+    '    <block type="text"><field name="TEXT">你好 MicroDuck</field></block>',
     '  </category>',
     '  <category name="演示" colour="#be185d">',
     '    <block type="ww_demo"></block>',

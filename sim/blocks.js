@@ -1,4 +1,4 @@
-/* wwDuck 图形化编程工作台 · 主逻辑
+/* MicroDuck 图形化编程工作台 · 主逻辑
  * 左：Blockly 积木 → 中：解释执行 → 右：MuJoCo 仿真实时联动
  * 执行方式：把积木翻译成动作指令，通过 postMessage 下发给 sim/index.html
  */
@@ -189,7 +189,7 @@
 
     switch (b.type) {
       case 'ww_init': {
-        log('连接仿真引擎：' + (b.getFieldValue('ROBOT') === 'wwduck' ? 'wwDuck 四足' : 'MicroDuck 双足'), 'ok');
+        log('连接仿真引擎：MicroDuck 双足', 'ok');
         await sendCmd('reset', {}, 700);
         break;
       }
@@ -398,7 +398,7 @@
     var fl = b.getFieldValue ? b.getFieldValue.bind(b) : function () { return null; };
     switch (b.type) {
       case 'ww_init':
-        lines.push(ind + 'duck = wwduck.Duck(robot="wwDuck")' + '   # 初始化四足机器鸭');
+        lines.push(ind + 'duck = wwduck.Duck(robot="MicroDuck")' + '   # 初始化双足机器鸭');
         break;
       case 'ww_reset':
         lines.push(ind + 'duck.reset()');
@@ -475,8 +475,8 @@
 
   function genProgram() {
     var lines = [];
-    lines.push('# wwDuck 图形化程序（由积木自动生成，只读）');
-    lines.push('# 运行目标：wwDuck 四足机器鸭 / MuJoCo 浏览器内物理仿真');
+    lines.push('# MicroDuck 图形化程序（由积木自动生成，只读）');
+    lines.push('# 运行目标：MicroDuck 双足机器鸭 / MuJoCo 浏览器内物理仿真');
     lines.push('');
     lines.push('import time');
     lines.push('import wwduck');
@@ -545,7 +545,7 @@
       var blob = new Blob([text], { type: xml ? 'text/xml' : 'application/json' });
       var a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'wwduck-program-' + Date.now() + (xml ? '.xml' : '.json');
+      a.download = 'microduck-program-' + Date.now() + (xml ? '.xml' : '.json');
       a.click();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 3000);
     }

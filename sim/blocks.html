@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>wwDuck 图形化编程工作台 · 万物拟态 WWNT Robotics</title>
-<meta name="description" content="wwDuck 四足机器鸭图形化积木编程工作台：拖拽积木生成动作序列，右侧 MuJoCo 物理仿真实时运行，同步输出 Python 代码。">
+<title>MicroDuck 图形化编程工作台 · 万物拟态 WWNT Robotics</title>
+<meta name="description" content="MicroDuck 双足机器鸭图形化积木编程工作台：拖拽积木生成动作序列，右侧 MuJoCo 物理仿真实时运行，同步输出 Python 代码。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦆</text></svg>">
 <script src="Assets/js/tailwindcdn.js"></script>
 <style>
@@ -215,7 +215,7 @@
   <div class="brand">
     <img src="Assets/images/ww-robot-logo.png" alt="万物拟态" class="brand-logo">
     <div class="brand-text">
-      <div class="brand-title">wwDuck 编程工作台</div>
+      <div class="brand-title">MicroDuck 编程工作台</div>
       <div class="brand-sub">RIG-SIM · BLOCK STUDIO</div>
     </div>
   </div>
@@ -245,7 +245,7 @@
 <main class="stage">
   <section class="pane-left">
     <div class="pane-head">
-      <span>wwDuck 积木编程</span>
+      <span>MicroDuck 积木编程</span>
       <span class="file" id="projName">未命名工程</span>
       <span class="grow"></span>
       <span class="chip-mini" id="autoSaveTip">自动保存已开启</span>
@@ -253,7 +253,7 @@
     <div class="workspace-wrap">
       <div id="blocklyDiv"></div>
       <div class="code-view hidden" id="codeView">
-        <div class="code-head"><span class="fn">wwduck_program.py</span><span>· 只读视图</span><button id="btnCopy">复制代码</button></div>
+        <div class="code-head"><span class="fn">microduck_program.py</span><span>· 只读视图</span><button id="btnCopy">复制代码</button></div>
         <pre id="codeBody"></pre>
       </div>
     </div>
@@ -264,9 +264,9 @@
   </section>
 
   <section class="pane-right">
-    <iframe id="simFrame" src="./index.html?embed=1" title="wwDuck 仿真"></iframe>
+    <iframe id="simFrame" src="./index.html?embed=1" title="MicroDuck 仿真"></iframe>
     <div class="hud">
-      <div class="chip"><b>wwDuck</b> 四足</div>
+      <div class="chip"><b>MicroDuck</b> 双足</div>
       <div class="chip">MuJoCo WASM</div>
       <div class="chip" id="hudState">IDLE</div>
     </div>

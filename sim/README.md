@@ -4,8 +4,8 @@
 
 ## 页面
 
-- `index.html` — wwDuck（MicroDuck 国产版）四足机器鸭实时物理仿真：站立 / 坐下 / 折叠姿态，行走、转向、翻跟斗、自动演示，拖拽旋转缩放。
-- `blocks.html` — wwDuck 图形化积木编程工作台（Blockly 自托管）：拖拽积木生成动作序列，右侧仿真实时联动，同步输出 Python 代码。
+- `index.html` — MicroDuck 双足机器鸭实时物理仿真：站立 / 坐下 / 折叠姿态，行走、转向、翻跟斗、自动演示，拖拽旋转缩放。
+- `blocks.html` — MicroDuck 图形化积木编程工作台（Blockly 自托管）：拖拽积木生成动作序列，右侧仿真实时联动，同步输出 Python 代码。
 
 ## 技术栈
 
