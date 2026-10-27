@@ -119,6 +119,40 @@ function buildScene(){
   root.add(bodies[0]);
 }
 
+// ---------- 在躯干正面贴品牌 Logo（贴花，随身体一起动） ----------
+function addBodyLogo(){
+  const grp = Object.values(bodies).find(g => g.name === 'trunk_base');
+  if (!grp) return;
+  // 用躯干组局部坐标算包围盒
+  const box = new THREE.Box3();
+  grp.children.forEach(m => {
+    if (m.isMesh && m.geometry){
+      m.geometry.computeBoundingBox();
+      if (!m.geometry.boundingBox) return;
+      const gb = m.geometry.boundingBox.clone();
+      m.updateMatrix();
+      gb.applyMatrix4(m.matrix);
+      box.union(gb);
+    }
+  });
+  if (box.isEmpty()) return;
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  // 尺寸控制在身体边界内
+  const w = Math.min(size.z * 0.55, size.y * 0.5);
+  const h = Math.min(w * (862 / 800), size.y * 0.7);
+  const tex = new THREE.TextureLoader().load('../Assets/images/ww-robot-logo.png');
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const decal = new THREE.Mesh(
+    new THREE.PlaneGeometry(w, h),
+    new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, side: THREE.DoubleSide })
+  );
+  decal.position.set(box.max.x + 0.0015, center.y, center.z);
+  decal.rotation.y = Math.PI / 2;   // 平面法线朝 +x（身体正前方）
+  decal.renderOrder = 1;
+  grp.add(decal);
+}
+
 // ---------- 每帧把 mjData 位姿同步到 three ----------
 function updateBodies(){
   for (let b = 1; b < model.nbody; b++){
@@ -365,6 +399,7 @@ async function main(){
   scene.add(grid);
 
   buildScene();
+  addBodyLogo();
   updateBodies();
 
   if (loadingEl) loadingEl.style.display = 'none';
