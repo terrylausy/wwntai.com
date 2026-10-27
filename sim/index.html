@@ -22,7 +22,8 @@
   .btn:active{ transform:scale(.96); }
   .btn.active{ background:#1d9e75; border-color:#1d9e75; color:#04110c; }
   .hint{ position:absolute; left:16px; bottom:14px; z-index:10; color:#8a97a5; font-size:12px; line-height:1.7; }
-  .badge{ position:absolute; right:16px; top:16px; z-index:10; color:#8a97a5; font-size:12px; text-align:right; }
+  .badge{ position:absolute; right:16px; top:16px; z-index:10; color:#8a97a5; font-size:12px; text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
+  .badge .logo{ width:52px; filter:invert(1); opacity:.9; }
   .loading{ position:absolute; inset:0; z-index:20; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; color:#cbd5e1; background:#0b0f14; }
   .spin{ width:34px; height:34px; border-radius:50%; border:3px solid rgba(255,255,255,.15); border-top-color:#1d9e75; animation:r 0.9s linear infinite; }
   @keyframes r{ to{ transform:rotate(360deg);} }
@@ -41,7 +42,10 @@
   <button class="btn" onclick="reset()">↺ 复位</button>
 </div>
 
-<div class="badge">MicroDuck 国产版（wwDuck）<br>MuJoCo WASM · 浏览器内实时仿真<br><span style="opacity:.6">MuJoCo (Apache-2.0) · three.js (MIT) · 模型来自 LuwuDynamics (Apache-2.0)</span></div>
+<div class="badge">
+  <img src="../Assets/images/ww-robot-logo.png" alt="万物拟态" class="logo">
+  <div>MicroDuck 国产版（wwDuck）<br>MuJoCo WASM · 浏览器内实时仿真<br><span style="opacity:.6">MuJoCo (Apache-2.0) · three.js (MIT) · 模型来自 LuwuDynamics (Apache-2.0)</span></div>
+</div>
 
 <div class="hint">
   左键拖拽旋转 · 滚轮缩放 · 右键平移<br>
