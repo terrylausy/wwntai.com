@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroDuck Open-source Bipedal Robot Duck - DIY Kit | wwntAI.com</title>
+    <meta name="description" content="MicroDuck open-source bipedal robot duck: 25cm tall, 15-DOF, RK3566 controller + fully open-source reinforcement learning stack. DIY kits for individual developers and makers.">
+    <link rel="canonical" href="https://www.wwntai.com/en/products/microduck.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.wwntai.com/products/microduck.html">
+    <link rel="alternate" hreflang="en" href="https://www.wwntai.com/en/products/microduck.html">
+    <link rel="alternate" hreflang="x-default" href="https://www.wwntai.com/products/microduck.html">
+    <meta property="og:type" content="product">
+    <meta property="og:title" content="MicroDuck Open-source Bipedal Robot Duck - DIY Kit">
+    <meta property="og:description" content="MicroDuck open-source bipedal robot duck: 25cm, 15-DOF, RK3566 + fully open-source RL stack, DIY kit.">
+    <meta property="og:url" content="https://www.wwntai.com/en/products/microduck.html">
+    <meta property="og:image" content="https://www.wwntai.com/Assets/images/microduck/microduck-hero.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "MicroDuck Open-source Bipedal Robot Duck",
+      "description": "25cm tall, 15-DOF open-source bipedal robot duck with RK3566 controller and fully open-source reinforcement learning stack. DIY kit.",
+      "brand": { "@type": "Brand", "name": "MicroDuck" },
+      "image": "https://www.wwntai.com/Assets/images/microduck/microduck-hero.jpg",
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.wwntai.com/en/products/microduck.html"
+      }
+    }
+    </script>
+    <script src="../../Assets/js/tailwindcdn.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',secondary:'#f8fafc',accent:'#2563eb',card:'#ffffff',border:'#e2e8f0',
+                        light: '#3b82f6',
+                        warm: '#d97706',
+                        accent2: '#7c3aed',
+                        cyanx: '#06b6d4',
+                        dark: '#0F172A',
+                        muted: '#64748B'},fontFamily:{sans:['Inter','Noto Sans SC','system-ui','sans-serif']}}}</script>
+    <style>
+        .bg-grid{background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:40px 40px}
+        .bg-grid-dark{background-image:linear-gradient(rgba(148,163,184,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.07) 1px,transparent 1px);background-size:42px 42px}
+        .glass{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,.08)}
+        .card-hover{transition:all .35s cubic-bezier(.4,0,.2,1)}
+        .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(6,182,212,.10)}
+        .text-gradient{background:linear-gradient(135deg,#2563eb,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .text-gradient-cyan{background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .spec-table td{border-bottom:1px solid #334155;padding:10px 0}
+        .spec-table td:first-child{color:#94a3b8;width:170px}
+        .tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;letter-spacing:.05em}
+        .tag-duck{background:rgba(6,182,212,.12);color:#06b6d4;border:1px solid rgba(6,182,212,.30)}
+        .tag-custom{background:rgba(129,140,248,.12);color:#818cf8;border:1px solid rgba(129,140,248,.30)}
+        .hero-glow{background:radial-gradient(ellipse at 50% 0%,rgba(34,211,238,.18) 0%,transparent 65%)}
+        .neon-ring{box-shadow:0 0 0 1px rgba(34,211,238,.25),0 0 40px rgba(34,211,238,.15),0 25px 60px rgba(0,0,0,.45)}
+        .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-size:.8rem;font-weight:500;border:1px solid rgba(34,211,238,.25);background:rgba(15,23,42,.6);color:#a5f3fc}
+    .tag-robot{background:rgba(37,99,235,.08);color:#2563eb;border:1px solid rgba(37,99,235,.20)}.tag-warm{background:rgba(217,119,6,.08);color:#d97706;border:1px solid rgba(217,119,6,.20)}</style>
+</head>
+<body class="bg-white text-gray-900 font-sans min-h-screen antialiased">
+
+<!-- Navigation -->
+<nav class="glass fixed top-0 left-0 right-0 z-50 transition-all">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <a href="../index.html" class="flex flex-col shrink-0">
+            <div class="flex items-center space-x-3">
+                <img src="../../Assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="hidden w-10 h-10 bg-gradient-to-br from-accent to-blue-700 rounded-lg items-center justify-center text-lg font-bold">U</div>
+                <span class="text-lg font-bold tracking-tight">wwnt<span class="text-accent">AI</span><span class="text-gray-500 text-sm font-normal ml-1">.com</span></span>
+            </div>
+            <span class="text-[11px] text-accent tracking-wider mt-0.5 pl-4 font-bold">WWNT Robotics | AI + Robotics <strong>Education</strong></span>
+        </a>
+        <div class="hidden lg:flex items-center space-x-1">
+            <a href="../index.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Home</a>
+            <div class="group relative">
+                <a href="../products/index.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Products & Courses <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="fixed left-0 right-0 top-[85px] opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all z-40">
+                    <div class="bg-white/95 backdrop-blur border-t border-gray-200 shadow-xl">
+                        <div class="max-w-7xl mx-auto px-8 py-8 grid grid-cols-7 gap-8">
+                            <div>
+                                <div class="text-xs font-bold text-gray-900 mb-3 tracking-wide">MicroDuck</div>
+                                <a href="../products/microduck.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">MicroDuck</a>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-gray-900 mb-3 tracking-wide">Humanoid Robots</div>
+                                <a href="../robots/pi-plus.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Mini Pi Plus</a>
+                                <a href="../robots/mini-pi.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Mini Pi</a>
+                                <a href="../robots/mini-hi.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Mini Hi</a>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-gray-900 mb-3 tracking-wide">Arm & Hand</div>
+                                <a href="../products/openarm.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">OpenArm</a>
+                                <a href="../products/dexterous-hand.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Dexterous Hand</a>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-gray-900 mb-3 tracking-wide">Quadruped Robots</div>
+                                <a href="../products/unitree-robot-dog.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Unitree Robot Dog</a>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-gray-900 mb-3 tracking-wide">Training Platform</div>
+                                <a href="../products/embedded-platform.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Embedded Platform</a>
+                                <a href="../products/smart-manufacturing-training.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Smart Manufacturing</a>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-gray-900 mb-3 tracking-wide">Courses</div>
+                                <a href="../courses.html#robot-courses" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Embodied AI Robots</a>
+                                <a href="../courses.html#openarm-courses" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">OpenArm Arm</a>
+                                <a href="../courses.html#dexterous-hand-courses" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">Dexterous Hand</a>
+                                <a href="../courses.html#ai-courses" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">AI Training Kit</a>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-gray-900 mb-3 tracking-wide">More</div>
+                                <a href="../products/index.html" class="block py-1.5 text-sm font-semibold text-accent transition-colors">All Products</a>
+                                <a href="../courses.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">All Courses</a>
+                                <a href="../products/ai-souvenir.html" class="block py-1.5 text-sm text-gray-600 hover:text-accent transition-colors">AI Souvenir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="group relative">
+                <a href="#" tabindex="0" onclick="event.preventDefault()" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Software <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all">
+                    <a href="../products/yanshi-ai.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-graduation-cap mr-2 text-accent text-xs"></i>Lesson Prep</a>
+                    <a href="https://sim.wwntai.com/" target="_blank" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-flask mr-2 text-accent text-xs"></i>WWNT Lab</a>
+                    <a href="../opensource.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors"><i class="fas fa-code-branch mr-2 text-accent text-xs"></i>Open Source</a>
+                </div>
+            </div>
+            <a href="../solutions/education.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">Custom Solutions</a>
+            <div class="group relative">
+                <a href="../about.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium transition-colors">About Us <i class="fas fa-chevron-down text-[10px] ml-1"></i></a>
+                <div class="absolute top-full left-0 mt-2 w-48 glass rounded-xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all">
+                    <a href="../about.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors">Company</a>
+                    <a href="../contact.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors">Contact</a>
+                    <a href="../news.html" class="block px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100/50 transition-colors">News</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="hidden lg:flex items-center gap-2">
+            <a href="../parts.html" style="background-color:#2563eb;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563eb'" class="inline-flex items-center px-5 py-2.5 text-white text-sm font-semibold rounded-lg transition-colors"><i class="fas fa-shopping-cart mr-2"></i>Parts Store</a>
+            <a href="../../products/microduck.html" class="px-3 py-2 border border-gray-300 hover:border-accent hover:text-accent text-gray-700 text-sm font-semibold rounded-lg transition-colors">中文</a>
+        </div>
+        <button class="lg:hidden text-gray-900 p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i class="fas fa-bars text-xl"></i></button>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden glass border-t border-gray-200 px-6 py-4">
+        <a href="../index.html" class="block py-3 text-gray-700 font-medium">Home</a>
+        <a href="../products/index.html" class="block py-3 text-gray-700 font-semibold"><i class="fas fa-th-large mr-2 text-accent text-xs"></i>Products & Courses</a>
+        <div class="block py-2 pl-4 text-xs text-gray-400 font-semibold">MicroDuck</div>
+        <a href="../products/microduck.html" class="block py-2 text-gray-700 pl-6">MicroDuck</a>
+        <div class="block py-2 pl-4 text-xs text-gray-400 font-semibold">Humanoid Robots</div>
+        <a href="../robots/pi-plus.html" class="block py-2 text-gray-700 pl-6">Mini Pi Plus</a>
+        <a href="../robots/mini-pi.html" class="block py-2 text-gray-700 pl-6">Mini Pi</a>
+        <a href="../robots/mini-hi.html" class="block py-2 text-gray-700 pl-6">Mini Hi</a>
+        <div class="block py-2 pl-4 text-xs text-gray-400 font-semibold">Arm & Hand</div>
+        <a href="../products/openarm.html" class="block py-2 text-gray-700 pl-6">OpenArm</a>
+        <a href="../products/dexterous-hand.html" class="block py-2 text-gray-700 pl-6">Dexterous Hand</a>
+        <div class="block py-2 pl-4 text-xs text-gray-400 font-semibold">Quadruped Robots</div>
+        <a href="../products/unitree-robot-dog.html" class="block py-2 text-gray-700 pl-6">Unitree Robot Dog</a>
+        <div class="block py-2 pl-4 text-xs text-gray-400 font-semibold">Training Platform</div>
+        <a href="../products/embedded-platform.html" class="block py-2 text-gray-700 pl-6">Embedded Platform</a>
+        <a href="../products/smart-manufacturing-training.html" class="block py-2 text-gray-700 pl-6">Smart Manufacturing</a>
+        <div class="block py-2 pl-4 text-xs text-gray-400 font-semibold">Courses</div>
+        <a href="../courses.html#robot-courses" class="block py-2 text-gray-700 pl-6">Embodied AI Robots</a>
+        <a href="../courses.html#openarm-courses" class="block py-2 text-gray-700 pl-6">OpenArm Arm</a>
+        <a href="../courses.html#dexterous-hand-courses" class="block py-2 text-gray-700 pl-6">Dexterous Hand</a>
+        <a href="../courses.html#ai-courses" class="block py-2 text-gray-700 pl-6">AI Training Kit</a>
+        <a href="../products/index.html" class="block py-2 text-gray-700 pl-4">All Products</a>
+        <a href="../courses.html" class="block py-2 text-gray-700 pl-4">All Courses</a>
+        <a href="../products/ai-souvenir.html" class="block py-2 text-gray-700 pl-4">AI Souvenir</a>
+        <a href="../products/yanshi-ai.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-laptop-code mr-2 text-accent text-xs"></i>Software</a>
+        <a href="../products/yanshi-ai.html" class="block py-3 text-gray-700 pl-4">Lesson Prep</a>
+        <a href="https://sim.wwntai.com/" target="_blank" class="block py-3 text-gray-700 pl-4">WWNT Lab</a>
+        <a href="../opensource.html" class="block py-3 text-gray-700 pl-4">Open Source</a>
+        <a href="../solutions/education.html" class="block py-3 text-gray-700 font-medium">Custom Solutions</a>
+        <a href="../about.html" class="block py-3 text-gray-700 font-medium"><i class="fas fa-building mr-2 text-accent text-xs"></i>About Us</a>
+        <a href="../about.html" class="block py-3 text-gray-700 pl-4">Company</a>
+        <a href="../contact.html" class="block py-3 text-gray-700 pl-4">Contact</a>
+        <a href="../news.html" class="block py-3 text-gray-700 pl-4">News</a>
+    </div>
+    </nav>
+
+<header class="relative overflow-hidden bg-[#0B1120] text-white">
+    <div class="absolute inset-0 bg-grid-dark opacity-60"></div>
+    <div class="absolute inset-0 hero-glow"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-32 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-16">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="flex flex-wrap items-center gap-2 mb-5">
+                    <span class="tag tag-robot">Open-source Bipedal Robot Duck</span>
+                    <span class="tag tag-warm">DIY Kit</span>
+                    <span class="px-3 py-1 bg-white/5 text-amber-200 text-xs rounded-full border border-white/10">Apache-2.0 Open Source</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight">MicroDuck <span class="text-amber-400">CN Edition</span></h1>
+                <p class="mt-3 text-sm md:text-base text-amber-300/80 font-medium tracking-wide">An open-source bipedal robot duck for individual developers · DIY assembly · reinforcement-learning native</p>
+                <p class="mt-6 text-lg text-slate-300 leading-relaxed">A cute 25cm robot duck with 15 full-body DOF, driven by an RK3566 50Hz policy loop. Structural drawings, BOM, firmware, and the reinforcement-learning training stack are <span class="text-amber-300 font-semibold">fully open-source</span> — assemble it yourself and <span class="text-emerald-300 font-semibold">go from simulation to real robot, training your own embodied intelligence</span>.</p>
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="../contact.html" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-xl transition-colors">Get the DIY Kit</a>
+                    <a href="#specs" class="px-6 py-3 border border-white/20 hover:border-amber-400 text-white font-semibold rounded-xl transition-colors">View Specs</a>
+                </div>
+            </div>
+            <div class="relative">
+                <img src="../../Assets/images/microduck/microduck-color-1.jpg" alt="MicroDuck CN Edition open-source robot duck" class="w-full rounded-2xl border border-white/10 shadow-2xl">
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Key Highlights -->
+<section class="relative z-10 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4"><i class="fas fa-kiwi-bird text-amber-500 text-xl"></i></div>
+                <h3 class="text-lg font-bold text-gray-900">Open-source Bipedal Duck</h3>
+                <p class="text-sm text-gray-500 mt-2 leading-relaxed">15 DOF (legs 5×2 + head/neck 4 + beak 1), 50Hz on-board policy loop, 7 built-in behaviors including walking, kicking and beak grasping, with self-recovery after falls.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4"><i class="fas fa-cubes text-emerald-500 text-xl"></i></div>
+                <h3 class="text-lg font-bold text-gray-900">DIY Kit</h3>
+                <p class="text-sm text-gray-500 mt-2 leading-relaxed">Structural parts + electronics + servos + controller + battery, all included. 3D-print drawings and BOM fully open-source, with a bilingual assembly guide — build one yourself.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4"><i class="fas fa-brain text-accent text-xl"></i></div>
+                <h3 class="text-lg font-bold text-gray-900">RL Training Stack</h3>
+                <p class="text-sm text-gray-500 mt-2 leading-relaxed">MuJoCo simulation + PPO training, export ONNX to deploy on the real robot. The sim-to-real toolchain is fully open, and behavior policies are retrainable.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4"><i class="fas fa-code text-purple-500 text-xl"></i></div>
+                <h3 class="text-lg font-bold text-gray-900">Developer Friendly</h3>
+                <p class="text-sm text-gray-500 mt-2 leading-relaxed">Rust daemon architecture, Python / JavaScript scripting for custom behaviors, low-cost domestic servo alternatives — accessible even for individual developers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Specs -->
+<section id="specs" class="relative z-10 py-20 bg-gray-50/60">
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="tag tag-robot mb-4">SPECS</span>
+            <h2 class="text-3xl md:text-4xl font-bold">Specifications</h2>
+        </div>
+        <div class="bg-white rounded-2xl border border-border overflow-hidden">
+            <table class="w-full text-sm">
+                <tbody class="divide-y divide-gray-100">
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 w-40 bg-gray-50/60">Dimensions</td><td class="px-6 py-4 text-gray-600">25cm height · 14cm width · ~800g (≤1kg)</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">DOF</td><td class="px-6 py-4 text-gray-600">15 DOF (legs 5×2 + head/neck 4 + beak 1)</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Servos</td><td class="px-6 py-4 text-gray-600">15 × domestic drop-in servos (FEETECH-compatible)</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Controller</td><td class="px-6 py-4 text-gray-600">Rockchip RK3566 (quad-core Cortex-A55 · 0.8 TOPS NPU)</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Memory / Storage</td><td class="px-6 py-4 text-gray-600">1GB RAM + 32GB eMMC</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Sensing</td><td class="px-6 py-4 text-gray-600">Wide-angle camera · 8×8 ToF depth · dual IMU · microphone · speaker · NFC</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Connectivity</td><td class="px-6 py-4 text-gray-600">Wi-Fi · Bluetooth · NFC</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Battery</td><td class="px-6 py-4 text-gray-600">18650 removable battery pack, ~1 hour runtime</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Control</td><td class="px-6 py-4 text-gray-600">50Hz on-board policy loop · RL training via MuJoCo / PPO</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Structure</td><td class="px-6 py-4 text-gray-600">3D-printed (FDM / SLA) + sheet metal, fully open-source drawings</td></tr>
+                    <tr><td class="px-6 py-4 font-semibold text-gray-700 bg-gray-50/60">Built-in Behaviors</td><td class="px-6 py-4 text-gray-600">Walk · sit · crouch · kick · beak grasp · roller skate · self-recovery</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- DIY Kit -->
+<section class="relative z-10 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="tag tag-warm mb-4">DIY KIT</span>
+            <h2 class="text-3xl md:text-4xl font-bold">DIY · From Parts to a Walking Robot Duck</h2>
+            <p class="mt-3 text-gray-500 max-w-2xl mx-auto">Not a toy that just loops canned motions, but an open-source bipedal robot platform you can keep experimenting with and remixing.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl p-8 border border-border text-center card-hover">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 flex items-center justify-center mb-5"><i class="fas fa-box-open text-amber-500 text-2xl"></i></div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Complete Kit</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">3D-printed structural parts, electronics, 15 servos, RK3566 controller, battery pack — all included and checked against the BOM, ready to assemble out of the box.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-8 border border-border text-center card-hover">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-5"><i class="fas fa-book-open text-emerald-500 text-2xl"></i></div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Bilingual Guide</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">From printing to assembly, from flashing to first run — illustrated step-by-step tutorials. The tolerance & interference checklist is fully public, ensuring a high reproduction success rate.</p>
+            </div>
+            <div class="bg-white rounded-2xl p-8 border border-border text-center card-hover">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-accent/10 flex items-center justify-center mb-5"><i class="fas fa-flask text-accent text-2xl"></i></div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Train New Skills</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Train new gaits and actions in MuJoCo with PPO, export ONNX to the real robot — teach this duck your own ideas.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Colors -->
+<section class="relative z-10 py-20 bg-gray-50/60">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="tag tag-robot mb-4">COLORS</span>
+            <h2 class="text-3xl md:text-4xl font-bold">Two Colors · Yellow / Purple</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div class="bg-white rounded-2xl border border-border overflow-hidden">
+                <img src="../../Assets/images/microduck/microduck-hero.jpg" alt="MicroDuck Yellow" class="w-full aspect-square object-cover">
+                <div class="py-3 text-center text-sm font-semibold text-gray-700">Yellow</div>
+            </div>
+            <div class="bg-white rounded-2xl border border-border overflow-hidden">
+                <img src="../../Assets/images/microduck/microduck-color-1.jpg" alt="MicroDuck Purple" class="w-full aspect-square object-cover">
+                <div class="py-3 text-center text-sm font-semibold text-gray-700">Purple</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scenarios -->
+<section class="relative z-10 py-20">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="tag tag-robot mb-4">SCENARIOS</span>
+            <h2 class="text-3xl md:text-4xl font-bold">Use Cases</h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover"><i class="fas fa-laptop-code text-accent text-2xl mb-4"></i><h3 class="text-lg font-bold text-gray-900 mb-2">Individual Developers</h3><p class="text-sm text-gray-500">Low-cost entry into reinforcement learning and embodied intelligence — train your own motion policies.</p></div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover"><i class="fas fa-lightbulb text-amber-500 text-2xl mb-4"></i><h3 class="text-lg font-bold text-gray-900 mb-2">Maker Education</h3><p class="text-sm text-gray-500">Kit assembly + open-source tutorials — take the robot apart and learn by building.</p></div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover"><i class="fas fa-flask text-emerald-500 text-2xl mb-4"></i><h3 class="text-lg font-bold text-gray-900 mb-2">Research Validation</h3><p class="text-sm text-gray-500">A low-cost platform for sim-to-real transfer, gait control, and domain randomization research.</p></div>
+            <div class="bg-white rounded-2xl p-6 border border-border card-hover"><i class="fas fa-trophy text-purple-500 text-2xl mb-4"></i><h3 class="text-lg font-bold text-gray-900 mb-2">Competitions & Events</h3><p class="text-sm text-gray-500">A vehicle for open-source ecosystem remixing, skill-pack development, and university competitions.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Open Source -->
+<section class="relative z-10 py-20 bg-gray-50/60">
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <span class="tag tag-robot mb-4">OPEN SOURCE</span>
+            <h2 class="text-3xl md:text-4xl font-bold">Open-source Ecosystem</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl p-6 border border-border"><h3 class="text-lg font-bold text-gray-900 mb-2">Runtime — microduck</h3><p class="text-sm text-gray-500">A Rust 7-daemon architecture with a 50Hz motor control loop (robotd) plus safety guards; processes communicate via JSON-RPC 2.0.</p></div>
+            <div class="bg-white rounded-2xl p-6 border border-border"><h3 class="text-lg font-bold text-gray-900 mb-2">Training — microduck_rl</h3><p class="text-sm text-gray-500">MuJoCo simulation + PPO reinforcement learning with domain randomization; export ONNX to deploy on the real robot.</p></div>
+            <div class="bg-white rounded-2xl p-6 border border-border"><h3 class="text-lg font-bold text-gray-900 mb-2">Open Licenses</h3><p class="text-sm text-gray-500">Hardware drawings / PCB / BOM under CERN-OHL-S, software stack and training environment under Apache-2.0, tutorials under CC BY-SA.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="relative z-10 py-20">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Bring a MicroDuck Home</h2>
+        <p class="text-gray-500 mb-8">Get the DIY kit or a fully assembled unit, join the open-source community, and have fun with fellow developers.</p>
+        <a href="../contact.html" class="inline-flex items-center px-8 py-3 bg-accent hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors">Request a Consultation <i class="fas fa-arrow-right ml-2"></i></a>
+    </div>
+</section>
+
+<footer class="bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <img src="../../Assets/logos/WwRobot-Logo.png" alt="WW-Robot" class="h-14 w-auto" onerror="this.style.display='none'">
+                    <span class="text-2xl font-bold text-white">wwnt<span class="text-accent">AI</span>.com</span>
+                </div>
+                <p class="text-sm leading-relaxed">HQ: Zengcheng District, Guangzhou</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Six Product Lines</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="../products/robots.html" class="block hover:text-white transition-colors">Embodied AI Robots</a>
+                    <a href="../products/microduck.html" class="block hover:text-amber-400 transition-colors">MicroDuck (CN Edition)</a>
+                    <a href="../products/openarm.html" class="block hover:text-white transition-colors">OpenArm Robotic Arm</a>
+                    <a href="../products/dexterous-hand.html" class="block hover:text-purple-400 transition-colors">Dexterous Hand</a>
+                    <a href="../products/embedded-platform.html" class="block hover:text-white transition-colors">Training Platform</a>
+                    <a href="../products/yanshi-ai.html" class="block hover:text-white transition-colors">Yanshu AI</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contact</h4>
+                <div class="space-y-2 text-sm">
+                    <a href="../contact.html" class="block hover:text-white transition-colors">Request a Demo</a>
+                    <a href="mailto:Support@wwntai.com" class="block hover:text-white transition-colors">Support@wwntai.com</a>
+                </div>
+            </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-12 text-center">© 2026 wwntAI.com · WWNT Robotics</p>
+    </div>
+</footer>
+
+<script>
+let currentSlide = 0;
+const track = document.getElementById('carousel-track');
+const slides = track ? track.querySelectorAll(':scope > div') : [];
+const dots = document.querySelectorAll('.carousel-dot');
+function updateCarousel() {
+    if (!track) return;
+    track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+    dots.forEach(function(dot, i) {
+        dot.classList.toggle('bg-white/80', i === currentSlide);
+        dot.classList.toggle('bg-white/40', i !== currentSlide);
+    });
+}
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateCarousel();
+}
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateCarousel();
+}
+function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+if (slides.length > 0) {
+    updateCarousel();
+    setInterval(nextSlide, 5000);
+}
+</script>
+
+</body>
+</html>
