@@ -20,18 +20,27 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "MicroDuck 整机散件包（省心）",
-      "description": "MicroDuck 开源双足机器鸭全套散件：3D 打印结构件、电子件、15 颗 HD-1910-C001 舵机、RK3566 主控、NP-F550 电池组，附中英双语组装教程。",
-      "brand": { "@type": "Brand", "name": "MicroDuck" },
-      "image": "https://www.wwntai.com/Assets/images/microduck/microduck-hero.jpg",
-      "offers": {
-        "@type": "Offer",
-        "price": "3199",
-        "priceCurrency": "CNY",
-        "availability": "https://schema.org/PreOrder",
-        "url": "https://www.wwntai.com/parts.html"
-      }
+      "@type": "ItemList",
+      "name": "MicroDuck 配件商城",
+      "itemListElement": [
+        {
+          "@type": "Product",
+          "position": 1,
+          "name": "MicroDuck 配件包",
+          "description": "不含 3D 打印外壳，电子件与机械件全配齐，外壳自己打印。",
+          "brand": { "@type": "Brand", "name": "MicroDuck" },
+          "image": "https://www.wwntai.com/Assets/images/microduck/microduck-hero.jpg",
+          "offers": { "@type": "Offer", "price": "3199", "priceCurrency": "CNY", "availability": "https://schema.org/PreOrder", "url": "https://www.wwntai.com/parts.html" }
+        },
+        {
+          "@type": "Product",
+          "position": 2,
+          "name": "MicroDuck 散件套装",
+          "description": "飞特电机 ×15 + Radxa Zero 3W 主板 ×1，核心部件散件。",
+          "brand": { "@type": "Brand", "name": "MicroDuck" },
+          "offers": { "@type": "Offer", "price": "2059", "priceCurrency": "CNY", "availability": "https://schema.org/PreOrder", "url": "https://www.wwntai.com/parts.html" }
+        }
+      ]
     }
     </script>
     <script type="application/ld+json">
@@ -206,381 +215,262 @@
         <a href="news.html" class="block py-3 text-gray-700 pl-4">新闻动态</a>
     </div>
     </nav>
-
 <!-- Hero -->
 <header class="relative overflow-hidden bg-[#0B1120] text-white">
-    <div class="absolute inset-0 bg-grid-dark opacity-60" style="background-image:linear-gradient(rgba(148,163,184,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.07) 1px,transparent 1px);background-size:42px 42px"></div>
+    <div class="absolute inset-0 opacity-60" style="background-image:linear-gradient(rgba(148,163,184,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.07) 1px,transparent 1px);background-size:42px 42px"></div>
     <div class="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-32 -left-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
-    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-16 text-center">
-        <span class="tag tag-warm mb-4">ACCESSORIES · PARTS</span>
-        <h1 class="text-4xl md:text-6xl font-bold tracking-tight">MicroDuck<span class="text-amber-400">配件商城</span></h1>
-        <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">开源机器人散件与可选配件，图文陈列、明码标价，点击即购，微信扫码付款。</p>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-14 text-center">
+        <span class="tag tag-warm mb-4">PRE-ORDER</span>
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight">MicroDuck <span class="text-amber-400">配件商城</span></h1>
+        <p class="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">开源双足机器鸭 · 两个套装任选，BOM 全透明，明码标价。</p>
     </div>
 </header>
 
-<div class="max-w-7xl mx-auto px-6 lg:flex lg:gap-8 lg:items-start">
-
-<aside class="lg:w-64 lg:shrink-0 lg:sticky lg:top-24 mb-8 lg:mb-0">
-    <div class="bg-blue-50 rounded-2xl border border-blue-100 shadow-sm p-5">
-        <h2 class="text-base font-bold text-gray-900 mb-5 flex items-center"><i class="fas fa-sitemap mr-2 text-accent"></i>MicroDuck 配件商城导航</h2>
-<ul class="text-sm space-y-3">
-    <li>
-        <a href="#radxa" class="flex items-center gap-2.5 font-semibold text-gray-800 hover:text-accent transition-colors">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shrink-0"></span>
-            <span>预售</span>
-        </a>
-        <div class="ml-[5px] pl-5 border-l-2 border-gray-200 mt-2 space-y-1.5">
-            <a href="#radxa" class="block text-gray-600 hover:text-accent transition-colors">Radxa ZERO 3W 主板</a>
-            <a href="#radxa" class="block text-gray-600 hover:text-accent transition-colors">Radxa Camera 8M 219</a>
-            <a href="#radxa" class="block text-gray-600 hover:text-accent transition-colors">HD-1910-C001 舵机 15 个套装</a>
-            <a href="#radxa" class="block text-gray-600 hover:text-accent transition-colors">代装整机服务</a>
-            <a href="#radxa" class="block text-gray-600 hover:text-accent transition-colors">3D 打印结构件套装（PLA材质+ASA 关节加强）</a>
-        </div>
-    </li>
-    <li>
-        <a href="#microduck" class="flex items-center gap-2.5 font-semibold text-gray-800 hover:text-accent transition-colors">
-            <span class="w-2.5 h-2.5 rounded-full bg-gray-400 inline-block shrink-0"></span>
-            <span>待到货</span>
-        </a>
-        <div class="ml-[5px] pl-5 border-l-2 border-gray-200 mt-2 space-y-1.5">
-                        <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">FE-URT2-C001 调试板 + 线材</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">VL53L8CX ToF 模块</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">唯卓仕NP-F550 电池组</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">扬声器模组</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">萤石 64G 高速 TF 卡</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">标准件套装</a>
-            <a href="#bundle" class="block text-gray-600 hover:text-accent transition-colors">整机散件包（省心）</a>
-                        <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">轮滑套件</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">游戏手柄</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">imu_to_dxl 电路板</a>
-            <a href="#microduck" class="block text-gray-600 hover:text-accent transition-colors">香蕉插头 PCB</a>
-        </div>
-    </li>
-    <li>
-        <a href="#coming-soon" class="flex items-center gap-2.5 font-semibold text-gray-800 hover:text-accent transition-colors">
-            <span class="w-2.5 h-2.5 rounded-full bg-gray-400 inline-block shrink-0"></span>
-            <span>Radxa 其他配置</span>
-        </a>
-        <div class="ml-[5px] pl-5 border-l-2 border-gray-200 mt-2 space-y-1.5">
-            <a href="#coming-soon" class="block text-gray-600 hover:text-accent transition-colors">Radxa 其他配置</a>
-        </div>
-    </li>
-    <li>
-        <a href="#buy-guide" class="flex items-center gap-2.5 font-semibold text-gray-800 hover:text-accent transition-colors">
-            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block shrink-0"></span>
-            <span>购买流程</span>
-        </a>
-    </li>
-</ul>
-<a href="products/microduck.html" class="mt-5 w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-kiwi-bird"></i>MicroDuck 产品介绍</a><a href="https://unitclaw.github.io/microduck-wwduck/" target="_blank" class="mt-2.5 w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-book-open"></i>MicroDuck 电子书</a><a href="orders.html" class="mt-2.5 w-full py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-receipt"></i>我的订单 / 查询订单</a><button onclick="sharePage()" class="mt-2.5 w-full py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-share-nodes"></i>分享给朋友</button><a href="https://work.weixin.qq.com/kfid/kfc3528a89430b75863" target="_blank" class="mt-2.5 w-full py-2.5 bg-gray-500 hover:bg-gray-600 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-headset"></i>联系客服</a><a href="https://work.weixin.qq.com/kfid/kfc8aae110371f0f4f7" target="_blank" class="mt-2.5 w-full py-2.5 bg-gray-600 hover:bg-gray-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fas fa-exclamation-circle"></i>我要投诉</a><a href="https://github.com/UnitClaw" target="_blank" class="mt-2.5 w-full py-2.5 bg-white border border-gray-200 hover:border-amber-400 text-gray-700 hover:text-amber-600 text-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"><i class="fab fa-github text-lg"></i>GitHub 开源主页</a>
-    </div>
-    <div class="mt-5 bg-white rounded-2xl border border-gray-200 shadow-sm p-5 text-center">
-        <h3 class="text-base font-bold text-gray-900 mb-3 flex items-center justify-center gap-2"><i class="fas fa-users text-amber-500"></i>扫码加入配件交流群</h3>
-        <img src="Assets/images/microduck/group-qrcode.png" alt="MicroDuck 配件交流群二维码" class="w-full max-w-[220px] mx-auto rounded-lg" loading="lazy">
-        <p class="mt-3 text-xs text-gray-500 leading-relaxed">选型、下单、售后问题群里随时问，小鸭配件交流群欢迎你。</p>
-    </div>
-</aside>
-
-  <div class="flex-1 min-w-0">
-<!-- Radxa ZERO 3 系列 -->
-<!-- 整机散件包（即将上线） -->
-<section id="bundle" class="relative z-10 py-16">
-    <div>
-        <h3 class="text-xl font-bold text-gray-900 mb-5 flex items-center"><i class="fas fa-box-open text-amber-500 mr-2"></i>整机 &amp; 整机散件包（省心） · 即将上线</h3>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-            <div class="bg-white rounded-2xl border border-amber-200 overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/openduck-purple.jpg" alt="整机散件包" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">整机散件包（省心）</h4>
-                    <p class="text-xs text-gray-400 mt-1">Radxa ZERO 3W 主板 + 飞特舵机 方案</p>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">MicroDuck 全部零件一次配齐：3D 打印结构件、电子件、15 颗 HD-1910-C001 舵机、RK3566 主控、NP-F550 电池组。附中英双语组装教程，从零件到会走路的机器鸭，开箱即装。</p>
-                    <a href="products/microduck.html" class="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 hover:text-amber-700 mt-3"><i class="fas fa-kiwi-bird"></i>了解 MicroDuck 产品<i class="fas fa-arrow-right text-xs"></i></a>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥3199</span><span class="px-5 py-2 bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-lg">即将上线</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+<section class="relative z-10 py-12 md:py-16">
+    <div class="max-w-5xl mx-auto px-6 space-y-10">
+        <!-- MicroDuck 配件包 -->
+        <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="grid md:grid-cols-2">
+                <div class="bg-gray-50/60 p-6 md:p-8 flex flex-col justify-center">
+                    <img src="Assets/images/microduck/accessory-kit-hero.jpg" alt="MicroDuck 配件包" class="w-full rounded-2xl border border-gray-100">
+                    <div class="mt-4 text-center text-sm font-semibold text-gray-700 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">飞特 HD1901M 舵机 ×15 + Radxa ZERO 3W 主板 ×1<br>全套电子件与机械件（不含 3D 打印外壳）</div>
                 </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section id="radxa" class="relative z-10 py-20 bg-gray-50/60">
-    <div>
-        <div class="text-center mb-12">
-            <span class="tag tag-robot mb-4">IN STOCK</span>
-            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style="background:rgba(5,150,105,.10);color:#059669;border:1px solid rgba(5,150,105,.25)">预售</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-center">预售<span class="text-base md:text-lg font-medium text-gray-500">（正常7天内发货）</span></h2>
-            <p class="mt-3 text-gray-500 max-w-2xl mx-auto">现货配件，图片 + 详细配置，点击即购，7 天内发货。</p>
+                <div class="p-6 md:p-8 flex flex-col justify-center">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full">产品一</span>
+                        <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-semibold rounded-full border border-blue-100"><i class="fas fa-clock mr-1"></i>预订 · 20 天内发货</span>
                     </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-            <!-- Radxa ZERO 3W -->
-            <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden card-hover flex flex-col">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/radxa/zero-3w.webp" alt="Radxa ZERO 3W 主板" class="object-contain w-full h-full"></div>
-                <div class="p-5 flex flex-col flex-1">
-                    <h4 class="font-bold text-gray-900">Radxa ZERO 3W 主板</h4>
-                    <p class="text-xs text-amber-600 font-semibold mt-1">2GB / 无 eMMC / 带排针</p>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">超小型 RK3566 单板计算机，WiFi 6 + USB 3.0 + MIPI CSI，适合 IoT 与边缘计算。</p>
-                    <ul class="mt-3 space-y-1.5 text-xs text-gray-600 flex-1">
-                        <li><span class="font-semibold text-gray-700">处理器：</span>RK3566 四核 Cortex-A55 @1.6GHz</li>
-                        <li><span class="font-semibold text-gray-700">GPU：</span>Mali-G52-2EE（Vulkan 1.1 / OpenCL 2.0）</li>
-                        <li><span class="font-semibold text-gray-700">内存：</span>2GB LPDDR4</li>
-                        <li><span class="font-semibold text-gray-700">存储：</span>MicroSD 卡（无板载 eMMC）</li>
-                        <li><span class="font-semibold text-gray-700">无线：</span>WiFi 6 + 蓝牙 5.4</li>
-                        <li><span class="font-semibold text-gray-700">接口：</span>USB 3.0 + USB 2.0 OTG（Type-C）</li>
-                        <li><span class="font-semibold text-gray-700">显示：</span>Micro HDMI 1080p60</li>
-                        <li><span class="font-semibold text-gray-700">摄像头：</span>MIPI CSI（22-Pin）</li>
-                        <li><span class="font-semibold text-gray-700">尺寸：</span>65 × 30 mm · 系统 Debian/Ubuntu</li>
-                    </ul>
-                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100"><span class="price text-xl">¥769</span><a href="microduck-shop.html?item=Radxa%20ZERO%203W%20%E4%B8%BB%E6%9D%BF&price=769" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors">立即购买</a><button onclick="shareItem(this)" data-link="microduck-shop.html?item=Radxa%20ZERO%203W%20%E4%B8%BB%E6%9D%BF&price=769" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-
-            <!-- Radxa Camera 8M 219 -->
-            <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden card-hover flex flex-col">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/radxa/camera-8m-219.webp" alt="Radxa Camera 8M 219 摄像头" class="object-contain w-full h-full"></div>
-                <div class="p-5 flex flex-col flex-1">
-                    <h4 class="font-bold text-gray-900">Radxa Camera 8M 219 摄像头</h4>
-                    <p class="text-xs text-amber-600 font-semibold mt-1">Sony IMX219 · 800 万像素</p>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">高分辨率摄像头模组，默认 FPC 排线适配 ZERO 3W/3E，即插即用。</p>
-                    <ul class="mt-3 space-y-1.5 text-xs text-gray-600 flex-1">
-                        <li><span class="font-semibold text-gray-700">传感器：</span>Sony IMX219，800 万像素</li>
-                        <li><span class="font-semibold text-gray-700">分辨率：</span>3280 × 2464</li>
-                        <li><span class="font-semibold text-gray-700">帧率：</span>最高 30fps（全像素）</li>
-                        <li><span class="font-semibold text-gray-700">镜头：</span>焦距 2.95mm · 光圈 F2.5</li>
-                        <li><span class="font-semibold text-gray-700">视角：</span>D74° H62° V49° · 畸变 &lt;0.3%</li>
-                        <li><span class="font-semibold text-gray-700">排线：</span>150mm（22-Pin 0.5mm）</li>
-                        <li><span class="font-semibold text-gray-700">应用：</span>人脸识别 · 车牌识别 · 标线识别</li>
-                    </ul>
-                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100"><span class="price text-xl">¥219</span><a href="microduck-shop.html?item=Radxa%20Camera%208M%20219%20%E6%91%84%E5%83%8F%E5%A4%B4&price=219" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors">立即购买</a><button onclick="shareItem(this)" data-link="microduck-shop.html?item=Radxa%20Camera%208M%20219%20%E6%91%84%E5%83%8F%E5%A4%B4&price=219" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-
-
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/servo-hd-1910.jpg" alt="HD-1910-C001 串口总线舵机" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">HD-1910-C001 串口总线舵机 15 个套装</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">FEETECH 空芯杯串口总线舵机，AI 开源专用，适配 MicroDuck 等仿生机器人关节。6V 12kg·cm 堵转扭矩、12 位磁编码 360° 位置反馈、TTL 总线菊花链串联。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥1845</span><a href="microduck-shop.html?item=HD-1910-C001%20%E4%B8%B2%E5%8F%A3%E6%80%BB%E7%BA%BF%E8%88%B5%E6%9C%BA%2015%20%E4%B8%AA%E5%A5%97%E8%A3%85&price=1845" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors">立即购买</a><button onclick="shareItem(this)" data-link="microduck-shop.html?item=HD-1910-C001%20%E4%B8%B2%E5%8F%A3%E6%80%BB%E7%BA%BF%E8%88%B5%E6%9C%BA%2015%20%E4%B8%AA%E5%A5%97%E8%A3%85&price=1845" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-
-
-
-
-
-
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-gradient-to-br from-indigo-50 to-violet-100 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-indigo-500"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">代装整机服务</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">散件代装 + 首跑调试一站式服务。专业工程师组装、烧录、首跑验证，到手即用，适合想省心的用户。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥699</span><a href="microduck-shop.html?item=%E4%BB%A3%E8%A3%85%E6%95%B4%E6%9C%BA%E6%9C%8D%E5%8A%A1&price=699" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors">立即购买</a><button onclick="shareItem(this)" data-link="microduck-shop.html?item=%E4%BB%A3%E8%A3%85%E6%95%B4%E6%9C%BA%E6%9C%8D%E5%8A%A1&price=699" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/structure-3d-asa.png" alt="3D 打印结构件套装（PLA材质+ASA 关节加强）" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">3D 打印结构件套装（PLA材质+ASA 关节加强）</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">全套外壳 + 骨架结构件，PLA 材质 + ASA 关节加强件，高抗冲击、韧性好、结构件不易摔裂。Krisspy GitHub 改进版图纸，公差与干涉问题清单公开，打印即装。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥139</span><a href="microduck-shop.html?item=3D%20%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%84%E4%BB%B6%E5%A5%97%E8%A3%85%EF%BC%88PLA%E6%9D%90%E8%B4%A8%2BASA%20%E5%85%B3%E8%8A%82%E5%8A%A0%E5%BC%BA%EF%BC%89&price=139" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg transition-colors">立即购买</a><button onclick="shareItem(this)" data-link="microduck-shop.html?item=3D%20%E6%89%93%E5%8D%B0%E7%BB%93%E6%9E%84%E4%BB%B6%E5%A5%97%E8%A3%85%EF%BC%88PLA%E6%9D%90%E8%B4%A8%2BASA%20%E5%85%B3%E8%8A%82%E5%8A%A0%E5%BC%BA%EF%BC%89&price=139" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- MicroDuck 配件陈列 -->
-<section id="microduck" class="relative z-10 py-20">
-    <div>
-        <div class="text-center mb-12">
-            <span class="tag tag-robot mb-4">MicroDuck</span>
-            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4" style="background:rgba(100,116,139,.10);color:#64748b;border:1px solid rgba(100,116,139,.25)">待到货</span>
-            <h2 class="text-3xl md:text-4xl font-bold">待到货</h2>
-            <p class="mt-3 text-gray-500 max-w-2xl mx-auto">开源双足机器鸭的散件与扩展配件，个人开发者友好。待到货，敬请期待。</p>
-        </div>
-
-        <!-- 现货配件（待到货） -->
-        <h3 class="text-xl font-bold text-gray-900 mb-5 flex items-center"><i class="fas fa-clock text-amber-500 mr-2"></i>现货配件 · 待到货</h3>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/fe-urt2.jpg" alt="FE-URT2-C001 调试板 + 线材" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">FE-URT2-C001 调试板 + 线材</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">飞特 USB 转 TTL/485 总线调试板（Type-C · 2.54 排针），配 AMP2.0 双头转接线，用于舵机 ID 配置与总线调试。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥49.5</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="microduck-shop.html?item=FE-URT2-C001%20%E8%B0%83%E8%AF%95%E6%9D%BF%20%2B%20%E7%BA%BF%E6%9D%90" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/vl53l8cx.jpg" alt="VL53L8CX ToF 模块" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">VL53L8CX ToF 模块</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">ST 8×8 多区域 ToF 测距传感器，64 分区同步探测、65° 视角、最远 400cm，实现避障、手势识别与深度感知。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥54.9</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="microduck-shop.html?item=VL53L8CX%20ToF%20%E6%A8%A1%E5%9D%97" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/npf550.jpg" alt="唯卓仕NP-F550 电池组" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">唯卓仕NP-F550 电池组</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">唯卓仕 VILTROX NP-F550 锂电池：2200mAh / 7.4V，USB-C 直充约 2 小时，4 格 LED 电量显示，尺寸 70.7×38.5×25mm，重约 110g，可拆卸快换。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥49</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="microduck-shop.html?item=%E5%94%AF%E5%8D%93%E4%BB%95NP-F550%20%E7%94%B5%E6%B1%A0%E7%BB%84" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/speaker.jpg" alt="扬声器模组" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">扬声器模组</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">扬声器模组，让机器鸭能「说」，支持语音反馈与提示音。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥5.9</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="microduck-shop.html?item=%E6%89%AC%E5%A3%B0%E5%99%A8%E6%A8%A1%E7%BB%84" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/ezviz-tf64.png" alt="萤石 64G 监控专用高速 TF 卡" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">萤石 64G 监控专用高速 TF 卡</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">萤石 64G 内存卡，监控专用高速卡，视频录像 TF 存储卡，读速 90MB/s。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥60</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="microduck-shop.html?item=%E8%90%A4%E7%9F%B3%2064G%20%E7%9B%91%E6%8E%A7%E4%B8%93%E7%94%A8%E9%AB%98%E9%80%9F%20TF%20%E5%8D%A1" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover sm:col-span-2 lg:col-span-3">
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">标准件套装（轴承 · 螺丝 · 螺纹胶 · 防滑垫）</h4>
-                    <div class="mt-3 grid grid-cols-2 gap-x-6 gap-y-1.5 text-xs text-gray-600">
-                        <div class="flex justify-between"><span>轴承 10×15×3</span><span class="font-semibold text-gray-700">×3</span></div>
-                        <div class="flex justify-between"><span>轴承 16×22×4</span><span class="font-semibold text-gray-700">×11</span></div>
-                        <div class="flex justify-between"><span>轴承 6×12×3（轮滑）</span><span class="font-semibold text-gray-700">×4</span></div>
-                        <div class="flex justify-between"><span>自攻螺丝 平尾 M2×5</span><span class="font-semibold text-gray-700">×1包</span></div>
-                        <div class="flex justify-between"><span>自攻螺丝 平尾 M2×6</span><span class="font-semibold text-gray-700">×1包</span></div>
-                        <div class="flex justify-between"><span>自攻螺丝 平尾 M2×8</span><span class="font-semibold text-gray-700">×1包</span></div>
-                        <div class="flex justify-between"><span>自攻螺丝 平尾 M2.5×6</span><span class="font-semibold text-gray-700">×1包</span></div>
-                        <div class="flex justify-between"><span>自攻螺丝 平尾 M2.5×8</span><span class="font-semibold text-gray-700">×1包</span></div>
-                        <div class="flex justify-between"><span>乐泰螺纹胶 243</span><span class="font-semibold text-gray-700">×1</span></div>
-                        <div class="flex justify-between"><span>鞋底防滑垫</span><span class="font-semibold text-gray-700">×1</span></div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">MicroDuck 配件包</h2>
+                    <p class="text-sm text-gray-500 mt-2 leading-relaxed">不含 3D 打印外壳 · 电子件 + 机械件全配齐，外壳自己打印，中英双语组装教程。</p>
+                    <div class="flex items-baseline gap-2 mt-6">
+                        <span class="text-xs text-gray-400">套装价</span>
+                        <span class="text-4xl font-extrabold text-amber-600">¥3199</span>
                     </div>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥99</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="microduck-shop.html?item=%E6%A0%87%E5%87%86%E4%BB%B6%E5%A5%97%E8%A3%85%EF%BC%88%E8%BD%B4%E6%89%BF%20%C2%B7%20%E8%9E%BA%E4%B8%9D%20%C2%B7%20%E8%9E%BA%E7%BA%B9%E8%83%B6%20%C2%B7%20%E9%98%B2%E6%BB%91%E5%9E%AB%EF%BC%89" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+                    <a href="contact.html" class="mt-6 inline-flex items-center justify-center px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-xl transition-colors">立即预订 <i class="fas fa-arrow-right ml-2"></i></a>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-white flex items-center justify-center p-4"><img src="Assets/images/microduck/skate.png" alt="轮滑套件" class="part-fig w-full h-full object-contain"></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">轮滑套件</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">轮滑套件，让机器鸭从「走」进化到「滑」，解锁轮滑行为，移动更快更流畅。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥49</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
+            <details class="border-t border-gray-100 group">
+                <summary class="px-6 md:px-8 py-4 cursor-pointer list-none flex items-center justify-between text-sm font-bold text-gray-900 hover:bg-gray-50 transition-colors">
+                    <span><i class="fas fa-list-ul text-amber-500 mr-2"></i>BOM 物料清单（22 项）</span>
+                    <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <div class="px-6 md:px-8 pb-6">
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/radxa-zero-3w.jpeg" alt="Radxa Zero 3W 主控板（2GB）" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">Radxa Zero 3W 主控板（2GB） <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">RK3566 四核 Cortex-A55 @1.6GHz · 2GB LPDDR4 · WiFi6 + 蓝牙5.4 · USB 3.0 · MIPI CSI · 65×30mm</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/tf-card.png" alt="64GB TF 卡（萤石）" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">64GB TF 卡（萤石） <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">UHS-I · Class10 · 读取 90MB/s · 监控级优化</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/hat-board.png" alt="树莓派机器人 HAT 电路板" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">树莓派机器人 HAT 电路板 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">4 层板 · 舵机 TTL 总线 + 5V/2A 配电 · 音频 · Qwiic 扩展</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/imu-board.png" alt="imu_to_dxl 电路板" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">imu_to_dxl 电路板 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">LSM6DSV16X IMU · Cortex-M4 120MHz · TTL 串口 1Mbps</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/servo-hub.png" alt="舵机总线 HUB + banana PCB" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">舵机总线 HUB + banana PCB <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">15 路舵机并联分线 + 电池配电</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/servo-hd1901m.png" alt="飞特 HD1901M 总线舵机" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">飞特 HD1901M 总线舵机 <span class="text-amber-600 font-bold ml-1">×15</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">34×20×23mm · 堵转 1.47 N·m @7.4V · 12 位磁编码 · TTL 总线</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/debug-board.png" alt="飞特 URT-2 调试板" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">飞特 URT-2 调试板 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">USB 转 RS-485 / TTL · 双路输出</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/battery.png" alt="NP-F550 电池" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">NP-F550 电池 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">2200mAh · 8.4V · Type-C 充电 · 电量显示</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <div class="w-16 h-16 rounded-lg bg-gray-50 flex items-center justify-center text-gray-300 shrink-0"><i class="fas fa-cable-car text-lg"></i></div>
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">AMP2.0 双头转接线 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">5264 端子 3P/4P · 舵机串联</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/camera.jpeg" alt="IMX219 摄像头模块" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">IMX219 摄像头模块 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">Sony 800 万像素 · MIPI CSI · FoV 74°</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/tof.png" alt="VL53L8CX ToF 模块" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">VL53L8CX ToF 模块 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">8×8 = 64 区测距 · 0–400cm · 940nm</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/speaker.png" alt="扬声器" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">扬声器 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">8Ω / 2W 小腔体喇叭</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/bearing-10153.png" alt="轴承 10×15×3" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">轴承 10×15×3 <span class="text-amber-600 font-bold ml-1">×3</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">腿部关节轴向定位</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/bearing-16224.png" alt="轴承 16×22×4" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">轴承 16×22×4 <span class="text-amber-600 font-bold ml-1">×11</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">髋 / 膝部关节</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/bearing-6123.png" alt="轴承 6×12×3" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">轴承 6×12×3 <span class="text-amber-600 font-bold ml-1">×4</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">轮滑变体专用</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/screws.png" alt="自攻螺丝 平尾 M2×5" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">自攻螺丝 平尾 M2×5 <span class="text-amber-600 font-bold ml-1">1 包</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">塑料自攻 · 配乐泰防松</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/screws.png" alt="自攻螺丝 平尾 M2×6" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">自攻螺丝 平尾 M2×6 <span class="text-amber-600 font-bold ml-1">1 包</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">塑料自攻 · 配乐泰防松</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/screws.png" alt="自攻螺丝 平尾 M2×8" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">自攻螺丝 平尾 M2×8 <span class="text-amber-600 font-bold ml-1">1 包</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">穿透两层打印件处</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/screws.png" alt="自攻螺丝 平尾 M2.5×6" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">自攻螺丝 平尾 M2.5×6 <span class="text-amber-600 font-bold ml-1">1 包</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">承力较大连接点</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/screws.png" alt="自攻螺丝 平尾 M2.5×8" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">自攻螺丝 平尾 M2.5×8 <span class="text-amber-600 font-bold ml-1">1 包</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">厚壁与多层叠装处</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/threadlocker.png" alt="乐泰螺纹胶 243" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">乐泰螺纹胶 243 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">中强度厌氧锁固胶（蓝色）</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/anti-slip.png" alt="鞋底防滑垫" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">鞋底防滑垫 <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">橡胶自粘 · 厚度 1.5mm</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-gradient-to-br from-violet-50 to-purple-100 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-violet-500"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">游戏手柄</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">蓝牙手柄，零代码直接玩。连上即可遥控机器鸭行走、踢球，秒变遥控玩具。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="price text-xl">¥79</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-blue-500"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M2 15h2M2 9h2M20 15h2M20 9h2"/></svg></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">imu_to_dxl 电路板</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">IMU 转 Dynamixel 协议桥接板，microduck-replica 开源方案的姿态数据转换。</p>
-                    <div class="flex items-center justify-between mt-4"><span class="text-gray-400 font-semibold">待定</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl border border-border overflow-hidden card-hover">
-                <div class="h-48 bg-gradient-to-br from-yellow-50 to-amber-100 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 text-yellow-500"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-                <div class="p-5">
-                    <h4 class="font-bold text-gray-900">Banana PCB + 香蕉插头 PCB（铜镀金）</h4>
-                    <p class="text-sm text-gray-600 mt-2 leading-relaxed">2.5mm 香蕉插头 PCB（铜镀金）× 2<br>banana PCB（嘉立创）× 1</p>
-                    <div class="flex items-center justify-between mt-4"><span class="text-gray-400 font-semibold">待定</span><span class="px-5 py-2 bg-gray-200 text-gray-500 text-sm font-semibold rounded-lg">待到货</span><button onclick="shareItem(this)" data-link="parts.html" class="w-9 h-9 flex items-center justify-center text-amber-500 bg-amber-50 hover:bg-amber-100 border border-amber-200 transition-colors ml-1.5 shrink-0 rounded-lg" title="分享到微信"><i class="fas fa-share-nodes text-lg"></i></button></div>
-                </div>
-            </div>
+            </details>
         </div>
-
+        <!-- MicroDuck 散件套装 -->
+        <div class="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="grid md:grid-cols-2">
+                <div class="bg-gray-50/60 p-6 md:p-8 flex flex-col justify-center">
+                    <img src="Assets/images/microduck/diy-kit-hero.png" alt="MicroDuck 散件套装" class="w-full rounded-2xl border border-gray-100">
+                    <div class="mt-4 text-center text-sm font-semibold text-gray-700 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3">飞特 HD1901M 舵机 ×15 + Radxa ZERO 3W 主板 ×1</div>
+                </div>
+                <div class="p-6 md:p-8 flex flex-col justify-center">
+                    <div class="flex flex-wrap items-center gap-3 mb-3">
+                        <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full">产品二</span>
+                        <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-semibold rounded-full border border-blue-100"><i class="fas fa-clock mr-1"></i>下单后 15 天内发货</span>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900">MicroDuck 散件套装</h2>
+                    <p class="text-sm text-gray-500 mt-2 leading-relaxed">飞特电机 ×15 + Radxa Zero 3W 主板 ×1 · 核心部件散件，灵活自组。</p>
+                    <div class="flex items-baseline gap-2 mt-6">
+                        <span class="text-xs text-gray-400">套装价</span>
+                        <span class="text-4xl font-extrabold text-amber-600">¥2059</span>
+                    </div>
+                    <a href="contact.html" class="mt-6 inline-flex items-center justify-center px-6 py-3.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-xl transition-colors">立即预订 <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+            </div>
+            <details class="border-t border-gray-100 group">
+                <summary class="px-6 md:px-8 py-4 cursor-pointer list-none flex items-center justify-between text-sm font-bold text-gray-900 hover:bg-gray-50 transition-colors">
+                    <span><i class="fas fa-list-ul text-amber-500 mr-2"></i>BOM 物料清单（2 项）</span>
+                    <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <div class="px-6 md:px-8 pb-6">
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/servo-hd1901m.png" alt="飞特 HD1901M 总线舵机" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">飞特 HD1901M 总线舵机 <span class="text-amber-600 font-bold ml-1">×15</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">34×20×23mm · 堵转 1.47 N·m @7.4V · 12 位磁编码 · TTL 总线</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                        <img src="Assets/images/microduck/bom/radxa-zero-3w.jpeg" alt="Radxa Zero 3W 主控板（2GB）" class="w-16 h-16 object-contain rounded-lg bg-gray-50 p-1 shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <div class="font-semibold text-gray-900 text-sm">Radxa Zero 3W 主控板（2GB） <span class="text-amber-600 font-bold ml-1">×1</span></div>
+                            <div class="text-[13px] text-gray-500 mt-1 leading-relaxed">RK3566 四核 Cortex-A55 · 2GB LPDDR4 · WiFi6 + 蓝牙5.4 · USB 3.0</div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </div>
     </div>
 </section>
 
-<!-- 待到货 -->
-<section id="coming-soon" class="relative z-10 py-20">
-    <div>
-        <div class="text-center mb-10">
-            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wide" style="background:rgba(100,116,139,.10);color:#64748b;border:1px solid rgba(100,116,139,.25)">COMING SOON</span>
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-500 mt-4">待到货</h2>
-            <p class="mt-3 text-gray-400 max-w-2xl mx-auto">以下产品待到货，敬请期待。</p>
-        </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-gray-100/70 rounded-2xl border border-dashed border-gray-300 p-6 text-center opacity-70"><h4 class="font-bold text-gray-500">ZERO 3W 1GB 版</h4><span class="inline-block mt-3 px-3 py-1 bg-gray-200 text-gray-500 text-xs rounded-full font-semibold">待到货</span></div>
-            <div class="bg-gray-100/70 rounded-2xl border border-dashed border-gray-300 p-6 text-center opacity-70"><h4 class="font-bold text-gray-500">ZERO 3W 4GB 版</h4><span class="inline-block mt-3 px-3 py-1 bg-gray-200 text-gray-500 text-xs rounded-full font-semibold">待到货</span></div>
-            <div class="bg-gray-100/70 rounded-2xl border border-dashed border-gray-300 p-6 text-center opacity-70"><h4 class="font-bold text-gray-500">ZERO 3W 8GB 版</h4><span class="inline-block mt-3 px-3 py-1 bg-gray-200 text-gray-500 text-xs rounded-full font-semibold">待到货</span></div>
-            <div class="bg-gray-100/70 rounded-2xl border border-dashed border-gray-300 p-6 text-center opacity-70"><h4 class="font-bold text-gray-500">ZERO 3E（千兆网口版）</h4><span class="inline-block mt-3 px-3 py-1 bg-gray-200 text-gray-500 text-xs rounded-full font-semibold">待到货</span></div>
-        </div>
-    </div>
-</section>
-
-<!-- 购买说明 -->
-<section id="buy-guide" class="relative z-10 py-16 bg-gray-50/60">
-    <div class="text-center">
-        <h2 class="text-2xl md:text-3xl font-bold mb-6">如何购买</h2>
-        <div class="grid md:grid-cols-3 gap-5 text-left">
-            <div class="bg-white rounded-2xl p-6 border border-border"><div class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center mb-3 font-bold text-amber-600">1</div><h3 class="font-bold mb-1">点击购买</h3><p class="text-sm text-gray-500">在卡片上点「立即购买」，自动带入所选配件</p></div>
-            <div class="bg-white rounded-2xl p-6 border border-border"><div class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center mb-3 font-bold text-amber-600">2</div><h3 class="font-bold mb-1">微信扫码付款</h3><p class="text-sm text-gray-500">核对金额后扫码付款，记下交易单号</p></div>
-            <div class="bg-white rounded-2xl p-6 border border-border"><div class="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center mb-3 font-bold text-amber-600">3</div><h3 class="font-bold mb-1">填单提交</h3><p class="text-sm text-gray-500">填收货信息与交易订单号，付款后自动跳转我的订单</p></div>
-        </div>
-    </div>
-</section>
-
-  </div>
-
-</div>
-
-<!-- 关于商城 / 创始人寄语 -->
-<section class="relative bg-white">
-    <div class="max-w-4xl mx-auto px-6 py-16 md:py-20">
-        <p class="text-center text-xs tracking-widest text-amber-600 font-semibold mb-3">ABOUT THIS STORE</p>
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 text-center">MicroDuck 配件商城 · 写给同样踩过坑的你</h2>
-
-        <div class="mt-8 text-gray-600 leading-relaxed space-y-4 text-[15px]">
-            <p>做开源机器人，最磨人的往往不是代码，而是零件。</p>
-            <p>配件突然断货，等了两周发现发不了；买回来的摄像头排线对不上主板；舵机参数看着差不多，装上去才发现协议不兼容；为了凑齐一套标准件，跑了三家店、付了三次运费，最后还少一颗螺丝。这些事，我们自己都经历过。</p>
-            <p>MicroDuck 配件商城不是一开始就规划好的平台，它更像是被这些坑一点点逼出来的一个货架。我们能力有限，做不到大而全，只能尽量把一件事做好：<strong class="text-gray-900">让个人开发者在复现开源机器人时，少一次选型焦虑，少一趟冤枉路。</strong></p>
-        </div>
-
-        <h3 class="mt-12 text-xl font-bold text-gray-900">我们正在努力做的几件小事</h3>
-        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
-                <div class="font-semibold text-gray-900 mb-1.5">① 把库存状态说清楚</div>
-                <p class="text-sm text-gray-600 leading-relaxed">现货可下单的配件标注 7 天内发货，即将上线的提前公示，不让人下了单才发现要无限等待。供应不稳定是现实，我们选择把现实讲在前面。</p>
+<section class="relative z-10 pb-16">
+    <div class="max-w-5xl mx-auto px-6">
+        <a href="https://unitclaw.github.io/microduck-wwduck/" target="_blank" rel="noopener" class="flex items-center justify-between gap-4 bg-gray-900 hover:bg-gray-800 text-white rounded-2xl p-6 md:p-8 transition-colors">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0"><i class="fas fa-book-open text-amber-400 text-xl"></i></div>
+                <div>
+                    <div class="font-bold text-lg">MicroDuck 开源电子书</div>
+                    <div class="text-sm text-gray-400">组装教程、BOM、固件与强化学习训练栈 · 全量开源</div>
+                </div>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
-                <div class="font-semibold text-gray-900 mb-1.5">② 把匹配关系写明白</div>
-                <p class="text-sm text-gray-600 leading-relaxed">摄像头排线适配哪块板、舵机适配哪个关节、PoE HAT 需要什么前提、标准件套装里到底有几颗什么规格的螺丝——这些细节不藏着，因为选错一次的成本，开发者比谁都清楚。</p>
-            </div>
-            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
-                <div class="font-semibold text-gray-900 mb-1.5">③ 把质量来源摆出来</div>
-                <p class="text-sm text-gray-600 leading-relaxed">传感器型号、舵机品牌、电池规格、TF 卡用途，关键参数尽量公开可查。我们不敢说每一件都是最优解，但至少让你知道自己在买什么。</p>
-            </div>
-            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
-                <div class="font-semibold text-gray-900 mb-1.5">④ 把零散采购收拢到一张订单</div>
-                <p class="text-sm text-gray-600 leading-relaxed">整机散件、结构件、电子件、标准件、可选配件放在一起，明码标价，点击即购。代装整机服务也是给想省心的朋友多一个选择，不是必须。</p>
-            </div>
-        </div>
-
-        <h3 class="mt-12 text-xl font-bold text-gray-900">商城现在有什么</h3>
-        <p class="mt-4 text-[15px] text-gray-600 leading-relaxed">预售的有 Radxa ZERO 3W 主板、8M 219 摄像头、HD-1910-C001 串口总线舵机 15 个套装、3D 打印结构件套装（PLA材质+ASA 关节加强）和代装整机服务。</p>
-        <p class="mt-3 text-[15px] text-gray-600 leading-relaxed">即将上线的有 MicroDuck 国产版整机散件包（省心）。</p>
-        <p class="mt-3 text-[15px] text-gray-600 leading-relaxed">待到货的有调试板、VL53L8CX ToF 模块、NP-F550 电池组、扬声器模组、64G 高速 TF 卡、标准件套装、轮滑套件、游戏手柄、imu_to_dxl 电路板、香蕉插头 PCB，以及 ZERO 3W 1GB/4GB/8GB 和 ZERO 3E 千兆网口版。结构件图纸全量开源，公差与干涉问题清单也公开，复现成功率高一些，是我们能给的诚意。</p>
-        <p class="mt-3 text-[15px] text-gray-600 leading-relaxed">购买路径也尽量简单：点击购买 → 微信扫码付款 → 填收货信息与交易单号，付款后自动跳转「我的订单」，凭手机号随时查进度。</p>
-
-        <div class="mt-12 bg-amber-50 rounded-2xl border border-amber-100 p-6">
-            <h3 class="text-xl font-bold text-gray-900">一点心里话</h3>
-            <p class="mt-3 text-[15px] text-gray-700 leading-relaxed">我们知道这个商城还远不完美。品类不够多，部分配件还在路上，客服可能也不是随叫随到。但它是围绕真实复现场景一点点搭起来的，每一条参数、每一张图、每一个「即将上线」，都来自我们自己装机器时遇到过的具体问题。</p>
-            <p class="mt-3 text-[15px] text-gray-700 leading-relaxed">如果你在采购或组装过程中发现哪里写错了、缺了什么、哪里还能更清楚，欢迎直接告诉我们。个人开发者做硬件已经够不容易了，能在这个小货架上帮你省下一点时间，就是我们做它的意义。</p>
-        </div>
-
-        <div class="mt-10 flex flex-col items-end">
-            <div class="font-semibold text-gray-900">万物拟态 CEO 叶志青（Henry Ip）</div>
-            <p class="mt-2 text-sm text-gray-500">MicroDuck 配件商城 —— 我们也在学，尽量不让后来的人再踩同一个坑。</p>
-        </div>
+            <i class="fas fa-external-link-alt text-gray-500 shrink-0"></i>
+        </a>
     </div>
 </section>
 
